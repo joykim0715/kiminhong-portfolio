@@ -1,0 +1,116 @@
+/* Hero decorative layers — sits behind content, pointer-events none */
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    #f7f8f6 0%,
+    #eef2f1 45%,
+    #e7ecef 100%
+  );
+}
+
+.grid {
+  position: absolute;
+  inset: -2%;
+  opacity: 0.45;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--clr-primary) 8%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--clr-primary) 8%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, black 20%, transparent 72%);
+  animation: gridDrift 48s linear infinite;
+}
+
+.gridSecondary {
+  position: absolute;
+  inset: -4%;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--clr-muted) 12%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--clr-muted) 12%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 14px 14px;
+  mask-image: radial-gradient(ellipse 90% 80% at 55% 50%, black 10%, transparent 68%);
+  animation: gridDriftReverse 64s linear infinite;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 25% 35%, rgba(247, 248, 246, 0.55), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(231, 236, 239, 0.65), transparent 58%),
+    linear-gradient(
+      180deg,
+      rgba(247, 248, 246, 0.35) 0%,
+      rgba(247, 248, 246, 0.72) 55%,
+      rgba(247, 248, 246, 0.88) 100%
+    );
+}
+
+@keyframes gridDrift {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(28px, 18px);
+  }
+}
+
+@keyframes gridDriftReverse {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-12px, -8px);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid {
+    background-size: 40px 40px;
+    opacity: 0.35;
+  }
+
+  .gridSecondary {
+    background-size: 10px 10px;
+    opacity: 0.16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid,
+  .gridSecondary {
+    animation: none;
+  }
+}

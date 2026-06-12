@@ -1,0 +1,385 @@
+.collage {
+  position: relative;
+  width: min(520px, 94vw);
+  height: min(600px, 114vw);
+  margin-inline: auto;
+  padding-bottom: 40px;
+  touch-action: manipulation;
+}
+
+.collageIdle .orbit {
+  animation:
+    orbitDrift 32s ease-in-out infinite,
+    orbitPulse 2.6s ease-in-out infinite;
+}
+
+.collageIdle .field {
+  animation: fieldGlow 3s ease-in-out infinite;
+}
+
+.collageIdle .fieldB {
+  animation-delay: 1.4s;
+}
+
+.aura {
+  position: absolute;
+  inset: -10% -8%;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 75% 70% at 50% 55%,
+      color-mix(in srgb, var(--clr-primary) 22%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 80% 25%,
+      color-mix(in srgb, var(--clr-secondary) 14%, transparent),
+      transparent 70%
+    );
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.orbit {
+  position: absolute;
+  inset: 4% 2%;
+  z-index: 0;
+  border: 1px solid color-mix(in srgb, var(--clr-primary) 18%, transparent);
+  border-radius: 58% 42% 54% 46% / 48% 56% 44% 52%;
+  opacity: 0.7;
+  animation: orbitDrift 32s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Shared card chrome */
+.card {
+  position: absolute;
+  overflow: hidden;
+  will-change: transform;
+  box-shadow:
+    0 20px 48px color-mix(in srgb, var(--clr-text) 10%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--clr-primary) 10%, transparent);
+}
+
+.interactive {
+  cursor: pointer;
+  transition: box-shadow 0.45s ease;
+}
+
+.interactive:hover,
+.interactive:focus-visible {
+  box-shadow:
+    0 28px 56px color-mix(in srgb, var(--clr-primary) 18%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--clr-primary) 22%, transparent);
+  outline: none;
+}
+
+.interactive:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--clr-primary) 55%, transparent);
+  outline-offset: 3px;
+}
+
+.cardImage {
+  object-fit: cover;
+}
+
+/* Center — formal portrait */
+.formal {
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 56%;
+  height: 62%;
+  border-radius: 58% 42% 52% 48% / 46% 54% 46% 54%;
+  box-shadow:
+    0 28px 64px color-mix(in srgb, var(--clr-primary) 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--clr-primary) 14%, transparent);
+}
+
+.formalImage {
+  mix-blend-mode: multiply;
+  filter: contrast(1.03) saturate(1.04);
+  object-position: center 8%;
+}
+
+.formalTint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--clr-primary) 16%, transparent) 0%,
+    transparent 50%,
+    color-mix(in srgb, var(--clr-secondary) 12%, transparent) 100%
+  );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* Field shots — polaroid-style accents */
+.field {
+  z-index: 3;
+  width: 50%;
+  height: 34%;
+  border-radius: 16px;
+  background: #fff;
+  padding: 6px;
+  box-shadow:
+    0 16px 40px color-mix(in srgb, var(--clr-text) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--clr-primary) 8%, transparent);
+}
+
+.fieldInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.fieldImage {
+  filter: saturate(1.05) contrast(1.02);
+}
+
+.fieldA {
+  bottom: 6%;
+  left: -2%;
+}
+
+.fieldA .fieldImage {
+  object-position: center 35%;
+}
+
+.fieldB {
+  top: 4%;
+  right: -2%;
+}
+
+.fieldB .fieldImage {
+  object-position: center 40%;
+}
+
+.scanGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--clr-primary) 10%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--clr-primary) 10%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 16px 16px;
+  mask-image: radial-gradient(ellipse 90% 85% at 50% 45%, black 10%, transparent 78%);
+  pointer-events: none;
+}
+
+.cardBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-primary);
+  background: color-mix(in srgb, #fff 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clr-primary) 22%, transparent);
+  pointer-events: none;
+  animation: badgePulse 2.4s ease-in-out infinite;
+}
+
+.formal .cardBadge {
+  top: auto;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hint {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--clr-text);
+  white-space: nowrap;
+  background: color-mix(in srgb, #fff 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clr-primary) 28%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--clr-primary) 12%, transparent);
+  transform: translateX(-50%);
+  animation: hintBounce 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hintDesktop {
+  display: inline;
+}
+
+.hintMobile {
+  display: none;
+}
+
+.hintIcon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.hintCursor {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 10px;
+  height: 14px;
+  border: 1.5px solid var(--clr-primary);
+  border-radius: 6px 6px 3px 3px;
+  background: color-mix(in srgb, var(--clr-primary) 12%, transparent);
+}
+
+.hintCursor::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 2px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid var(--clr-primary);
+  border-right: 3px solid transparent;
+  border-left: 3px solid transparent;
+}
+
+.hintRipple {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--clr-primary) 50%, transparent);
+  animation: hintRipple 2.2s ease-out infinite;
+}
+
+@keyframes orbitDrift {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.015);
+  }
+}
+
+@keyframes orbitPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--clr-primary) 0%, transparent);
+  }
+  50% {
+    opacity: 0.95;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--clr-primary) 10%, transparent);
+  }
+}
+
+@keyframes fieldGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 16px 40px color-mix(in srgb, var(--clr-text) 12%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--clr-primary) 8%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 20px 44px color-mix(in srgb, var(--clr-primary) 18%, transparent),
+      0 0 0 2px color-mix(in srgb, var(--clr-primary) 28%, transparent);
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hintBounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-4px);
+  }
+}
+
+@keyframes hintRipple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .collage {
+    width: min(400px, 94vw);
+    height: min(460px, 108vw);
+  }
+
+  .field {
+    width: 52%;
+    height: 32%;
+  }
+
+  .hintDesktop {
+    display: none;
+  }
+
+  .hintMobile {
+    display: inline;
+  }
+
+  .hint {
+    bottom: -8px;
+    font-size: 10px;
+    padding: 7px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .collageIdle .orbit,
+  .collageIdle .field,
+  .cardBadge,
+  .hint,
+  .hintRipple {
+    animation: none;
+  }
+
+  .card {
+    will-change: auto;
+  }
+}

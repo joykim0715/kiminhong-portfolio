@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+:root {
+  --clr-bg: #f7f8f6;
+  --clr-surface: #e7ecef;
+  --clr-text: #24323a;
+  --clr-muted: #6b8390;
+  --clr-primary: #5fa8a3;
+  --clr-secondary: #6faed9;
+  --clr-dark: #1c2b30;
+  --clr-dark-surf: #243238;
+  --clr-border: color-mix(in srgb, var(--clr-text) 12%, transparent);
+
+  --gradient-bridge: linear-gradient(
+    180deg,
+    #1c2b30 0%,
+    #5fa8a3 40%,
+    #6faed9 70%,
+    #f7f8f6 100%
+  );
+  --gradient-contact: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--clr-primary) 35%, var(--clr-dark)) 0%,
+    var(--clr-dark) 50%,
+    var(--clr-dark-surf) 100%
+  );
+}
+
+@theme inline {
+  --color-bg: var(--clr-bg);
+  --color-surface: var(--clr-surface);
+  --color-text: var(--clr-text);
+  --color-muted: var(--clr-muted);
+  --color-primary: var(--clr-primary);
+  --color-secondary: var(--clr-secondary);
+  --color-dark: var(--clr-dark);
+  --color-dark-surf: var(--clr-dark-surf);
+  --color-border: var(--clr-border);
+  --font-sans: var(--font-geist-sans);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.break-keep {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--clr-primary) 35%, transparent);
+  color: var(--clr-text);
+}
+
+.section-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* GSAP pin panels — full-width background while pinned */
+.works-pin-panel,
+.skills-pin-panel {
+  width: 100%;
+}
+
+.section-title {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.hero-title {
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--clr-text) 0%, var(--clr-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-light {
+  background: linear-gradient(90deg, #ffffff 0%, var(--clr-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-nav {
+  background: color-mix(in srgb, var(--clr-bg) 85%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.glass-nav-dark {
+  background: color-mix(in srgb, var(--clr-dark) 80%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid color-mix(in srgb, white 12%, transparent);
+}
+
+.btn-glow {
+  box-shadow: 0 0 24px color-mix(in srgb, var(--clr-primary) 30%, transparent);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 36px color-mix(in srgb, var(--clr-primary) 45%, transparent);
+}
+
+.masonry-grid {
+  columns: 1;
+  column-gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .masonry-grid {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry-grid {
+    columns: 3;
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+.dial-metallic {
+  background: conic-gradient(
+    from 0deg,
+    var(--clr-dark-surf) 0deg,
+    var(--clr-primary) 60deg,
+    var(--clr-dark) 120deg,
+    var(--clr-secondary) 200deg,
+    var(--clr-primary) 280deg,
+    var(--clr-dark-surf) 360deg
+  );
+  box-shadow:
+    inset 0 0 40px color-mix(in srgb, white 8%, transparent),
+    0 0 60px color-mix(in srgb, var(--clr-primary) 15%, transparent);
+}
+
+html.scroll-locked,
+body.scroll-locked {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
