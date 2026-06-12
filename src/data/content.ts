@@ -5,7 +5,7 @@ export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
     description:
-      "헬스케어 신입 김인홍의 포트폴리오. 스포츠의학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
+      "헬스케어 신입 김인홍의 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
   },
   hero: {
     tagline: "senior healthcare researcher",
@@ -25,8 +25,8 @@ export const siteContent = {
     saraminUrl: "https://www.saramin.co.kr",
   },
   bridge: {
-    line1: "데이터와 움직임이 만나는",
-    line2: "다음 헬스케어 경험",
+    line1: "스포츠과학과 디지털헬스의 교차점에서,",
+    line2: "건강한 삶의 가치를 함께 찾아갑니다.",
   },
   works: {
     sectionLabel: "Portfolio",
