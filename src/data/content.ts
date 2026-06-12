@@ -24,6 +24,10 @@ export const siteContent = {
     saraminCtaLabel: "이력서 확인하기",
     saraminUrl: "https://www.saramin.co.kr",
   },
+  bridge: {
+    line1: "데이터와 움직임이 만나는",
+    line2: "다음 헬스케어 경험",
+  },
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects & Certificates",

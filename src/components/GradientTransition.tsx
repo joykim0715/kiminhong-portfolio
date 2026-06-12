@@ -4,8 +4,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
+import { siteContent } from "@/data/content";
 
 export default function GradientTransition() {
+  const { bridge } = siteContent;
   const sectionRef = useRef<HTMLElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
 
@@ -65,9 +67,9 @@ export default function GradientTransition() {
 
       <div className="gradient-reveal-text relative z-10 flex h-full items-center justify-center px-6">
         <p className="max-w-2xl break-keep text-center text-2xl font-medium tracking-tight text-white sm:text-3xl lg:text-4xl">
-          데이터와 움직임이 만나는
+          {bridge.line1}
           <span className="mt-2 block font-bold text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)]">
-            다음 헬스케어 경험
+            {bridge.line2}
           </span>
         </p>
       </div>
