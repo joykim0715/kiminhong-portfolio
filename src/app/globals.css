@@ -159,6 +159,22 @@ body {
   margin-bottom: 1rem;
 }
 
+.gallery-card {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--clr-primary) 55%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--clr-primary) 30%, transparent),
+    0 12px 40px color-mix(in srgb, var(--clr-primary) 22%, transparent),
+    0 0 56px color-mix(in srgb, var(--clr-primary) 32%, transparent);
+}
+
 .dial-metallic {
   background: conic-gradient(
     from 0deg,

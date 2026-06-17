@@ -17,7 +17,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       <button
         type="button"
         onClick={onClick}
-        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_16px_48px_color-mix(in_srgb,var(--clr-primary)_15%,transparent)] ${className}`}
+        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 ${className}`}
       >
         <div className="border-b border-border px-5 py-4 text-center sm:px-6">
           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#5FA8A3]">{work.category}</p>
@@ -48,7 +48,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
     <button
       type="button"
       onClick={onClick}
-      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_60px_color-mix(in_srgb,var(--clr-primary)_15%,transparent)] ${className}`}
+      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 ${className}`}
     >
       <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-dark-surf p-6 sm:p-8">
         {work.image ? (
