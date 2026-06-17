@@ -84,6 +84,7 @@ export default function WorkGallery() {
           cardSelector: ".stack-card",
           stepVh: STACK_STEP_VH,
           scrub: 1.2,
+          holdDuration: 0.5,
           onIndex: setActiveStackIndex,
         });
       } else if (!isDesktop) {

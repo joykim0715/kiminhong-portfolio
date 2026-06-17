@@ -18,6 +18,8 @@ type PinStackOptions = {
   cardSelector: string;
   stepVh?: number;
   scrub?: number;
+  /** Transition 완료 후 카드가 잠시 멈추는 구간 (타임라인 비율, 1 ≈ 전환 길이) */
+  holdDuration?: number;
   onIndex?: (index: number) => void;
 };
 
@@ -25,12 +27,14 @@ type PinStackOptions = {
 export function scrollPinStack(options: PinStackOptions) {
   if (prefersReducedMotion()) return null;
 
-  const { zone, stepVh = 0.9, scrub = 1.2 } = options;
+  const { zone, stepVh = 0.9, scrub = 1.2, holdDuration = 0.5 } = options;
   const pinEl = resolveEl(zone, options.pinSelector);
   const cards = gsap.utils.toArray<Element>(options.cardSelector, zone);
   if (!pinEl || cards.length < 2) return null;
 
   const steps = cards.length - 1;
+  const transitionDuration = 1;
+  const segmentDuration = transitionDuration + holdDuration;
 
   cards.forEach((card, i) => {
     gsap.set(card, {
@@ -53,21 +57,22 @@ export function scrollPinStack(options: PinStackOptions) {
       scrub,
       invalidateOnRefresh: true,
       onUpdate(self) {
-        const index = Math.min(steps, Math.floor(self.progress * steps + 0.0001));
+        const timelinePos = self.progress * steps * segmentDuration;
+        const index = Math.min(steps, Math.floor(timelinePos / segmentDuration));
         options.onIndex?.(index);
       },
     },
   });
 
   for (let i = 1; i < cards.length; i++) {
-    const at = i - 1;
+    const at = (i - 1) * segmentDuration;
     tl.to(
       cards[i - 1],
-      { y: -28, scale: 0.91, opacity: 0.2, zIndex: i, duration: 1, ease: "none" },
+      { y: -28, scale: 0.91, opacity: 0.2, zIndex: i, duration: transitionDuration, ease: "none" },
       at,
     ).to(
       cards[i],
-      { y: 0, scale: 1, opacity: 1, zIndex: i + 1, duration: 1, ease: "none" },
+      { y: 0, scale: 1, opacity: 1, zIndex: i + 1, duration: transitionDuration, ease: "none" },
       at,
     );
   }
