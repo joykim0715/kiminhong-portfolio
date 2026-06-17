@@ -59,6 +59,15 @@ const certifications: HelixItem[] = [
     type: "Certification",
   },
   {
+    id: "cert-10",
+    title: "TOEIC 850점",
+    org: "ETS",
+    date: "2025.02",
+    description: "영어 의사소통 역량을 인증한 시험 성적입니다.",
+    tags: ["Language", "Certification"],
+    type: "Certification",
+  },
+  {
     id: "cert-08",
     title: "2025 추계 한국운동재활학회 우수 포스터상",
     org: "한국운동재활협회",
@@ -102,15 +111,6 @@ const certifications: HelixItem[] = [
     date: "2024.07",
     description: "전국대학 플로어볼 선수권 대회 우승.",
     tags: ["Award", "Sports"],
-    type: "Certification",
-  },
-  {
-    id: "cert-10",
-    title: "TOEIC 850점",
-    org: "ETS",
-    date: "2025.02",
-    description: "영어 의사소통 역량을 인증한 시험 성적입니다.",
-    tags: ["Language", "Certification"],
     type: "Certification",
   },
 ];
