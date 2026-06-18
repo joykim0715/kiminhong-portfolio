@@ -1,5 +1,5 @@
 /**
- * 사이트 전체 텍스트 — 여기서 수정하면 Hero / About 등에 반영됩니다.
+ * 사이트 전체 텍스트 — 여기서 수정하면 Hero / Gallery / About 등에 반영됩니다.
  */
 export const siteContent = {
   meta: {
@@ -31,6 +31,12 @@ export const siteContent = {
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects & Certificates",
+  },
+  gallery: {
+    sectionLabel: "Inspiration",
+    title: "Beyond the screen",
+    description:
+      "Travel, nature, lifestyle, and photography — moments that shape perspective.",
   },
   about: {
     sectionLabel: "About",

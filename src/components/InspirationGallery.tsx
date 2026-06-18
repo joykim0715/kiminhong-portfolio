@@ -5,6 +5,7 @@ import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, parallaxFadeOnScroll } from "@/lib/scrollInteractions";
 import { prefersReducedMotion } from "@/lib/animations";
+import { siteContent } from "@/data/content";
 import { inspirationItems } from "@/data/inspiration";
 
 const heightClass = {
@@ -14,6 +15,7 @@ const heightClass = {
 };
 
 export default function InspirationGallery() {
+  const { gallery } = siteContent;
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -42,11 +44,11 @@ export default function InspirationGallery() {
     <section id="gallery" ref={sectionRef} className="relative z-[1] bg-bg/82 py-24 text-text backdrop-blur-[2px] sm:py-32">
       <div className="section-container">
         <div className="gallery-heading">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">Inspiration</p>
-          <h2 className="section-title mt-3 tracking-tight text-text">Beyond the screen</h2>
-          <p className="mt-4 max-w-xl text-base text-muted">
-            Travel, nature, lifestyle, and photography — moments that shape perspective.
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">
+            {gallery.sectionLabel}
           </p>
+          <h2 className="section-title mt-3 tracking-tight text-text">{gallery.title}</h2>
+          <p className="mt-4 max-w-xl text-base text-muted">{gallery.description}</p>
         </div>
 
         <div className="masonry-grid mt-12">
