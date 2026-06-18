@@ -35,8 +35,7 @@ export const siteContent = {
   gallery: {
     sectionLabel: "Inspiration",
     title: "Beyond the screen",
-    description:
-      "여행, 자연, 일상, 사진 — 시야를 넓혀 준 순간들입니다.",
+    description: "여행과 자연, 일상과 사진 속에서 시야를 키워 온 순간들",
   },
   about: {
     sectionLabel: "About",
