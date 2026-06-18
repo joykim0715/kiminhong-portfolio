@@ -36,7 +36,7 @@ export const siteContent = {
     sectionLabel: "Inspiration",
     title: "Beyond the screen",
     description:
-      "Travel, nature, lifestyle, and photography — moments that shape perspective.",
+      "여행, 자연, 일상, 사진 — 시야를 넓혀 준 순간들입니다.",
   },
   about: {
     sectionLabel: "About",
