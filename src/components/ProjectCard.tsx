@@ -17,11 +17,11 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       <button
         type="button"
         onClick={onClick}
-        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 ${className}`}
+        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-surface text-left text-text opacity-100 ${className}`}
       >
         <div className="border-b border-border px-5 py-4 text-center sm:px-6">
-          <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#5FA8A3]">{work.category}</p>
-          <h3 className="mt-1.5 text-base font-bold tracking-tight text-[#24323A] sm:text-lg">{work.title}</h3>
+          <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">{work.category}</p>
+          <h3 className="mt-1.5 text-base font-bold tracking-tight text-text sm:text-lg">{work.title}</h3>
         </div>
         <div className="relative flex aspect-[5/3] items-center justify-center overflow-hidden bg-dark-surf p-4 sm:p-5">
           {work.image ? (
@@ -48,7 +48,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
     <button
       type="button"
       onClick={onClick}
-      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-[#E7ECEF] text-left text-[#24323A] opacity-100 ${className}`}
+      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-surface text-left text-text opacity-100 ${className}`}
     >
       <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-dark-surf p-6 sm:p-8">
         {work.image ? (
@@ -68,8 +68,8 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
         )}
       </div>
       <div className="border-t border-border p-5 text-center sm:p-6">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#5FA8A3]">{work.category}</p>
-        <h3 className="mt-2 text-lg font-bold tracking-tight text-[#24323A] sm:text-xl">{work.title}</h3>
+        <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">{work.category}</p>
+        <h3 className="mt-2 text-lg font-bold tracking-tight text-text sm:text-xl">{work.title}</h3>
       </div>
     </button>
   );

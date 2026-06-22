@@ -2,9 +2,9 @@ export const EASE_OUT = "power2.out";
 export const EASE_IN_OUT = "power2.inOut";
 
 export const DURATION = {
-  pageLoad: 1.5,
-  reveal: 0.8,
-  card: 0.6,
+  pageLoad: 1.2,
+  reveal: 0.55,
+  card: 0.55,
 } as const;
 
 export const STAGGER = {

@@ -136,7 +136,7 @@ export function fadeRevealOnScroll(
   return gsap.from(targets, {
     opacity: 0,
     y: options.y ?? 40,
-    duration: 0.8,
+    duration: 0.55,
     ease: "power2.out",
     stagger: options.stagger ?? 0.1,
     immediateRender: false,

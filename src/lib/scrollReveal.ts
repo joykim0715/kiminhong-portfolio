@@ -21,7 +21,7 @@ export function revealOnScroll(
     y = 60,
     x = 0,
     opacity = 0,
-    duration = 0.9,
+    duration = 0.55,
     stagger = 0,
     start = "top 85%",
   } = options;

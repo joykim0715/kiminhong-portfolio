@@ -178,9 +178,9 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
 
-      gsap.to(formalEl, { x: px * 10, y: py * 8, duration: 0.8, ease: "sine.out", overwrite: "auto" });
-      if (fieldAEl) gsap.to(fieldAEl, { x: px * -14, y: py * -10, duration: 0.9, ease: "sine.out", overwrite: "auto" });
-      if (fieldBEl) gsap.to(fieldBEl, { x: px * 14, y: py * -12, duration: 0.9, ease: "sine.out", overwrite: "auto" });
+      gsap.to(formalEl, { x: px * 10, y: py * 8, duration: 0.55, ease: "sine.out", overwrite: "auto" });
+      if (fieldAEl) gsap.to(fieldAEl, { x: px * -14, y: py * -10, duration: 0.6, ease: "sine.out", overwrite: "auto" });
+      if (fieldBEl) gsap.to(fieldBEl, { x: px * 14, y: py * -12, duration: 0.6, ease: "sine.out", overwrite: "auto" });
     };
 
     const onLeave = () => {
@@ -188,7 +188,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
       gsap.to([formalEl, fieldAEl, fieldBEl].filter(Boolean), {
         x: 0,
         y: 0,
-        duration: 0.7,
+        duration: 0.55,
         ease: EASE,
       });
     };

@@ -1,5 +1,5 @@
 /**
- * 사이트 전체 텍스트 — 여기서 수정하면 Hero / Gallery / About 등에 반영됩니다.
+ * 사이트 전체 텍스트 — 여기서 수정하면 Hero / About 등에 반영됩니다.
  */
 export const siteContent = {
   meta: {
@@ -8,7 +8,7 @@ export const siteContent = {
       "헬스케어 신입 김인홍의 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
   },
   hero: {
-    tagline: "senior healthcare researcher",
+    tagline: "스포츠과학 × 디지털헬스 신입",
     headline: "Finding the value of movement",
     bio: "헬스케어·디지털 헬스 분야에서 스포츠과학적 전문성과 데이터 분석으로 솔루션을 탐색합니다.",
     profileImage: "/images/profile.png",
@@ -22,7 +22,7 @@ export const siteContent = {
       mobile: "탭해서 사진 둘러보기",
     },
     saraminCtaLabel: "이력서 확인하기",
-    saraminUrl: "https://www.saramin.co.kr",
+    resumeUrl: "#",
   },
   bridge: {
     line1: "스포츠과학과 디지털헬스의 교차점에서,",
@@ -31,11 +31,6 @@ export const siteContent = {
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects & Certificates",
-  },
-  gallery: {
-    sectionLabel: "Inspiration",
-    title: "Beyond the screen",
-    description: "여행과 자연, 일상과 사진 속에서 시야를 키워 온 순간들",
   },
   about: {
     sectionLabel: "About",

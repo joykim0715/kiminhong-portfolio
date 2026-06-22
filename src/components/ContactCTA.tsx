@@ -44,6 +44,7 @@ export default function ContactCTA() {
       id="contact"
       ref={sectionRef}
       className="relative z-[1] flex min-h-screen flex-col items-center justify-center overflow-hidden bg-dark py-24 text-white"
+      aria-labelledby="contact-heading"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -52,7 +53,7 @@ export default function ContactCTA() {
       />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
-        <h2 className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight">
+        <h2 id="contact-heading" className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight">
           {about.headline}
         </h2>
         <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
@@ -73,7 +74,7 @@ export default function ContactCTA() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-logo text-sm font-semibold uppercase tracking-[0.2em] text-white/50 transition hover:text-primary sm:text-base"
+              className="cta-logo text-sm font-semibold uppercase tracking-[0.2em] text-white/50 transition hover:text-primary-light sm:text-base"
             >
               {link.label}
             </a>

@@ -68,7 +68,8 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta mt-10">
-            <Button href={hero.saraminUrl} target="_blank" rel="noopener noreferrer">
+            {/* TODO: 실제 이력서 PDF 경로로 교체 필요 */}
+            <Button href={hero.resumeUrl} target="_blank" rel="noopener noreferrer">
               {hero.saraminCtaLabel}
             </Button>
           </div>
@@ -78,7 +79,7 @@ export default function Hero() {
           {hero.profileGallery?.length ? (
             <HeroPortrait images={hero.profileGallery} hint={hero.profileHint} />
           ) : (
-            <div className="flex h-[460px] w-[400px] flex-col items-center justify-center gap-2 rounded-[58%_42%_52%_48%/46%_54%_46%_54%] bg-[#E7ECEF] text-[#6B8390]">
+            <div className="flex h-[460px] w-[400px] flex-col items-center justify-center gap-2 rounded-[58%_42%_52%_48%/46%_54%_46%_54%] bg-surface text-muted">
               <span className="px-4 text-center text-xs">프로필 이미지 없음</span>
             </div>
           )}

@@ -54,13 +54,13 @@ export default function StorySection() {
   }, []);
 
   return (
-    <section id="story" ref={sectionRef} className="relative z-[1] bg-dark py-24 text-white sm:py-32">
+    <section id="story" ref={sectionRef} aria-labelledby="story-heading" className="relative z-[1] bg-dark py-24 text-white sm:py-32">
       <div className="section-container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="story-text text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+          <p className="story-text text-xs font-semibold uppercase tracking-[0.35em] text-primary-light">
             {storyContent.sectionLabel}
           </p>
-          <h2 className="story-text section-title mt-3 tracking-tight">{storyContent.title}</h2>
+          <h2 id="story-heading" className="story-text section-title mt-3 tracking-tight">{storyContent.title}</h2>
           {storyContent.paragraphs.map((p) => (
             <p key={p} className="story-text mt-6 break-keep text-base text-white/75 sm:text-lg">
               {p}
