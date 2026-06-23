@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { siteContent, type SkillItem } from "@/data/content";
 
 const skillsContent = siteContent.skills;
@@ -26,13 +25,13 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
       style={{ aspectRatio: "1" }}
     >
       <svg
-        className="absolute inset-0 h-full w-full -rotate-90"
+        className="pointer-events-none absolute inset-0 h-full w-full -rotate-90 overflow-visible"
         viewBox="0 0 120 120"
         aria-hidden="true"
       >
         <defs>
           <filter id={`skill-ring-glow-${skill.id}`} x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feGaussianBlur stdDeviation="2" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -45,7 +44,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           r="52"
           fill="none"
           className="stroke-primary/20"
-          strokeWidth="6"
+          strokeWidth="5"
         />
         <circle
           ref={ringGlowRef}
@@ -53,8 +52,8 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           cy="60"
           r="52"
           fill="none"
-          className="stroke-secondary/70"
-          strokeWidth="9"
+          className="stroke-secondary/60"
+          strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
           strokeDashoffset={RING_CIRCUMFERENCE}
@@ -67,32 +66,29 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           r="52"
           fill="none"
           className="stroke-secondary"
-          strokeWidth="5"
+          strokeWidth="4.5"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
           strokeDashoffset={RING_CIRCUMFERENCE}
         />
       </svg>
 
-      <div
-        className="absolute flex flex-col items-center px-3 text-center"
-        style={{ inset: "14px" }}
-      >
-        <div className="flex h-9 w-full shrink-0 items-center justify-center sm:h-10">
+      <div className="absolute inset-0 px-5 sm:px-6">
+        <div className="absolute inset-x-5 top-[21%] flex h-9 items-center justify-center sm:inset-x-6 sm:top-[22%] sm:h-10">
           <span className="text-[10px] font-semibold uppercase tracking-widest text-primary sm:text-xs">
             {skill.category}
           </span>
         </div>
-        <div className="mt-1 w-full shrink-0 px-1">
+        <div className="absolute inset-x-4 top-[38%] flex flex-col items-center text-center sm:inset-x-5 sm:top-[39%]">
           <span className="text-base font-bold leading-tight text-text sm:text-lg">{skill.tools}</span>
+          <ul className="mt-2 w-full space-y-0.5">
+            {skill.details.map((detail) => (
+              <li key={detail} className="text-[10px] leading-snug text-muted sm:text-xs">
+                · {detail}
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="mt-2 w-full space-y-0.5">
-          {skill.details.map((detail) => (
-            <li key={detail} className="text-[10px] leading-snug text-muted sm:text-xs">
-              · {detail}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
@@ -101,7 +97,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
 export default function SkillsDial() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const pinPanelRef = useRef<HTMLDivElement>(null);
   const ringRefs = useRef<(SVGCircleElement | null)[]>([]);
   const ringGlowRefs = useRef<(SVGCircleElement | null)[]>([]);
   const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -109,14 +105,12 @@ export default function SkillsDial() {
   useEffect(() => {
     const section = sectionRef.current;
     const pinZone = pinZoneRef.current;
-    const grid = gridRef.current;
-    if (!section || !pinZone || !grid) return;
+    const pinPanel = pinPanelRef.current;
+    if (!section || !pinZone || !pinPanel) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
-      fadeRevealOnScroll(".skills-heading", section);
-
       const rings = ringRefs.current.filter(Boolean) as SVGCircleElement[];
       const ringGlows = ringGlowRefs.current.filter(Boolean) as SVGCircleElement[];
       const circles = circleRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -126,13 +120,13 @@ export default function SkillsDial() {
       };
 
       if (prefersReduced) {
-        gsap.set(circles, { opacity: 1, y: 0, scale: 1 });
+        gsap.set(circles, { opacity: 1, scale: 1 });
         rings.forEach((ring, i) => setRingProgress(ring, skills[i].proficiency / 100));
         ringGlows.forEach((ring, i) => setRingProgress(ring, skills[i].proficiency / 100));
         return;
       }
 
-      gsap.set(circles, { opacity: 0, y: 56, scale: 0.88 });
+      gsap.set(circles, { opacity: 0, scale: 0.9 });
       rings.forEach((ring) => gsap.set(ring, { strokeDashoffset: RING_CIRCUMFERENCE }));
       ringGlows.forEach((ring) => gsap.set(ring, { strokeDashoffset: RING_CIRCUMFERENCE }));
 
@@ -147,7 +141,7 @@ export default function SkillsDial() {
           trigger: pinZone,
           start: `top ${NAV_OFFSET}px`,
           end: () => `+=${window.innerHeight * SKILLS_SCROLL_VH}`,
-          pin: grid,
+          pin: pinPanel,
           pinSpacing: true,
           anticipatePin: 1,
           scrub: 0.85,
@@ -158,7 +152,7 @@ export default function SkillsDial() {
       circles.forEach((circle, i) => {
         tl.to(
           circle,
-          { opacity: 1, y: 0, scale: 1, duration: fadeDuration, ease: "power2.out" },
+          { opacity: 1, scale: 1, duration: fadeDuration, ease: "power2.out" },
           i * fadeStagger,
         );
       });
@@ -185,38 +179,37 @@ export default function SkillsDial() {
       className="relative z-[1] overflow-hidden bg-bg py-16 text-text sm:py-24"
     >
       <div className="section-container">
-        <div className="skills-heading text-center lg:text-left">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-            {skillsContent.sectionLabel}
-          </p>
-          <h2 id="skills-heading" className="section-title mt-3 tracking-tight">
-            {skillsContent.title}
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl break-keep text-base leading-relaxed text-muted sm:text-lg lg:mx-0">
-            {skillsContent.description}
-          </p>
-        </div>
+        <div ref={pinZoneRef}>
+          <div ref={pinPanelRef} className="skills-pin-panel bg-bg py-2 sm:py-4">
+            <div className="skills-heading text-center lg:text-left">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+                {skillsContent.sectionLabel}
+              </p>
+              <h2 id="skills-heading" className="section-title mt-3 tracking-tight">
+                {skillsContent.title}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl break-keep text-base leading-relaxed text-muted sm:text-lg lg:mx-0">
+                {skillsContent.description}
+              </p>
+            </div>
 
-        <div ref={pinZoneRef} className="mt-12">
-          <div
-            ref={gridRef}
-            className="skills-pin-panel skills-rings-grid grid grid-cols-1 justify-items-center gap-8 bg-bg py-4 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-10"
-          >
-            {skills.map((skill, i) => (
-              <SkillRing
-                key={skill.id}
-                skill={skill}
-                ringRef={(el) => {
-                  ringRefs.current[i] = el;
-                }}
-                ringGlowRef={(el) => {
-                  ringGlowRefs.current[i] = el;
-                }}
-                circleRef={(el) => {
-                  circleRefs.current[i] = el;
-                }}
-              />
-            ))}
+            <div className="skills-rings-grid mt-10 grid grid-cols-1 justify-items-center gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-10">
+              {skills.map((skill, i) => (
+                <SkillRing
+                  key={skill.id}
+                  skill={skill}
+                  ringRef={(el) => {
+                    ringRefs.current[i] = el;
+                  }}
+                  ringGlowRef={(el) => {
+                    ringGlowRefs.current[i] = el;
+                  }}
+                  circleRef={(el) => {
+                    circleRefs.current[i] = el;
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

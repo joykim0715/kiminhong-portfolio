@@ -321,6 +321,14 @@ export const siteContent = {
       description: "스마트홈 기술과 보건 의료 서비스 결합, 시니어 맞춤 기획 역량",
     },
     {
+      name: "우수 포스터상",
+      fullName: "2025 추계 한국운동재활학회 우수 포스터상",
+      issuer: "한국운동재활학회",
+      date: "2025.11",
+      type: "award",
+      description: "학술대회 포스터 발표 부문 우수 연구 성과로 선정",
+    },
+    {
       name: "성균 우등 졸업상",
       fullName: "학업 우수 표창",
       issuer: "성균관대학교",
