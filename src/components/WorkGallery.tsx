@@ -148,7 +148,7 @@ export default function WorkGallery() {
           ) : (
             <div className="works-pin-panel bg-bg py-3">
               <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
-              <div className="cert-grid mt-8 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="cert-grid mt-8 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
                 {certifications.map((cert) => (
                   <CertificationBadge key={cert.name} cert={cert} />
                 ))}

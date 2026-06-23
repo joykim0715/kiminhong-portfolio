@@ -6,8 +6,8 @@
   --clr-surface: #e7ecef;
   --clr-text: #24323a;
   --clr-muted: #4f6670;
-  --clr-primary: #357a74;
-  --clr-accent: #2d6b66;
+  --clr-primary: #5fa8a3;
+  --clr-accent: #5fa8a3;
   --clr-primary-light: #7ec8c2;
   --clr-secondary: #6faed9;
   --clr-dark: #1c2b30;
@@ -17,7 +17,7 @@
   --gradient-bridge: linear-gradient(
     180deg,
     #1c2b30 0%,
-    #357a74 40%,
+    #5fa8a3 40%,
     #6faed9 70%,
     #f7f8f6 100%
   );
