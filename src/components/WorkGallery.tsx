@@ -79,6 +79,8 @@ export default function WorkGallery() {
         fadeRevealOnScroll(activeTab === "projects" ? ".gallery-card" : ".cert-badge", section, {
           stagger: 0.12,
         });
+      } else if (activeTab === "certifications") {
+        fadeRevealOnScroll(".cert-badge", section, { stagger: 0.08 });
       }
     }, section);
 
@@ -117,7 +119,7 @@ export default function WorkGallery() {
           ) : (
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {certifications.map((cert) => (
-                <CertificationBadge key={cert.name} cert={cert} />
+                <CertificationBadge key={`${cert.name}-${cert.date}`} cert={cert} />
               ))}
             </div>
           )}
@@ -146,7 +148,7 @@ export default function WorkGallery() {
           ) : (
             <div className="works-pin-panel bg-bg py-3">
               <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
-              <div className="mt-8 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="cert-grid mt-8 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {certifications.map((cert) => (
                   <CertificationBadge key={cert.name} cert={cert} />
                 ))}

@@ -16,8 +16,24 @@ export type Work = {
 
 export type Certification = {
   name: string;
+  fullName: string;
   issuer: string;
-  year: string;
+  date: string;
+  type: "cert" | "award";
+  description: string;
+};
+
+export type SkillItem = {
+  id: string;
+  category: string;
+  tools: string;
+  proficiency: number;
+  details: string[];
+};
+
+export type ExperienceSection = {
+  title: string;
+  points: string[];
 };
 
 export const siteContent = {
@@ -84,23 +100,36 @@ export const siteContent = {
     sectionLabel: "Skills",
     title: "주요 역량",
     description: "보유하고 있는 역량입니다.",
-    groups: [
+    items: [
       {
-        label: "Research",
-        summary: "스포츠의학적 근거를 바탕으로 움직임과 회복을 해석합니다.",
-        skills: ["스포츠의학", "문헌 리뷰", "임상 데이터"],
+        id: "oa",
+        category: "OA",
+        tools: "MS Word, Excel, Powerpoint",
+        proficiency: 80,
+        details: ["데이터 관리 및 시각화", "페이퍼워크 작업", "기타 자료 제작"],
       },
       {
-        label: "Data",
-        summary: "헬스케어 데이터를 분석해 의사결정에 쓸 수 있는 인사이트로 전환합니다.",
-        skills: ["SPSS", "MySQL", "통계 분석", "시각화"],
+        id: "data",
+        category: "Data Analysis",
+        tools: "SPSS, MySQL",
+        proficiency: 78,
+        details: ["가설 검정과 회귀 분석 등 다각도 통계 검정", "효율적인 데이터 추출 쿼리 작성 및 관리"],
       },
       {
-        label: "Digital Health",
-        summary: "사용자 관점에서 디지털 헬스 서비스 경험을 설계합니다.",
-        skills: ["Figma", "UX 리서치", "헬스 지표", "서비스 기획"],
+        id: "viz",
+        category: "Visualization",
+        tools: "Figma, Looker Studio",
+        proficiency: 82,
+        details: ["UX 중심 레이아웃 설계", "컴포넌트 기반 UI 프로토타이핑"],
       },
-    ],
+      {
+        id: "ai",
+        category: "Generative AI",
+        tools: "Claude, Cursor, Gemini",
+        proficiency: 85,
+        details: ["MCP 기반 업무 자동화", "비주얼 에셋 생성", "바이브코딩"],
+      },
+    ] satisfies SkillItem[],
   },
 
   education: {
@@ -109,8 +138,8 @@ export const siteContent = {
     items: [
       {
         school: "성균관대학교",
-        period: "2020 — 2025",
-        major: "스포츠과학과 + 국제통상학전공 (복수전공)",
+        period: "2020 ~ 2025.08 (졸업)",
+        major: "스포츠과학부 원전공 + 국제통상학과 복수전공",
       },
     ],
   },
@@ -120,14 +149,31 @@ export const siteContent = {
     title: "경험",
     items: [
       {
-        organization: "가천대학교 산학협력단",
-        role: "연구 보조 (Research Assistant)",
-        project: "정부과제 노인 헬스케어 실증사업",
-        achievements: [
-          "노인 참여자 150명 대상 생체역학 측정 운영",
-          "InBody 970 / FRA-510s 장비 직접 운용",
-          "참여자 83% 유지율 달성",
-          "Figma 기반 결과 대시보드 제작",
+        organization: "AAL 지능형 홈케어 기반구축사업단",
+        role: "데이터 플랫폼 센터 연구원",
+        period: "2025.03 ~ 2026.03",
+        sections: [
+          {
+            title: "① 고령자 건강 데이터 수집 및 참여자 이탈 관리",
+            points: [
+              "150명 시니어 대상 건강 데이터 6.9만 건 수집",
+              "데이터 유실(Blackout) 구간 현장 밀착 관리로 분석 유효성 85% 확보",
+            ],
+          },
+          {
+            title: "② 전문 장비 활용 운동 역학 및 신체 기능 검사 수행",
+            points: [
+              "InBody 970 / FRA-510s 직접 운용",
+              "최종 서비스 참여 유지율 83% 달성",
+            ],
+          },
+          {
+            title: "③ 사업 홍보 및 의사결정 지원용 인터랙티브 콘텐츠 기획",
+            points: [
+              "Figma 기반 대시보드 프로토타이핑",
+              "B2B 용역 체결 의사결정 지원 5건",
+            ],
+          },
         ],
       },
     ],
@@ -234,8 +280,62 @@ export const siteContent = {
   },
 
   certifications: [
-    { name: "ADsP (데이터 분석 준전문가)", issuer: "한국데이터산업진흥원", year: "2025" },
-    { name: "SQLD (SQL 개발자)", issuer: "한국데이터산업진흥원", year: "2025" },
+    {
+      name: "ADsP",
+      fullName: "데이터 분석 준전문가",
+      issuer: "한국데이터산업진흥원",
+      date: "2026.06.05",
+      type: "cert",
+      description: "R Studio와 SQL을 활용한 데이터 필터링·분석 역량 보유",
+    },
+    {
+      name: "AI-POT 2급",
+      fullName: "AI 프롬프트 활용능력",
+      issuer: "관련 발급기관",
+      date: "2026.04.30",
+      type: "cert",
+      description: "역설계 프롬프팅 및 커넥터·MCP 기반 업무 자동화 역량",
+    },
+    {
+      name: "AIBT 2급",
+      fullName: "AI 비즈니스 활용",
+      issuer: "관련 발급기관",
+      date: "2026.04.02",
+      type: "cert",
+      description: "AI 기술의 비즈니스 적용 원리 이해 및 실무 자동화 역량",
+    },
+    {
+      name: "Google Analytics Certification",
+      fullName: "구글 애널리틱스 인증",
+      issuer: "Google",
+      date: "2026.02.03",
+      type: "cert",
+      description: "이벤트 기반 사용자 행동 패턴 및 유입 경로 분석 역량",
+    },
+    {
+      name: "스마트홈 헬스케어 지도사 2급",
+      fullName: "스마트홈 헬스케어 지도사",
+      issuer: "관련 발급기관",
+      date: "2025.11.14",
+      type: "cert",
+      description: "스마트홈 기술과 보건 의료 서비스 결합, 시니어 맞춤 기획 역량",
+    },
+    {
+      name: "성균 우등 졸업상",
+      fullName: "학업 우수 표창",
+      issuer: "성균관대학교",
+      date: "2025.08.25",
+      type: "award",
+      description: "스포츠과학 및 국제통상 전공 전 과정 학업 우수자 선정",
+    },
+    {
+      name: "ROTC 우수후보생 표창",
+      fullName: "총장 표창",
+      issuer: "성균관대학교",
+      date: "2022.08.25",
+      type: "award",
+      description: "군사교육단 대표 후보생으로서 리더십과 책임감 인정",
+    },
   ] satisfies Certification[],
 
   story: {
