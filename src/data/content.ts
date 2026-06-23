@@ -141,6 +141,11 @@ export const siteContent = {
         period: "2020 ~ 2025.08 (졸업)",
         major: "스포츠과학부 원전공 + 국제통상학과 복수전공",
       },
+      {
+        school: "기흥고등학교",
+        period: "2017 ~ 2020",
+        major: "인문계",
+      },
     ],
   },
 
