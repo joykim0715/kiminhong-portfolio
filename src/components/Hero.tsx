@@ -55,7 +55,7 @@ export default function Hero() {
 
       <div className="section-container relative z-10 grid flex-1 items-center gap-12 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
         <div ref={headingRef} className="hero-heading max-w-5xl">
-          <h1 className="hero-name hero-title text-gradient w-full text-left tracking-tight">김인홍</h1>
+          <h1 className="hero-name hero-title text-gradient w-full text-left tracking-tight">{hero.name}</h1>
 
           <p className="hero-desc-line mt-6 text-xs font-medium uppercase tracking-[0.35em] text-primary sm:text-sm">
             {hero.tagline}
@@ -70,7 +70,7 @@ export default function Hero() {
           <div className="hero-cta mt-10">
             {/* TODO: 실제 이력서 PDF 경로로 교체 필요 */}
             <Button href={hero.resumeUrl} target="_blank" rel="noopener noreferrer">
-              {hero.saraminCtaLabel}
+              {hero.resumeCtaLabel}
             </Button>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function Hero() {
             <HeroPortrait images={hero.profileGallery} hint={hero.profileHint} />
           ) : (
             <div className="flex h-[460px] w-[400px] flex-col items-center justify-center gap-2 rounded-[58%_42%_52%_48%/46%_54%_46%_54%] bg-surface text-muted">
-              <span className="px-4 text-center text-xs">프로필 이미지 없음</span>
+              <span className="px-4 text-center text-xs">{hero.noProfileImage}</span>
             </div>
           )}
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { Work } from "@/data/works";
+import type { Work } from "@/data/content";
 
 type ProjectCardProps = {
   work: Work;

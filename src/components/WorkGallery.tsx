@@ -5,16 +5,14 @@ import dynamic from "next/dynamic";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib/scrollInteractions";
 import { siteContent } from "@/data/content";
-import { certifications } from "@/data/certifications";
-import { helixItems } from "@/data/helixItems";
-import type { HelixItem } from "@/data/helixItems";
-import type { Work } from "@/data/works";
+import type { Work } from "@/data/content";
 import CertificationBadge from "./CertificationBadge";
 import ProjectCard from "./ProjectCard";
 
 const WorkModal = dynamic(() => import("./WorkModal"), { ssr: false });
 
-const projects = helixItems.filter((item) => item.type === "Project");
+const { works, certifications } = siteContent;
+const projects = works.projects;
 
 const STACK_STEP_VH = 0.9;
 
@@ -24,16 +22,6 @@ const TAB_CLASS_ACTIVE =
   "rounded-full bg-accent px-4 py-1.5 text-[13px] font-medium text-white transition-all duration-200";
 const TAB_CLASS_IDLE =
   "rounded-full bg-surface px-4 py-1.5 text-[13px] font-medium text-muted transition-all duration-200 hover:bg-primary/10";
-
-function helixToWork(item: HelixItem): Work {
-  return {
-    id: item.id,
-    title: item.title,
-    category: item.org ?? item.type,
-    description: item.description,
-    details: item.date ? [`기간: ${item.date}`, ...(item.tags ?? [])] : item.tags,
-  };
-}
 
 function WorksTabs({
   activeTab,
@@ -51,7 +39,7 @@ function WorksTabs({
           onClick={() => onTabChange(tab)}
           className={activeTab === tab ? TAB_CLASS_ACTIVE : TAB_CLASS_IDLE}
         >
-          {tab === "projects" ? "Projects" : "Certifications"}
+          {works.tabs[tab]}
         </button>
       ))}
     </div>
@@ -65,8 +53,7 @@ export default function WorkGallery() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
 
-  const activeProjects = projects;
-  const stackLabel = activeTab === "projects" ? "프로젝트" : "자격증";
+  const stackLabel = works.stackLabels[activeTab];
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -78,7 +65,7 @@ export default function WorkGallery() {
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".works-heading", section);
 
-      if (isDesktop && pinZone && activeTab === "projects" && activeProjects.length > 1) {
+      if (isDesktop && pinZone && activeTab === "projects" && projects.length > 1) {
         scrollPinStack({
           zone: pinZone,
           pinSelector: ".works-pin-panel",
@@ -97,34 +84,32 @@ export default function WorkGallery() {
 
     refreshScrollTriggers();
     return () => ctx.revert();
-  }, [activeTab, activeProjects.length]);
+  }, [activeTab]);
 
   useEffect(() => {
     setActiveStackIndex(0);
     refreshScrollTriggers();
   }, [activeTab]);
 
-  const openModal = (item: HelixItem) => setSelected(helixToWork(item));
-
   return (
     <section id="works" ref={sectionRef} className="relative z-[1] bg-bg py-24 text-text sm:py-32">
       <div className="section-container relative z-[1]">
         <div className="works-heading">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">
-            {siteContent.works.sectionLabel}
+            {works.sectionLabel}
           </p>
-          <h2 className="section-title mt-3 tracking-tight text-text">{siteContent.works.title}</h2>
+          <h2 className="section-title mt-3 tracking-tight text-text">{works.title}</h2>
         </div>
 
         <div className="mt-10 lg:hidden">
           <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
           {activeTab === "projects" ? (
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {activeProjects.map((item) => (
+              {projects.map((work) => (
                 <ProjectCard
-                  key={item.id}
-                  work={helixToWork(item)}
-                  onClick={() => openModal(item)}
+                  key={work.id}
+                  work={work}
+                  onClick={() => setSelected(work)}
                   className="gallery-card"
                 />
               ))}
@@ -144,17 +129,17 @@ export default function WorkGallery() {
               <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
               <div className="relative mx-auto mt-5 h-[min(42vh,320px)] w-full max-w-xl">
-                {activeProjects.map((item) => (
-                  <div key={`${activeTab}-${item.id}`} className="stack-card absolute inset-x-0 top-0">
-                    <ProjectCard compact work={helixToWork(item)} onClick={() => openModal(item)} />
+                {projects.map((work) => (
+                  <div key={`${activeTab}-${work.id}`} className="stack-card absolute inset-x-0 top-0">
+                    <ProjectCard compact work={work} onClick={() => setSelected(work)} />
                   </div>
                 ))}
               </div>
 
               <p className="mx-auto mt-4 max-w-xl text-center text-xs text-muted">
-                스크롤하여 {stackLabel} 탐색 ·{" "}
+                {works.scrollHint.replace("{label}", stackLabel)}{" "}
                 <span className="font-medium text-primary">
-                  {activeStackIndex + 1} / {activeProjects.length}
+                  {activeStackIndex + 1} / {projects.length}
                 </span>
               </p>
             </div>

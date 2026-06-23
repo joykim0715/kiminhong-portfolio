@@ -1,4 +1,4 @@
-import type { Certification } from "@/data/certifications";
+import type { Certification } from "@/data/content";
 
 type CertificationBadgeProps = {
   cert: Certification;

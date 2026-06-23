@@ -1,23 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { siteContent } from "@/data/content";
 
-const sections = [
-  { id: "hero", label: "Home" },
-  { id: "values", label: "Values" },
-  { id: "skills", label: "Skills" },
-  { id: "education", label: "Education" },
-  { id: "experience", label: "Experience" },
-  { id: "works", label: "Work" },
-  { id: "story", label: "Story" },
-  { id: "contact", label: "Contact" },
-];
+const { nav } = siteContent;
 
 export default function Navbar() {
   const [active, setActive] = useState("hero");
 
   useEffect(() => {
-    const observers = sections.map(({ id }) => {
+    const observers = nav.sections.map(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return null;
 
@@ -39,11 +31,11 @@ export default function Navbar() {
     <header className="nav-bar glass-nav fixed inset-x-0 top-0 z-50">
       <nav className="section-container flex h-16 items-center justify-between">
         <a href="#hero" className="text-sm font-bold tracking-tight text-text sm:text-base">
-          김인홍
+          {nav.siteName}
         </a>
 
         <ul className="hidden items-center gap-6 md:flex">
-          {sections.map(({ id, label }) => (
+          {nav.sections.map(({ id, label }) => (
             <li key={id}>
               <a
                 href={`#${id}`}
@@ -61,7 +53,7 @@ export default function Navbar() {
           href="#contact"
           className="rounded-full border border-primary/40 px-4 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/10 sm:text-sm"
         >
-          Contact
+          {nav.contactCta}
         </a>
       </nav>
     </header>

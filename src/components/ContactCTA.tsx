@@ -60,7 +60,7 @@ export default function ContactCTA() {
 
         <div className="cta-button mt-12">
           <Button href={`mailto:${about.email}`} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">
-            Get in touch
+            {about.ctaButton}
           </Button>
         </div>
 
@@ -82,7 +82,7 @@ export default function ContactCTA() {
         </nav>
 
         <p className="cta-body mt-16 text-xs text-white/40 sm:text-sm">
-          &copy; {new Date().getFullYear()} {about.copyright}. All rights reserved.
+          &copy; {new Date().getFullYear()} {about.copyright}. {about.rightsReserved}
         </p>
       </div>
     </section>

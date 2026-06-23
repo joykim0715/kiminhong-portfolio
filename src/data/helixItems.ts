@@ -1,4 +1,4 @@
-import { works } from "./works";
+import { siteContent } from "./content";
 
 export type HelixItem = {
   id: string;
@@ -16,7 +16,8 @@ function parseDate(details?: string[]): string | undefined {
   return period?.replace("기간:", "").trim();
 }
 
-export const helixItems: HelixItem[] = works.map((work) => ({
+/** @deprecated siteContent.works.projects 를 직접 사용하세요 */
+export const helixItems: HelixItem[] = siteContent.works.projects.map((work) => ({
   id: work.id,
   title: work.title,
   org: work.category,

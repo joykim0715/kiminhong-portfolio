@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { valuesContent } from "@/data/values";
+import { siteContent } from "@/data/content";
+
+const { values: valuesContent } = siteContent;
 
 export default function Values() {
   const sectionRef = useRef<HTMLElement>(null);

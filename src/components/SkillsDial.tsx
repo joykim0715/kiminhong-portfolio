@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { skillsContent } from "@/data/skills";
+import { siteContent } from "@/data/content";
+
+const skillsContent = siteContent.skills;
 
 export default function SkillsDial() {
   const sectionRef = useRef<HTMLElement>(null);

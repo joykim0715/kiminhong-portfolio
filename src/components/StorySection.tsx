@@ -5,7 +5,9 @@ import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { fadeRevealOnScroll, parallaxFadeOnScroll } from "@/lib/scrollInteractions";
-import { storyContent } from "@/data/story";
+import { siteContent } from "@/data/content";
+
+const { story: storyContent } = siteContent;
 
 const depthFactors = [0.3, 0.6, 0.9];
 

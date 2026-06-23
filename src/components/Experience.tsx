@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { experienceContent } from "@/data/experience";
+import { siteContent } from "@/data/content";
+
+const { experience: experienceContent } = siteContent;
 
 function highlightMetrics(text: string) {
   const parts = text.split(/(\d+%?명?)/g);
