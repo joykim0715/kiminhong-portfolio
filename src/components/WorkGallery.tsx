@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib/scrollInteractions";
+import { getLenisInstance } from "@/lib/lenisInstance";
 import { siteContent } from "@/data/content";
 import type { Work } from "@/data/content";
 import CertificationBadge from "./CertificationBadge";
@@ -15,6 +16,7 @@ const { works, certifications } = siteContent;
 const projects = works.projects;
 
 const STACK_STEP_VH = 0.9;
+const NAV_OFFSET = 64;
 
 type TabId = "projects" | "certifications";
 
@@ -46,14 +48,30 @@ function WorksTabs({
   );
 }
 
+function scrollToPinZone(pinZone: HTMLElement) {
+  const lenis = getLenisInstance();
+  if (lenis) {
+    lenis.scrollTo(pinZone, { offset: -NAV_OFFSET, duration: 0.55 });
+  } else {
+    const top = pinZone.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+}
+
 export default function WorkGallery() {
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [selected, setSelected] = useState<Work | null>(null);
   const [activeStackIndex, setActiveStackIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
+  const prevTabRef = useRef<TabId>("projects");
 
   const stackLabel = works.stackLabels[activeTab];
+
+  const handleTabChange = useCallback((tab: TabId) => {
+    if (tab === activeTab) return;
+    setActiveTab(tab);
+  }, [activeTab]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -68,7 +86,7 @@ export default function WorkGallery() {
       if (isDesktop && pinZone && activeTab === "projects" && projects.length > 1) {
         scrollPinStack({
           zone: pinZone,
-          pinSelector: ".works-pin-panel",
+          pinSelector: ".works-pin-panel--projects",
           cardSelector: ".stack-card",
           stepVh: STACK_STEP_VH,
           scrub: 1.2,
@@ -89,8 +107,24 @@ export default function WorkGallery() {
   }, [activeTab]);
 
   useEffect(() => {
+    const prevTab = prevTabRef.current;
+    prevTabRef.current = activeTab;
     setActiveStackIndex(0);
-    refreshScrollTriggers();
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const pinZone = pinZoneRef.current;
+
+    if (isDesktop && prevTab === "projects" && activeTab === "certifications" && pinZone) {
+      requestAnimationFrame(() => {
+        refreshScrollTriggers();
+        requestAnimationFrame(() => {
+          scrollToPinZone(pinZone);
+          refreshScrollTriggers();
+        });
+      });
+    } else {
+      refreshScrollTriggers();
+    }
   }, [activeTab]);
 
   return (
@@ -104,7 +138,7 @@ export default function WorkGallery() {
         </div>
 
         <div className="mt-10 lg:hidden">
-          <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
           {activeTab === "projects" ? (
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
               {projects.map((work) => (
@@ -126,13 +160,13 @@ export default function WorkGallery() {
         </div>
 
         <div ref={pinZoneRef} className="mt-10 hidden lg:block">
-          {activeTab === "projects" ? (
-            <div className="works-pin-panel flex min-h-[calc(100dvh-4rem)] flex-col justify-center bg-bg py-3">
-              <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
+          <div className={activeTab === "projects" ? "" : "hidden"} aria-hidden={activeTab !== "projects"}>
+            <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-center bg-bg py-3">
               <div className="relative mx-auto mt-5 h-[min(42vh,320px)] w-full max-w-xl">
                 {projects.map((work) => (
-                  <div key={`${activeTab}-${work.id}`} className="stack-card absolute inset-x-0 top-0">
+                  <div key={work.id} className="stack-card absolute inset-x-0 top-0">
                     <ProjectCard compact work={work} onClick={() => setSelected(work)} />
                   </div>
                 ))}
@@ -145,16 +179,20 @@ export default function WorkGallery() {
                 </span>
               </p>
             </div>
-          ) : (
-            <div className="works-pin-panel bg-bg py-3">
-              <WorksTabs activeTab={activeTab} onTabChange={setActiveTab} />
-              <div className="cert-grid mt-8 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+          </div>
+
+          <div
+            className={activeTab === "certifications" ? "mt-5" : "hidden"}
+            aria-hidden={activeTab !== "certifications"}
+          >
+            <div className="works-pin-panel works-pin-panel--certs bg-bg py-3">
+              <div className="cert-grid grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
                 {certifications.map((cert) => (
                   <CertificationBadge key={cert.name} cert={cert} />
                 ))}
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
