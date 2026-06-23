@@ -109,8 +109,8 @@ export const siteContent = {
     items: [
       {
         school: "성균관대학교",
-        period: "2020 — 현재",
-        major: "스포츠과학부 + 국제통상학과 (복수전공)",
+        period: "2020 — 2025",
+        major: "스포츠과학과 + 국제통상학전공 (복수전공)",
       },
     ],
   },
@@ -120,7 +120,7 @@ export const siteContent = {
     title: "경험",
     items: [
       {
-        organization: "가천대학교 의료캠퍼스",
+        organization: "가천대학교 산학협력단",
         role: "연구 보조 (Research Assistant)",
         project: "정부과제 노인 헬스케어 실증사업",
         achievements: [
@@ -206,7 +206,7 @@ export const siteContent = {
       },
       {
         id: "05",
-        title: "국대스마터즈 스포츠마케팅",
+        title: "대한체육회 국대스마터즈 1기",
         category: "Sports Marketing",
         image: "/works/05.jpg",
         description:
