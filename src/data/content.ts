@@ -143,7 +143,7 @@ export const siteContent = {
       },
       {
         school: "기흥고등학교",
-        period: "2017 ~ 2020",
+        period: "2017 ~ 2020 (졸업)",
         major: "인문계",
       },
     ],
