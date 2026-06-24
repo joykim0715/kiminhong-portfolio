@@ -1,109 +1,90 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { gsap } from "@/lib/gsap";
-import { prefersReducedMotion } from "@/lib/animations";
-import { fadeRevealOnScroll, parallaxFadeOnScroll } from "@/lib/scrollInteractions";
 import { siteContent } from "@/data/content";
 
 const { story: storyContent } = siteContent;
 
-const depthFactors = [0.3, 0.6, 0.9];
-
-const positions = [
-  "left-0 top-8 z-10 w-[55%]",
-  "right-0 top-0 z-20 w-[50%]",
-  "bottom-0 left-1/4 z-30 w-[60%]",
+const images = [
+  "/images/rs_p4_0.png",
+  "/images/rs_p2_1.png",
+  "/images/rs_p4_2.png",
 ];
 
 export default function StorySection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section || prefersReducedMotion()) return;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const ctx = gsap.context(() => {
-      fadeRevealOnScroll(".story-text", section, { stagger: 0.12 });
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
 
-      if (!isMobile) {
-        storyContent.photos.forEach((_, i) => {
-          const el = section.querySelector(`[data-photo="${i}"]`);
-          if (!el) return;
-
-          gsap.to(el, {
-            y: () => -100 * depthFactors[i],
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        });
-
-        const photoStack = section.querySelector(".story-photo-stack");
-        if (photoStack) {
-          parallaxFadeOnScroll(photoStack as Element, section, { y: 24 });
-        }
-      }
-    }, section);
-
-    return () => ctx.revert();
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <section id="story" ref={sectionRef} aria-labelledby="story-heading" className="relative z-[1] bg-dark py-24 text-white sm:py-32">
-      <div className="section-container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="story-text text-xs font-semibold uppercase tracking-[0.35em] text-primary-light">
-            {storyContent.sectionLabel}
-          </p>
-          <h2 id="story-heading" className="story-text section-title mt-3 tracking-tight">{storyContent.title}</h2>
-          {storyContent.paragraphs.map((p) => (
-            <p key={p} className="story-text mt-6 break-keep text-base text-white/75 sm:text-lg">
-              {p}
+    <section id="story" aria-labelledby="story-heading" className="relative z-[1] bg-dark py-24 text-white sm:py-32">
+      <div className="section-container">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+          <div className="space-y-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary-light">
+              {storyContent.sectionLabel}
             </p>
-          ))}
-        </div>
+            <h2 id="story-heading" className="section-title tracking-tight">
+              {storyContent.title}
+            </h2>
+            {storyContent.paragraphs.map((p) => (
+              <p key={p} className="break-keep text-base text-white/75 sm:text-lg">
+                {p}
+              </p>
+            ))}
+          </div>
 
-        <div className="flex flex-col gap-4 md:hidden">
-          {storyContent.photos.map((photo) => (
-            <PhotoCard key={photo.id} photo={photo} />
-          ))}
-        </div>
-
-        <div className="story-photo-stack relative mx-auto hidden h-[480px] w-full max-w-md md:block">
-          {storyContent.photos.map((photo, i) => (
-            <div key={photo.id} data-photo={i} className={`absolute shadow-2xl ${positions[i]}`}>
-              <PhotoCard photo={photo} />
+          <div className="relative">
+            <div className="relative aspect-[4/3] transform-gpu overflow-hidden rounded-2xl shadow-2xl will-change-transform">
+              {images.map((src, i) => (
+                <div
+                  key={src}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    i === current ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover sharp-image"
+                    quality={90}
+                    alt={`Story image ${i + 1}`}
+                  />
+                </div>
+              ))}
+              <div
+                className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-black/10 to-transparent"
+                aria-hidden="true"
+              />
             </div>
-          ))}
+
+            <div className="mt-4 flex justify-center gap-2">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setCurrent(i)}
+                  aria-label={`이미지 ${i + 1}로 이동`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === current ? "w-6 bg-accent" : "w-2 bg-neutral-300 dark:bg-neutral-600"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function PhotoCard({ photo }: { photo: (typeof storyContent.photos)[number] }) {
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10">
-      <div className="relative aspect-[4/5] w-full">
-        <Image
-          src={photo.image}
-          alt={photo.label}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 300px"
-          loading="lazy"
-        />
-      </div>
-      <span className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white">
-        {photo.label}
-      </span>
-    </div>
   );
 }

@@ -6,6 +6,7 @@ import { prefersReducedMotion } from "@/lib/animations";
 import { parallaxFadeOnScroll } from "@/lib/scrollInteractions";
 import { siteContent } from "@/data/content";
 import Button from "./ui/Button";
+import GradientMesh from "./ui/GradientMesh";
 import HeroBackground from "./HeroBackground";
 import HeroPortrait from "./HeroPortrait";
 
@@ -51,7 +52,10 @@ export default function Hero() {
       ref={sectionRef}
       className="relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16 text-text"
     >
-      <HeroBackground />
+      <div className="absolute inset-0 z-0">
+        <GradientMesh />
+        <HeroBackground />
+      </div>
 
       <div className="section-container relative z-10 grid flex-1 items-center gap-12 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
         <div ref={headingRef} className="hero-heading max-w-5xl">

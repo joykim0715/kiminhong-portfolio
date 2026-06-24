@@ -17,21 +17,22 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       <button
         type="button"
         onClick={onClick}
-        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-surface text-left text-text opacity-100 ${className}`}
+        className={`gallery-card group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-surface text-left text-text opacity-100 transition-all duration-300 hover:scale-[1.02] hover:border-accent hover:shadow-xl ${className}`}
       >
         <div className="border-b border-border px-5 py-4 text-center sm:px-6">
           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">{work.category}</p>
           <h3 className="mt-1.5 text-base font-bold tracking-tight text-text sm:text-lg">{work.title}</h3>
         </div>
-        <div className="relative flex aspect-[5/3] items-center justify-center overflow-hidden bg-dark-surf p-4 sm:p-5">
+        <div className="relative flex aspect-[5/3] items-center justify-center overflow-hidden bg-dark-surf p-4 sm:p-5 transform-gpu will-change-transform">
           {work.image ? (
-            <div className="relative h-full w-full max-w-[65%]">
+            <div className="relative h-full w-full max-w-[65%] transform-gpu will-change-transform">
               <Image
                 src={work.image}
                 alt={work.title}
                 fill
-                className="object-contain transition duration-500 group-hover:scale-105"
+                className="object-contain sharp-image transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 36vw"
+                quality={88}
               />
             </div>
           ) : (
@@ -48,17 +49,18 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
     <button
       type="button"
       onClick={onClick}
-      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-surface text-left text-text opacity-100 ${className}`}
+      className={`gallery-card group flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-surface text-left text-text opacity-100 transition-all duration-300 hover:scale-[1.02] hover:border-accent hover:shadow-xl ${className}`}
     >
-      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-dark-surf p-6 sm:p-8">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-dark-surf p-6 sm:p-8 transform-gpu will-change-transform">
         {work.image ? (
-          <div className="relative h-full w-full max-w-[70%]">
+          <div className="relative h-full w-full max-w-[70%] transform-gpu will-change-transform">
             <Image
               src={work.image}
               alt={work.title}
               fill
-              className="object-contain transition duration-500 group-hover:scale-105"
+              className="object-contain sharp-image transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 40vw"
+              quality={88}
             />
           </div>
         ) : (

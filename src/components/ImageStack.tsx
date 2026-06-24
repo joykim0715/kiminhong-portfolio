@@ -55,14 +55,15 @@ function Card({ item, className = "" }: { item: Work; className?: string }) {
     <div
       className={`overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl ${className}`}
     >
-      <div className="relative aspect-[16/10] w-full bg-dark-surf">
+      <div className="relative aspect-[16/10] w-full bg-dark-surf transform-gpu will-change-transform">
         {item.image ? (
           <Image
             src={item.image}
             alt={item.title}
             fill
-            className="object-cover"
+            className="object-cover sharp-image"
             sizes="(max-width: 768px) 100vw, 480px"
+            quality={88}
           />
         ) : (
           <div className="flex h-full items-center justify-center">

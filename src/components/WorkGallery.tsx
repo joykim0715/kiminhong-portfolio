@@ -128,8 +128,20 @@ export default function WorkGallery() {
   }, [activeTab]);
 
   return (
-    <section id="works" ref={sectionRef} className="relative z-[1] bg-bg py-24 text-text sm:py-32">
-      <div className="section-container relative z-[1]">
+    <section id="works" ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
+      <svg
+        className="absolute inset-0 z-0 h-full w-full opacity-[0.04] pointer-events-none text-text"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern id="dot-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dot-grid)" />
+      </svg>
+
+      <div className="section-container relative z-10">
         <div className="works-heading">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">
             {works.sectionLabel}

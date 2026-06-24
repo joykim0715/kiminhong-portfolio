@@ -70,7 +70,7 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
 
             <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
               {work.image ? (
-                <Image src={work.image} alt={work.title} fill className="object-cover" sizes="672px" />
+                <Image src={work.image} alt={work.title} fill className="object-cover sharp-image" sizes="672px" quality={88} />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-dark via-dark-surf to-secondary/40">
                   <span className="text-xs uppercase tracking-[0.3em] text-muted">이미지 준비 중</span>

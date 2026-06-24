@@ -68,6 +68,16 @@ body {
   overflow-wrap: break-word;
 }
 
+img {
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sharp-image {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 .break-keep {
   word-break: keep-all;
   overflow-wrap: break-word;

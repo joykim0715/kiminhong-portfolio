@@ -233,7 +233,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
   return (
     <div
       ref={collageRef}
-      className={`${styles.collage} ${isIdle ? styles.collageIdle : ""}`}
+      className={`${styles.collage} transform-gpu will-change-transform ${isIdle ? styles.collageIdle : ""}`}
       onMouseLeave={handleLeaveCollage}
     >
       <div className={styles.aura} aria-hidden="true" />
@@ -241,7 +241,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
 
       <div
         ref={formalRef}
-        className={`${styles.card} ${styles.formal} ${styles.interactive}`}
+        className={`${styles.card} ${styles.formal} ${styles.interactive} transform-gpu will-change-transform`}
         onMouseEnter={() => handleEnter("formal")}
         onClick={() => handleTap("formal")}
         onKeyDown={(e) => e.key === "Enter" && handleTap("formal")}
@@ -253,9 +253,9 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
           src={formal.src}
           alt={formal.alt}
           fill
-          className={`${styles.cardImage} ${styles.formalImage}`}
+          className={`${styles.cardImage} ${styles.formalImage} sharp-image`}
           priority
-          quality={95}
+          quality={92}
           sizes="(max-width: 1024px) 300px, 400px"
         />
         <div className={styles.formalTint} aria-hidden="true" />
@@ -266,7 +266,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
       {field[0] && (
         <div
           ref={fieldARef}
-          className={`${styles.card} ${styles.field} ${styles.fieldA} ${styles.interactive}`}
+          className={`${styles.card} ${styles.field} ${styles.fieldA} ${styles.interactive} transform-gpu will-change-transform`}
           onMouseEnter={() => handleEnter("field0")}
           onClick={() => handleTap("field0")}
           onKeyDown={(e) => e.key === "Enter" && handleTap("field0")}
@@ -274,13 +274,13 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
           tabIndex={0}
           aria-label={field[0].alt}
         >
-          <div className={styles.fieldInner}>
+          <div className={`${styles.fieldInner} transform-gpu will-change-transform`}>
             <Image
               src={field[0].src}
               alt={field[0].alt}
               fill
-              className={`${styles.cardImage} ${styles.fieldImage}`}
-              quality={90}
+              className={`${styles.cardImage} ${styles.fieldImage} sharp-image`}
+              quality={92}
               sizes="(max-width: 1024px) 220px, 280px"
             />
           </div>
@@ -291,7 +291,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
       {field[1] && (
         <div
           ref={fieldBRef}
-          className={`${styles.card} ${styles.field} ${styles.fieldB} ${styles.interactive}`}
+          className={`${styles.card} ${styles.field} ${styles.fieldB} ${styles.interactive} transform-gpu will-change-transform`}
           onMouseEnter={() => handleEnter("field1")}
           onClick={() => handleTap("field1")}
           onKeyDown={(e) => e.key === "Enter" && handleTap("field1")}
@@ -299,13 +299,13 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
           tabIndex={0}
           aria-label={field[1].alt}
         >
-          <div className={styles.fieldInner}>
+          <div className={`${styles.fieldInner} transform-gpu will-change-transform`}>
             <Image
               src={field[1].src}
               alt={field[1].alt}
               fill
-              className={`${styles.cardImage} ${styles.fieldImage}`}
-              quality={90}
+              className={`${styles.cardImage} ${styles.fieldImage} sharp-image`}
+              quality={92}
               sizes="(max-width: 1024px) 220px, 280px"
             />
           </div>
