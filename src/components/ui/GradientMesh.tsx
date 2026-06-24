@@ -17,9 +17,9 @@ export default function GradientMesh() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
       <svg
-        className="h-full w-full opacity-[0.18]"
+        className="h-full w-full opacity-[0.32]"
         viewBox="0 0 1200 800"
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"

@@ -49,9 +49,9 @@ export default function HelixBackground() {
 
       const material = new THREE.PointsMaterial({
         color: new THREE.Color(color),
-        size: 0.12,
+        size: 0.14,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.85,
         sizeAttenuation: true,
         depthWrite: false,
       });
@@ -82,7 +82,7 @@ export default function HelixBackground() {
     const bridgeMaterial = new THREE.LineBasicMaterial({
       color: BRIDGE_COLOR,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.22,
     });
     const bridges = new THREE.LineSegments(bridgeGeometry, bridgeMaterial);
 

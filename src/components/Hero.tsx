@@ -53,8 +53,8 @@ export default function Hero() {
       className="relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16 text-text"
     >
       <div className="absolute inset-0 z-0">
-        <GradientMesh />
         <HeroBackground />
+        <GradientMesh />
       </div>
 
       <div className="section-container relative z-10 grid flex-1 items-center gap-12 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">

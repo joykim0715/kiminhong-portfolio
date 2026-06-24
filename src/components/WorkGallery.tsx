@@ -130,7 +130,7 @@ export default function WorkGallery() {
   return (
     <section id="works" ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
       <svg
-        className="absolute inset-0 z-0 h-full w-full opacity-[0.04] pointer-events-none text-text"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full text-text opacity-[0.07]"
         aria-hidden="true"
       >
         <defs>
