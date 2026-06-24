@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { siteContent, type SkillItem } from "@/data/content";
-import HelixBackground from "./ui/HelixBackground";
 
 const skillsContent = siteContent.skills;
 const skills = skillsContent.items;
@@ -177,15 +176,11 @@ export default function SkillsDial() {
       id="skills"
       ref={sectionRef}
       aria-labelledby="skills-heading"
-      className="relative z-[1] min-h-screen overflow-hidden bg-bg py-16 text-text sm:py-24"
+      className="relative z-[1] overflow-hidden bg-bg py-16 text-text sm:py-24"
     >
-      <div className="pointer-events-none absolute inset-0 z-0 hidden opacity-50 md:block">
-        <HelixBackground />
-      </div>
-
-      <div className="section-container relative z-10">
+      <div className="section-container">
         <div ref={pinZoneRef}>
-          <div ref={pinPanelRef} className="skills-pin-panel bg-bg/55 py-2 backdrop-blur-[2px] sm:py-4">
+          <div ref={pinPanelRef} className="skills-pin-panel bg-bg py-2 sm:py-4">
             <div className="skills-heading text-center lg:text-left">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
                 {skillsContent.sectionLabel}

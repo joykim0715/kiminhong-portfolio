@@ -97,7 +97,8 @@ img {
 
 /* GSAP pin panels — full-width background while pinned */
 .works-pin-panel,
-.skills-pin-panel {
+.skills-pin-panel,
+.story-pin-panel {
   width: 100%;
 }
 
