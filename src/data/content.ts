@@ -36,6 +36,16 @@ export type ExperienceSection = {
   points: string[];
 };
 
+export type EmploymentType = "정규직" | "계약직" | "인턴" | "아르바이트";
+
+export type ExperienceItem = {
+  organization: string;
+  role: string;
+  period: string;
+  employmentType: EmploymentType;
+  sections: ExperienceSection[];
+};
+
 export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
@@ -157,6 +167,7 @@ export const siteContent = {
         organization: "AAL 지능형 홈케어 기반구축사업단",
         role: "데이터 플랫폼 센터 연구원",
         period: "2025.03 ~ 2026.03",
+        employmentType: "계약직",
         sections: [
           {
             title: "① 고령자 건강 데이터 수집 및 참여자 이탈 관리",
@@ -181,7 +192,21 @@ export const siteContent = {
           },
         ],
       },
-    ],
+      {
+        organization: "신성태권도 미금점",
+        role: "보조사범",
+        period: "2023.04 ~ 2023.12",
+        employmentType: "아르바이트",
+        sections: [],
+      },
+      {
+        organization: "mvm휘트니스 성복점",
+        role: "CS매니저",
+        period: "2021.02 ~ 2022.08",
+        employmentType: "아르바이트",
+        sections: [],
+      },
+    ] satisfies ExperienceItem[],
   },
 
   works: {

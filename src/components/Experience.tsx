@@ -57,35 +57,42 @@ export default function Experience() {
         <div className="mt-10 space-y-6">
           {experienceContent.items.map((item) => (
             <article
-              key={item.organization}
+              key={`${item.organization}-${item.period}`}
               className="experience-item rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6"
             >
-              <header>
-                <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">
-                  {item.organization}
-                </h3>
-                <p className="mt-1 text-sm font-medium text-primary sm:text-base">{item.role}</p>
-                <p className="mt-1 text-sm text-muted">{item.period}</p>
+              <header className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">
+                    {item.organization}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-primary sm:text-base">{item.role}</p>
+                  <p className="mt-1 text-sm text-muted">{item.period}</p>
+                </div>
+                <span className="shrink-0 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+                  {item.employmentType}
+                </span>
               </header>
 
-              <div className="mt-6 space-y-5">
-                {item.sections.map((section) => (
-                  <div key={section.title}>
-                    <h4 className="text-sm font-semibold text-text sm:text-base">{section.title}</h4>
-                    <ul className="mt-2.5 space-y-2">
-                      {section.points.map((point) => (
-                        <li
-                          key={point}
-                          className="flex items-start gap-3 text-sm text-text sm:text-base"
-                        >
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                          <span className="break-keep leading-relaxed">{highlightMetrics(point)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+              {item.sections.length > 0 && (
+                <div className="mt-6 space-y-5">
+                  {item.sections.map((section) => (
+                    <div key={section.title}>
+                      <h4 className="text-sm font-semibold text-text sm:text-base">{section.title}</h4>
+                      <ul className="mt-2.5 space-y-2">
+                        {section.points.map((point) => (
+                          <li
+                            key={point}
+                            className="flex items-start gap-3 text-sm text-text sm:text-base"
+                          >
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                            <span className="break-keep leading-relaxed">{highlightMetrics(point)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
             </article>
           ))}
         </div>

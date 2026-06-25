@@ -177,8 +177,13 @@ export default function WorkGallery() {
           <div className={activeTab === "projects" ? "" : "hidden"} aria-hidden={activeTab !== "projects"}>
             <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-center bg-bg py-3">
               <div className="relative mx-auto mt-5 h-[min(42vh,320px)] w-full max-w-xl">
-                {projects.map((work) => (
-                  <div key={work.id} className="stack-card absolute inset-x-0 top-0">
+                {projects.map((work, i) => (
+                  <div
+                    key={work.id}
+                    className={`stack-card absolute inset-x-0 top-0 ${
+                      i === activeStackIndex ? "pointer-events-auto" : "pointer-events-none"
+                    }`}
+                  >
                     <ProjectCard compact work={work} onClick={() => setSelected(work)} />
                   </div>
                 ))}

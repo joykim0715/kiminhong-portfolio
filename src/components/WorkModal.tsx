@@ -46,11 +46,12 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
           />
 
           <motion.div
+            key={work.id}
             role="dialog"
             aria-modal="true"
             aria-labelledby="work-modal-title"
             data-work-modal
-            className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-border bg-surface shadow-2xl"
+            className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
             initial={{ opacity: 0, y: 48, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.96 }}
@@ -68,9 +69,16 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
               </svg>
             </button>
 
-            <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
+            <div className="relative h-52 w-full shrink-0 overflow-hidden rounded-t-2xl bg-dark-surf sm:h-60">
               {work.image ? (
-                <Image src={work.image} alt={work.title} fill className="object-cover sharp-image" sizes="672px" quality={88} />
+                <Image
+                  src={work.image}
+                  alt={work.title}
+                  fill
+                  className="object-contain sharp-image p-4"
+                  sizes="672px"
+                  quality={88}
+                />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-dark via-dark-surf to-secondary/40">
                   <span className="text-xs uppercase tracking-[0.3em] text-muted">이미지 준비 중</span>
@@ -78,7 +86,7 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
               )}
             </div>
 
-            <div className="p-6 sm:p-8">
+            <div className="overflow-y-auto p-6 sm:p-8">
               <p className="text-xs font-medium uppercase tracking-[0.3em] text-primary">{work.category}</p>
               <h2 id="work-modal-title" className="mt-2 text-2xl font-bold tracking-tight text-text sm:text-3xl">
                 {work.title}
