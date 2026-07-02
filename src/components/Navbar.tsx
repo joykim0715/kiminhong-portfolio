@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteContent } from "@/data/content";
+import VisitorCounter from "./VisitorCounter";
 
 const { nav } = siteContent;
 
@@ -29,10 +30,13 @@ export default function Navbar() {
 
   return (
     <header className="nav-bar glass-nav fixed inset-x-0 top-0 z-50">
-      <nav className="section-container flex h-16 items-center justify-between">
-        <a href="#hero" className="text-sm font-bold tracking-tight text-text sm:text-base">
-          {nav.siteName}
-        </a>
+      <nav className="section-container flex h-16 items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-text sm:text-base">
+            {nav.siteName}
+          </a>
+          <VisitorCounter />
+        </div>
 
         <ul className="hidden items-center gap-6 md:flex">
           {nav.sections.map(({ id, label }) => (
