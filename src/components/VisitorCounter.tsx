@@ -56,12 +56,24 @@ export default function VisitorCounter() {
 
   return (
     <p
-      className="min-w-0 text-xs font-bold leading-snug text-text sm:text-sm"
+      className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 text-xs font-bold leading-snug text-text sm:text-sm"
       aria-label={`총 방문자 수 ${stats.total}명, 오늘 방문자 수 ${stats.today}명`}
     >
-      총 방문자 수{" "}
-      <span className="text-primary">{formatCount(stats.total)}</span>, 오늘 방문자 수{" "}
-      <span className="text-primary">{formatCount(stats.today)}</span>
+      <span>
+        총 방문자 수{" "}
+        <span className="text-base font-extrabold tabular-nums text-primary sm:text-lg">
+          {formatCount(stats.total)}
+        </span>
+      </span>
+      <span className="font-normal text-muted" aria-hidden>
+        /
+      </span>
+      <span>
+        오늘 방문자 수{" "}
+        <span className="text-base font-extrabold tabular-nums text-primary sm:text-lg">
+          {formatCount(stats.today)}
+        </span>
+      </span>
     </p>
   );
 }
