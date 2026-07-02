@@ -7,13 +7,16 @@ import { siteContent } from "@/data/content";
 
 const { experience: experienceContent } = siteContent;
 
-const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$/;
+const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
 
 function highlightMetrics(text: string) {
-  const parts = text.split(/(\d+\.?\d*만\s*건|\d+%|\d+건)/g);
+  const parts = text.split(/(\d+\.?\d*만\s*건|\d+%|\d+건|\d+명)/g);
   return parts.map((part, i) =>
     METRIC_RE.test(part) ? (
-      <span key={i} className="font-semibold text-accent">
+      <span
+        key={i}
+        className="mx-0.5 inline-block rounded-md bg-secondary/15 px-1.5 py-0.5 text-[0.95em] font-extrabold tabular-nums text-secondary sm:text-[1.05em]"
+      >
         {part}
       </span>
     ) : (
