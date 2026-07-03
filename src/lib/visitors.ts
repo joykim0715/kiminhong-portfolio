@@ -17,8 +17,12 @@ function todayDateKST() {
   }).format(new Date());
 }
 
-function todayUniqueSetKey() {
-  return `visitors:unique:today:${todayDateKST()}`;
+function todayEventsKey() {
+  return `visitors:events:today:${todayDateKST()}`;
+}
+
+function todayLegacyKey() {
+  return `visitors:today:${todayDateKST()}`;
 }
 
 function getRedis() {
@@ -46,18 +50,18 @@ export type VisitorStats = {
   today: number;
 };
 
-function todayLegacyKey() {
-  return `visitors:today:${todayDateKST()}`;
-}
-
-async function resolveStats(redis: Redis, uniqueTotal: number, uniqueToday: number): Promise<VisitorStats> {
+async function resolveStats(
+  redis: Redis,
+  uniqueTotal: number,
+  todayEvents: number,
+): Promise<VisitorStats> {
   const [legacyTotal, legacyToday] = await Promise.all([
     redis.get<number>(LEGACY_TOTAL_KEY),
     redis.get<number>(todayLegacyKey()),
   ]);
   return {
     total: Math.max(uniqueTotal, legacyTotal ?? 0),
-    today: Math.max(uniqueToday, legacyToday ?? 0),
+    today: Math.max(todayEvents, legacyToday ?? 0),
   };
 }
 
@@ -66,11 +70,11 @@ export async function getVisitorStats(): Promise<VisitorStats | null> {
   if (!redis) return null;
 
   try {
-    const [uniqueTotal, uniqueToday] = await Promise.all([
+    const [uniqueTotal, todayEvents] = await Promise.all([
       redis.scard(ALL_UNIQUE_SET),
-      redis.scard(todayUniqueSetKey()),
+      redis.get<number>(todayEventsKey()),
     ]);
-    return resolveStats(redis, uniqueTotal, uniqueToday);
+    return resolveStats(redis, uniqueTotal, todayEvents ?? 0);
   } catch {
     return null;
   }
@@ -88,17 +92,16 @@ export async function recordVisit(
 
   try {
     const identity = hashVisitorIdentity(ip, fingerprint);
-    const todayKey = todayUniqueSetKey();
+    const eventsKey = todayEventsKey();
 
-    await Promise.all([redis.sadd(todayKey, identity), redis.sadd(ALL_UNIQUE_SET, identity)]);
-    await redis.expire(todayKey, TODAY_TTL_SECONDS);
-
-    const [uniqueTotal, uniqueToday] = await Promise.all([
-      redis.scard(ALL_UNIQUE_SET),
-      redis.scard(todayKey),
+    const [, todayEvents] = await Promise.all([
+      redis.sadd(ALL_UNIQUE_SET, identity),
+      redis.incr(eventsKey),
     ]);
+    await redis.expire(eventsKey, TODAY_TTL_SECONDS);
 
-    const stats = await resolveStats(redis, uniqueTotal, uniqueToday);
+    const uniqueTotal = await redis.scard(ALL_UNIQUE_SET);
+    const stats = await resolveStats(redis, uniqueTotal, todayEvents);
     return { stats, rateLimited: false };
   } catch {
     return { stats: null, rateLimited: false };

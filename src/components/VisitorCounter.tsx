@@ -8,7 +8,6 @@ type VisitorResponse = {
   today: number | null;
 };
 
-const SESSION_KEY = "portfolio-visitor-v2-counted";
 const FINGERPRINT_KEY = "portfolio-visitor-fp";
 
 function formatCount(value: number) {
@@ -28,29 +27,17 @@ export default function VisitorCounter() {
   const [stats, setStats] = useState<VisitorResponse | null>(null);
 
   useEffect(() => {
-    const todayKST = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Asia/Seoul",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }).format(new Date());
-
-    const alreadyCounted = sessionStorage.getItem(SESSION_KEY) === todayKST;
-
     const load = async () => {
       try {
-        if (!alreadyCounted) {
-          const postRes = await fetch("/api/visitors", {
-            method: "POST",
-            headers: { "X-Visitor-Fp": getVisitorFingerprint() },
-          });
-          if (postRes.ok) {
-            sessionStorage.setItem(SESSION_KEY, todayKST);
-            setStats((await postRes.json()) as VisitorResponse);
-            return;
-          }
-          if (postRes.status !== 429) return;
+        const postRes = await fetch("/api/visitors", {
+          method: "POST",
+          headers: { "X-Visitor-Fp": getVisitorFingerprint() },
+        });
+        if (postRes.ok) {
+          setStats((await postRes.json()) as VisitorResponse);
+          return;
         }
+        if (postRes.status !== 429) return;
 
         const getRes = await fetch("/api/visitors");
         if (getRes.ok) {
