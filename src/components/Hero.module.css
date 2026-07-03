@@ -176,11 +176,16 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .heroCutoutImage {
   object-fit: contain;
-  object-position: bottom center;
+  object-position: right bottom;
+  transform: scale(1.06);
+  transform-origin: right bottom;
 }
 
 .heroWidget {
