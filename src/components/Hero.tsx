@@ -6,18 +6,6 @@ import styles from "./Hero.module.css";
 
 const { hero, nav, socialLinks } = siteContent;
 
-const CODE_SNIPPET = `const healthData = await fetchMetrics({
-  cohort: "senior-wellness",
-  window: "90d",
-});
-
-export function analyzeMovement(data) {
-  return data.filter(v => v.validity >= 0.85)
-    .map(v => ({ ...v, insight: score(v) }));
-}`;
-
-const KEYWORDS = ["DATA", "HEALTH", "ANALYTICS", "MOVEMENT"];
-
 function ArrowIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -74,28 +62,16 @@ export default function Hero() {
         </div>
 
         <div className={`${styles.heroVisual} hero-visual`}>
-          <pre className={styles.heroCodeBg} aria-hidden="true">
-            {CODE_SNIPPET}
-          </pre>
-
           <div className={styles.heroCutoutWrap}>
             <Image
               src={cutoutSrc}
               alt={`${hero.name} 프로필`}
               fill
               priority
-              quality={95}
+              quality={100}
               className={`${styles.heroCutoutImage} sharp-image`}
-              sizes="(max-width: 1024px) 90vw, 440px"
+              sizes="(max-width: 1024px) 95vw, 720px"
             />
-          </div>
-
-          <div className={styles.heroKeywords} aria-hidden="true">
-            {KEYWORDS.map((word, i) => (
-              <span key={word} className={i === KEYWORDS.length - 1 ? styles.heroKeywordAccent : undefined}>
-                {word}
-              </span>
-            ))}
           </div>
         </div>
       </div>

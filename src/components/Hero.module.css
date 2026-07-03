@@ -46,8 +46,8 @@
 
 @media (min-width: 1024px) {
   .heroGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 0.88fr 1.12fr;
+    gap: 2rem;
   }
 }
 
@@ -154,65 +154,36 @@
 
 .heroVisual {
   position: relative;
-  min-height: clamp(440px, 54vw, 600px);
-}
-
-.heroCodeBg {
-  position: absolute;
-  inset: 6% 0 10% 8%;
-  overflow: hidden;
-  border-radius: 1rem;
-  opacity: 0.2;
-  pointer-events: none;
-  font-family: ui-monospace, monospace;
-  font-size: 0.62rem;
-  line-height: 1.55;
-  color: var(--clr-primary-light);
-  white-space: pre;
-  mask-image: linear-gradient(135deg, black 20%, transparent 85%);
+  min-height: clamp(480px, 58vw, 680px);
 }
 
 .heroCutoutWrap {
   position: absolute;
-  inset: 0;
+  inset: -4% -6% -2% 0;
   z-index: 2;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
 }
 
 .heroCutoutImage {
   object-fit: contain;
   object-position: right center;
-  transform: scale(1.02);
+  transform: scale(1.28);
   transform-origin: right center;
-}
-
-.heroKeywords {
-  position: absolute;
-  right: 0;
-  bottom: 8%;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgb(255 255 255 / 0.35);
-}
-
-.heroKeywordAccent {
-  color: var(--clr-primary);
 }
 
 @media (max-width: 1023px) {
   .heroVisual {
     order: -1;
-    min-height: 380px;
+    min-height: clamp(400px, 72vw, 520px);
   }
 
-  .heroKeywords {
-    display: none;
+  .heroCutoutWrap {
+    inset: -2% -4% 0 0;
+  }
+
+  .heroCutoutImage {
+    transform: scale(1.18);
   }
 }
