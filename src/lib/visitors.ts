@@ -3,6 +3,7 @@ import { Redis } from "@upstash/redis";
 import { hashVisitorIdentity } from "./visitorIdentity";
 
 const ALL_UNIQUE_SET = "visitors:unique:all";
+const LEGACY_TOTAL_KEY = "visitors:total";
 const TODAY_TTL_SECONDS = 60 * 60 * 48;
 const POST_RATE_LIMIT = 10;
 const POST_RATE_WINDOW = "60 s" as const;
@@ -45,16 +46,31 @@ export type VisitorStats = {
   today: number;
 };
 
+function todayLegacyKey() {
+  return `visitors:today:${todayDateKST()}`;
+}
+
+async function resolveStats(redis: Redis, uniqueTotal: number, uniqueToday: number): Promise<VisitorStats> {
+  const [legacyTotal, legacyToday] = await Promise.all([
+    redis.get<number>(LEGACY_TOTAL_KEY),
+    redis.get<number>(todayLegacyKey()),
+  ]);
+  return {
+    total: Math.max(uniqueTotal, legacyTotal ?? 0),
+    today: Math.max(uniqueToday, legacyToday ?? 0),
+  };
+}
+
 export async function getVisitorStats(): Promise<VisitorStats | null> {
   const redis = getRedis();
   if (!redis) return null;
 
   try {
-    const [total, today] = await Promise.all([
+    const [uniqueTotal, uniqueToday] = await Promise.all([
       redis.scard(ALL_UNIQUE_SET),
       redis.scard(todayUniqueSetKey()),
     ]);
-    return { total, today };
+    return resolveStats(redis, uniqueTotal, uniqueToday);
   } catch {
     return null;
   }
@@ -77,12 +93,13 @@ export async function recordVisit(
     await Promise.all([redis.sadd(todayKey, identity), redis.sadd(ALL_UNIQUE_SET, identity)]);
     await redis.expire(todayKey, TODAY_TTL_SECONDS);
 
-    const [total, today] = await Promise.all([
+    const [uniqueTotal, uniqueToday] = await Promise.all([
       redis.scard(ALL_UNIQUE_SET),
       redis.scard(todayKey),
     ]);
 
-    return { stats: { total, today }, rateLimited: false };
+    const stats = await resolveStats(redis, uniqueTotal, uniqueToday);
+    return { stats, rateLimited: false };
   } catch {
     return { stats: null, rateLimited: false };
   }

@@ -8,7 +8,7 @@ type VisitorResponse = {
   today: number | null;
 };
 
-const SESSION_KEY = "portfolio-visitor-counted";
+const SESSION_KEY = "portfolio-visitor-v2-counted";
 const FINGERPRINT_KEY = "portfolio-visitor-fp";
 
 function formatCount(value: number) {
