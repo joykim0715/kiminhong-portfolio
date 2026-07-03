@@ -172,6 +172,31 @@
   z-index: 1;
 }
 
+.heroCutoutWrap::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 4%;
+  top: 54%;
+  width: clamp(36px, 5.5vw, 56px);
+  height: clamp(28px, 4vw, 42px);
+  border-radius: 40% 55% 45% 50%;
+  background: radial-gradient(
+    ellipse 80% 70% at 55% 45%,
+    rgb(18 22 28 / 0.95) 0%,
+    rgb(10 12 16 / 0.88) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .heroCutoutWrap::after {
+    left: 8%;
+    top: 56%;
+  }
+}
+
 .heroCutoutImage {
   object-fit: contain;
   object-position: right center;
