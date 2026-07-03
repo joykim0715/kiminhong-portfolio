@@ -1,15 +1,23 @@
+import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { hashVisitorIdentity } from "./visitorIdentity";
 
-const TOTAL_KEY = "visitors:total";
+const ALL_UNIQUE_SET = "visitors:unique:all";
+const TODAY_TTL_SECONDS = 60 * 60 * 48;
+const POST_RATE_LIMIT = 10;
+const POST_RATE_WINDOW = "60 s" as const;
 
-function todayKeyKST() {
-  const date = new Intl.DateTimeFormat("en-CA", {
+function todayDateKST() {
+  return new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Seoul",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
   }).format(new Date());
-  return `visitors:today:${date}`;
+}
+
+function todayUniqueSetKey() {
+  return `visitors:unique:today:${todayDateKST()}`;
 }
 
 function getRedis() {
@@ -17,6 +25,19 @@ function getRedis() {
   const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
+}
+
+let rateLimiter: Ratelimit | null = null;
+
+function getRateLimiter(redis: Redis) {
+  if (!rateLimiter) {
+    rateLimiter = new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(POST_RATE_LIMIT, POST_RATE_WINDOW),
+      prefix: "visitors:rl",
+    });
+  }
+  return rateLimiter;
 }
 
 export type VisitorStats = {
@@ -30,28 +51,39 @@ export async function getVisitorStats(): Promise<VisitorStats | null> {
 
   try {
     const [total, today] = await Promise.all([
-      redis.get<number>(TOTAL_KEY),
-      redis.get<number>(todayKeyKST()),
+      redis.scard(ALL_UNIQUE_SET),
+      redis.scard(todayUniqueSetKey()),
     ]);
-    return {
-      total: total ?? 0,
-      today: today ?? 0,
-    };
+    return { total, today };
   } catch {
     return null;
   }
 }
 
-export async function incrementVisitorStats(): Promise<VisitorStats | null> {
+export async function recordVisit(
+  ip: string,
+  fingerprint: string,
+): Promise<{ stats: VisitorStats | null; rateLimited: boolean }> {
   const redis = getRedis();
-  if (!redis) return null;
+  if (!redis) return { stats: null, rateLimited: false };
+
+  const { success } = await getRateLimiter(redis).limit(`post:${ip}`);
+  if (!success) return { stats: null, rateLimited: true };
 
   try {
-    const todayKey = todayKeyKST();
-    const [total, today] = await Promise.all([redis.incr(TOTAL_KEY), redis.incr(todayKey)]);
-    await redis.expire(todayKey, 60 * 60 * 48);
-    return { total, today };
+    const identity = hashVisitorIdentity(ip, fingerprint);
+    const todayKey = todayUniqueSetKey();
+
+    await Promise.all([redis.sadd(todayKey, identity), redis.sadd(ALL_UNIQUE_SET, identity)]);
+    await redis.expire(todayKey, TODAY_TTL_SECONDS);
+
+    const [total, today] = await Promise.all([
+      redis.scard(ALL_UNIQUE_SET),
+      redis.scard(todayKey),
+    ]);
+
+    return { stats: { total, today }, rateLimited: false };
   } catch {
-    return null;
+    return { stats: null, rateLimited: false };
   }
 }

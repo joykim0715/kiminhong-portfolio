@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getVisitorStats, incrementVisitorStats } from "@/lib/visitors";
+import { getClientFingerprint, getClientIp } from "@/lib/visitorIdentity";
+import { getVisitorStats, recordVisit } from "@/lib/visitors";
 
 export async function GET() {
   const stats = await getVisitorStats();
@@ -9,10 +10,21 @@ export async function GET() {
   return NextResponse.json({ enabled: true, ...stats });
 }
 
-export async function POST() {
-  const stats = await incrementVisitorStats();
+export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const fingerprint = getClientFingerprint(request);
+  const { stats, rateLimited } = await recordVisit(ip, fingerprint);
+
+  if (rateLimited) {
+    return NextResponse.json(
+      { enabled: true, error: "rate_limited", total: null, today: null },
+      { status: 429 },
+    );
+  }
+
   if (!stats) {
     return NextResponse.json({ enabled: false, total: null, today: null }, { status: 503 });
   }
+
   return NextResponse.json({ enabled: true, ...stats });
 }

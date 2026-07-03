@@ -9,9 +9,19 @@ type VisitorResponse = {
 };
 
 const SESSION_KEY = "portfolio-visitor-counted";
+const FINGERPRINT_KEY = "portfolio-visitor-fp";
 
 function formatCount(value: number) {
   return value.toLocaleString("ko-KR");
+}
+
+function getVisitorFingerprint(): string {
+  let fp = localStorage.getItem(FINGERPRINT_KEY);
+  if (!fp) {
+    fp = crypto.randomUUID();
+    localStorage.setItem(FINGERPRINT_KEY, fp);
+  }
+  return fp;
 }
 
 export default function VisitorCounter() {
@@ -30,12 +40,16 @@ export default function VisitorCounter() {
     const load = async () => {
       try {
         if (!alreadyCounted) {
-          const postRes = await fetch("/api/visitors", { method: "POST" });
+          const postRes = await fetch("/api/visitors", {
+            method: "POST",
+            headers: { "X-Visitor-Fp": getVisitorFingerprint() },
+          });
           if (postRes.ok) {
             sessionStorage.setItem(SESSION_KEY, todayKST);
             setStats((await postRes.json()) as VisitorResponse);
             return;
           }
+          if (postRes.status !== 429) return;
         }
 
         const getRes = await fetch("/api/visitors");
