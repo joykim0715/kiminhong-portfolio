@@ -30,9 +30,33 @@
     #6faed9 66%,
     #8abfd4 72%,
     #a8ccd0 78%,
-    #c5d4d8 84%,
-    #dce5e3 90%,
-    #eef2f0 95%,
+    #c5d4d8 82%,
+    #d0dedb 86%,
+    #dce5e3 89%,
+    #e5ecea 91%,
+    #ecf1ef 93%,
+    #f2f6f4 95%,
+    #f5f8f6 97%,
+    #f7f8f6 100%
+  );
+
+  --gradient-bridge-values: linear-gradient(
+    to bottom,
+    #a8ccd0 0%,
+    #b0d0d4 5%,
+    #b8d4d2 10%,
+    #c0d8d6 15%,
+    #c8dcd9 20%,
+    #d0e0de 25%,
+    #d8e4e2 30%,
+    #dceae7 35%,
+    #e2eeec 40%,
+    #e8f2f0 45%,
+    #edf4f2 50%,
+    #f0f6f4 55%,
+    #f3f7f5 60%,
+    #f5f8f6 65%,
+    #f7f8f6 70%,
     #f7f8f6 100%
   );
 

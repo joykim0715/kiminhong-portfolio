@@ -23,7 +23,7 @@ export default function Values() {
   }, []);
 
   return (
-    <section id="values" ref={sectionRef} className="relative z-[1] bg-bg/82 py-24 text-text backdrop-blur-[2px] sm:py-32">
+    <section id="values" ref={sectionRef} className="relative z-[1] -mt-px bg-bg py-24 text-text sm:py-32">
       <div className="section-container grid gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="values-heading lg:sticky lg:top-28 lg:self-start">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">

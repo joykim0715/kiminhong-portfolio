@@ -19,6 +19,7 @@ export default function Home() {
         <Hero />
         <SectionBlend variant="hero-bridge" />
         <GradientTransition />
+        <SectionBlend variant="bridge-values" />
         <Values />
         <SkillsDial />
         <Education />

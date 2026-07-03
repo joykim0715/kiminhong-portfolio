@@ -1,14 +1,15 @@
 import styles from "./SectionBlend.module.css";
 
 type SectionBlendProps = {
-  variant: "hero-bridge" | "works-story";
+  variant: "hero-bridge" | "bridge-values" | "works-story";
 };
 
 export default function SectionBlend({ variant }: SectionBlendProps) {
-  const className =
-    variant === "hero-bridge"
-      ? `${styles.sectionBlend} ${styles.sectionBlendHeroBridge}`
-      : `${styles.sectionBlend} ${styles.sectionBlendWorksStory}`;
+  const className = {
+    "hero-bridge": `${styles.sectionBlend} ${styles.sectionBlendHeroBridge}`,
+    "bridge-values": `${styles.sectionBlend} ${styles.sectionBlendBridgeValues}`,
+    "works-story": `${styles.sectionBlend} ${styles.sectionBlendWorksStory}`,
+  }[variant];
 
   return <div className={className} aria-hidden="true" />;
 }
