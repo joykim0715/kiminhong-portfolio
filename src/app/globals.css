@@ -17,8 +17,11 @@
   --gradient-bridge: linear-gradient(
     180deg,
     #1c2b30 0%,
-    #5fa8a3 40%,
-    #6faed9 70%,
+    #243238 12%,
+    #3d6b68 32%,
+    #5fa8a3 48%,
+    #6faed9 68%,
+    #c5d4d8 88%,
     #f7f8f6 100%
   );
   --gradient-contact: linear-gradient(

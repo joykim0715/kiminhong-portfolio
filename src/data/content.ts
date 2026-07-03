@@ -73,7 +73,7 @@ export const siteContent = {
     tagline: "스포츠과학 × 디지털헬스 신입",
     headline: "Finding the value of movement",
     bio: "헬스케어·디지털 헬스 분야에서 스포츠과학적 전문성과 데이터 분석으로 솔루션을 탐색합니다.",
-    profileImage: "/images/profile.png",
+    profileImage: "/images/hero-portrait.png",
     profileGallery: [
       { src: "/images/profile.png", alt: "김인홍 프로필", variant: "formal" as const },
       { src: "/images/profile-field-1.png", alt: "현장 상담", variant: "field" as const },
