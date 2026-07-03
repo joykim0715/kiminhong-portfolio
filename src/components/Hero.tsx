@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { siteContent } from "@/data/content";
+import HeroBackground from "./HeroBackground";
 import styles from "./Hero.module.css";
 
-const { hero, nav, socialLinks, skills: skillsContent } = siteContent;
+const { hero, nav, socialLinks } = siteContent;
 
 const CODE_SNIPPET = `const healthData = await fetchMetrics({
   cohort: "senior-wellness",
@@ -33,17 +34,16 @@ function ArrowIcon() {
 }
 
 export default function Hero() {
-  const topSkills = skillsContent.items.slice(0, 4);
-  const performanceValue = Math.max(...skillsContent.items.map((s) => s.proficiency));
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
 
   return (
     <section id="hero" className={`${styles.hero} relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16`}>
+      <HeroBackground />
       <div className={styles.heroGlow} aria-hidden="true" />
 
       <div className={`section-container ${styles.heroGrid}`}>
         <div className={styles.heroContent}>
-          <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
+          <h1 className={`${styles.heroName} hero-name-line text-gradient`}>{hero.name}</h1>
 
           <p className={`${styles.heroTagline} hero-desc-line`}>{hero.tagline}</p>
           <p className={`${styles.heroHeadline} hero-desc-line`}>{hero.headline}</p>
@@ -90,27 +90,6 @@ export default function Hero() {
               className={`${styles.heroCutoutImage} sharp-image`}
               sizes="(max-width: 1024px) 90vw, 440px"
             />
-          </div>
-
-          <div className={`${styles.heroWidget} ${styles.heroWidgetPerformance}`} aria-hidden="true">
-            <p className={styles.heroWidgetLabel}>Performance Overview</p>
-            <p className={styles.heroWidgetValue}>{performanceValue}%</p>
-            <p className={styles.heroWidgetSub}>Core competency index</p>
-          </div>
-
-          <div className={`${styles.heroWidget} ${styles.heroWidgetSkills}`} aria-hidden="true">
-            <p className={styles.heroWidgetLabel}>Skills</p>
-            {topSkills.map((skill) => (
-              <div key={skill.id} className={styles.heroSkillRow}>
-                <div className={styles.heroSkillRowHead}>
-                  <span>{skill.category}</span>
-                  <span>{skill.proficiency}%</span>
-                </div>
-                <div className={styles.heroSkillBar}>
-                  <div className={styles.heroSkillBarFill} style={{ width: `${skill.proficiency}%` }} />
-                </div>
-              </div>
-            ))}
           </div>
 
           <div className={styles.heroKeywords} aria-hidden="true">

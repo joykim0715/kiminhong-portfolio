@@ -18,7 +18,7 @@
 }
 
 .sectionBlendBridgeValues {
-  height: clamp(220px, 30vh, 360px);
+  height: clamp(120px, 16vh, 200px);
   margin-top: -1px;
   background: var(--gradient-bridge-values);
 }

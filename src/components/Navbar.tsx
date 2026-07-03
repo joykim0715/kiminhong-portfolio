@@ -29,13 +29,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="nav-bar glass-nav-dark fixed inset-x-0 top-0 z-50 text-white">
+    <header className="nav-bar glass-nav fixed inset-x-0 top-0 z-50 text-text">
       <nav className="section-container flex h-16 items-center justify-between gap-3">
         <div className="nav-brand flex min-w-0 items-center gap-3 sm:gap-4">
-          <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-white sm:text-base">
+          <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-text sm:text-base">
             {nav.siteName}
           </a>
-          <div className="nav-visitor [&_p]:text-white/75 [&_span.text-primary]:text-primary-light">
+          <div className="nav-visitor [&_p]:text-muted [&_span.text-primary]:text-primary">
             <VisitorCounter />
           </div>
         </div>
@@ -46,7 +46,7 @@ export default function Navbar() {
               <a
                 href={`#${id}`}
                 className={`text-sm transition-colors ${
-                  active === id ? "text-primary-light" : "text-white/60 hover:text-white"
+                  active === id ? "text-primary" : "text-muted hover:text-text"
                 }`}
               >
                 {label}
@@ -57,7 +57,7 @@ export default function Navbar() {
 
         <a
           href="#contact"
-          className="rounded-full border border-primary/50 px-4 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:text-sm"
+          className="rounded-full border border-primary/40 px-4 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/10 sm:text-sm"
         >
           {nav.contactCta}
         </a>
