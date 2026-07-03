@@ -70,7 +70,7 @@ export default function Hero() {
               priority
               quality={100}
               className={`${styles.heroCutoutImage} sharp-image`}
-              sizes="(max-width: 1024px) 95vw, 720px"
+              sizes="(max-width: 1024px) 98vw, 860px"
             />
           </div>
         </div>

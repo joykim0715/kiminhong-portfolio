@@ -46,8 +46,8 @@
 
 @media (min-width: 1024px) {
   .heroGrid {
-    grid-template-columns: 0.88fr 1.12fr;
-    gap: 2rem;
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 1.5rem;
   }
 }
 
@@ -154,12 +154,12 @@
 
 .heroVisual {
   position: relative;
-  min-height: clamp(480px, 58vw, 680px);
+  min-height: clamp(520px, 64vw, 760px);
 }
 
 .heroCutoutWrap {
   position: absolute;
-  inset: -4% -6% -2% 0;
+  inset: -6% -10% -4% -2%;
   z-index: 2;
   display: flex;
   align-items: center;
@@ -169,21 +169,21 @@
 .heroCutoutImage {
   object-fit: contain;
   object-position: right center;
-  transform: scale(1.28);
+  transform: scale(1.42);
   transform-origin: right center;
 }
 
 @media (max-width: 1023px) {
   .heroVisual {
     order: -1;
-    min-height: clamp(400px, 72vw, 520px);
+    min-height: clamp(440px, 78vw, 580px);
   }
 
   .heroCutoutWrap {
-    inset: -2% -4% 0 0;
+    inset: -4% -8% 0 -2%;
   }
 
   .heroCutoutImage {
-    transform: scale(1.18);
+    transform: scale(1.32);
   }
 }
