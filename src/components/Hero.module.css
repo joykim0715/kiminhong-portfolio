@@ -1,0 +1,318 @@
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #080c0b;
+  color: #f5f7f6;
+}
+
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 72% 38%, color-mix(in srgb, var(--clr-primary) 28%, transparent), transparent 68%),
+    radial-gradient(ellipse 40% 35% at 20% 80%, color-mix(in srgb, var(--clr-secondary) 12%, transparent), transparent 70%);
+}
+
+.heroGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  flex: 1;
+  align-items: center;
+  gap: 3rem;
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.heroContent {
+  max-width: 36rem;
+}
+
+.heroNameBlock {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.heroNameLine1,
+.heroNameLine2 {
+  display: block;
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.heroNameLine1 {
+  color: #fff;
+}
+
+.heroNameLine2 {
+  color: var(--clr-primary);
+}
+
+.heroSignature {
+  position: absolute;
+  right: 0;
+  bottom: -0.15em;
+  font-family: "Segoe Script", "Apple Chancery", cursive;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--clr-primary) 85%, white);
+  opacity: 0.9;
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+
+.heroTagline {
+  margin-top: 1.75rem;
+  font-size: clamp(0.95rem, 2vw, 1.125rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.heroHeadline {
+  margin-top: 1rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.heroBio {
+  margin-top: 1rem;
+  max-width: 32rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.62);
+}
+
+.heroCtaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 2.25rem;
+}
+
+.heroBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--clr-primary) 70%, white);
+  background: var(--clr-primary);
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0a100e;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.heroBtnPrimary:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--clr-primary) 45%, transparent);
+}
+
+.heroBtnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  background: transparent;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.heroBtnGhost:hover {
+  transform: scale(1.03);
+  border-color: rgb(255 255 255 / 0.55);
+  background: rgb(255 255 255 / 0.06);
+}
+
+.heroSocial {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 2.75rem;
+}
+
+.heroSocialLink {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.45);
+  transition: color 0.2s;
+}
+
+.heroSocialLink:hover {
+  color: var(--clr-primary-light);
+}
+
+.heroVisual {
+  position: relative;
+  min-height: clamp(420px, 52vw, 560px);
+}
+
+.heroCodeBg {
+  position: absolute;
+  inset: 8% 0 12% 10%;
+  overflow: hidden;
+  border-radius: 1rem;
+  opacity: 0.22;
+  pointer-events: none;
+  font-family: ui-monospace, monospace;
+  font-size: 0.62rem;
+  line-height: 1.55;
+  color: var(--clr-primary-light);
+  white-space: pre;
+  mask-image: linear-gradient(135deg, black 20%, transparent 85%);
+}
+
+.heroPortraitWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.heroPortraitImage {
+  position: relative;
+  width: min(100%, 420px);
+  height: min(92%, 520px);
+  margin-inline: auto;
+}
+
+.heroPortraitImage img {
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.heroWidget {
+  position: absolute;
+  z-index: 4;
+  width: min(220px, 42vw);
+  border-radius: 0.875rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(12 18 16 / 0.72);
+  backdrop-filter: blur(12px);
+  padding: 0.875rem 1rem;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.35);
+}
+
+.heroWidgetPerformance {
+  top: 6%;
+  left: 0;
+}
+
+.heroWidgetSkills {
+  top: 38%;
+  right: 0;
+}
+
+.heroWidgetLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.heroWidgetValue {
+  margin-top: 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--clr-primary);
+}
+
+.heroWidgetSub {
+  margin-top: 0.15rem;
+  font-size: 0.65rem;
+  color: rgb(255 255 255 / 0.45);
+}
+
+.heroSkillRow {
+  margin-top: 0.55rem;
+}
+
+.heroSkillRowHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: rgb(255 255 255 / 0.75);
+}
+
+.heroSkillBar {
+  margin-top: 0.25rem;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.heroSkillBarFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
+}
+
+.heroKeywords {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgb(255 255 255 / 0.35);
+}
+
+.heroKeywordAccent {
+  color: var(--clr-primary);
+}
+
+@media (max-width: 1023px) {
+  .heroVisual {
+    order: -1;
+    min-height: 380px;
+  }
+
+  .heroWidgetPerformance {
+    top: 2%;
+    left: 0;
+  }
+
+  .heroWidgetSkills {
+    top: auto;
+    bottom: 4%;
+    right: 0;
+  }
+
+  .heroKeywords {
+    display: none;
+  }
+
+  .heroSignature {
+    position: static;
+    display: block;
+    margin-top: 0.25rem;
+    transform: none;
+  }
+}
