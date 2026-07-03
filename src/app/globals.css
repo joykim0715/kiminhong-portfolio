@@ -17,12 +17,51 @@
   --gradient-bridge: linear-gradient(
     180deg,
     #1c2b30 0%,
-    #243238 12%,
-    #3d6b68 32%,
-    #5fa8a3 48%,
-    #6faed9 68%,
-    #c5d4d8 88%,
+    #1e2f2d 6%,
+    #213532 12%,
+    #253b38 18%,
+    #2a4440 24%,
+    #2f4d48 30%,
+    #355651 36%,
+    #3d6b68 42%,
+    #4a8580 48%,
+    #5fa8a3 54%,
+    #67afb0 60%,
+    #6faed9 66%,
+    #8abfd4 72%,
+    #a8ccd0 78%,
+    #c5d4d8 84%,
+    #dce5e3 90%,
+    #eef2f0 95%,
     #f7f8f6 100%
+  );
+
+  --gradient-hero-bridge-tail: linear-gradient(
+    to bottom,
+    #1c2b30 0%,
+    #1e302e 20%,
+    #223632 40%,
+    #263a36 60%,
+    #2a423e 80%,
+    #2e4a44 100%
+  );
+
+  --gradient-works-story: linear-gradient(
+    to bottom,
+    #f7f8f6 0%,
+    #eef2f0 6%,
+    #e3ebe8 12%,
+    #d4e0dd 20%,
+    #c0d0cc 28%,
+    #a8bdb8 36%,
+    #8ea9a3 44%,
+    #73948d 52%,
+    #5a7d76 60%,
+    #456660 68%,
+    #35524d 76%,
+    #2a4340 84%,
+    #243238 92%,
+    #1c2b30 100%
   );
   --gradient-contact: linear-gradient(
     135deg,

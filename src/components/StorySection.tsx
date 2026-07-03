@@ -28,7 +28,7 @@ export default function StorySection() {
       id="story"
       ref={sectionRef}
       aria-labelledby="story-heading"
-      className="relative z-[1] bg-dark py-16 text-white sm:py-24"
+      className="relative z-[1] -mt-px bg-dark py-16 text-white sm:py-24"
     >
       <div className="section-container">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">

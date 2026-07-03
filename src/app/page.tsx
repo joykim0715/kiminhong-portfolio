@@ -1,3 +1,4 @@
+import SectionBlend from "@/components/SectionBlend";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import GradientTransition from "@/components/GradientTransition";
@@ -16,12 +17,14 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="relative z-[3]">
         <Hero />
+        <SectionBlend variant="hero-bridge" />
         <GradientTransition />
         <Values />
         <SkillsDial />
         <Education />
         <Experience />
         <WorkGallery />
+        <SectionBlend variant="works-story" />
         <StorySection />
         <ContactCTA />
       </main>

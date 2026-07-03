@@ -54,13 +54,13 @@ export default function GradientTransition() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative z-[1] -mt-px h-[100vh] overflow-hidden" aria-hidden="false">
+    <section ref={sectionRef} className="relative z-[1] -mt-px min-h-[85vh] overflow-hidden" aria-hidden="false">
       <div
         ref={gradientRef}
         className="absolute inset-0 will-change-transform"
         style={{
           background: "var(--gradient-bridge)",
-          backgroundSize: "100% 120%",
+          backgroundSize: "100% 160%",
           backgroundPosition: "50% 0%",
         }}
       />

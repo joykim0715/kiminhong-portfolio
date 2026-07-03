@@ -4,7 +4,19 @@ import Image from "next/image";
 import { siteContent } from "@/data/content";
 import styles from "./Hero.module.css";
 
-const { hero, nav, socialLinks } = siteContent;
+const { hero, nav, socialLinks, skills: skillsContent } = siteContent;
+
+const CODE_SNIPPET = `const healthData = await fetchMetrics({
+  cohort: "senior-wellness",
+  window: "90d",
+});
+
+export function analyzeMovement(data) {
+  return data.filter(v => v.validity >= 0.85)
+    .map(v => ({ ...v, insight: score(v) }));
+}`;
+
+const KEYWORDS = ["DATA", "HEALTH", "ANALYTICS", "MOVEMENT"];
 
 function ArrowIcon() {
   return (
@@ -21,6 +33,10 @@ function ArrowIcon() {
 }
 
 export default function Hero() {
+  const topSkills = skillsContent.items.slice(0, 4);
+  const performanceValue = Math.max(...skillsContent.items.map((s) => s.proficiency));
+  const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
+
   return (
     <section id="hero" className={`${styles.hero} relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16`}>
       <div className={styles.heroGlow} aria-hidden="true" />
@@ -60,15 +76,50 @@ export default function Hero() {
         </div>
 
         <div className={`${styles.heroVisual} hero-visual`}>
-          <Image
-            src={hero.profileImage}
-            alt={`${hero.name} 프로필`}
-            fill
-            priority
-            quality={95}
-            className={`${styles.heroReferencePhoto} sharp-image`}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
+          <pre className={styles.heroCodeBg} aria-hidden="true">
+            {CODE_SNIPPET}
+          </pre>
+
+          <div className={styles.heroCutoutWrap}>
+            <Image
+              src={cutoutSrc}
+              alt={`${hero.name} 프로필`}
+              fill
+              priority
+              quality={95}
+              className={`${styles.heroCutoutImage} sharp-image`}
+              sizes="(max-width: 1024px) 90vw, 440px"
+            />
+          </div>
+
+          <div className={`${styles.heroWidget} ${styles.heroWidgetPerformance}`} aria-hidden="true">
+            <p className={styles.heroWidgetLabel}>Performance Overview</p>
+            <p className={styles.heroWidgetValue}>{performanceValue}%</p>
+            <p className={styles.heroWidgetSub}>Core competency index</p>
+          </div>
+
+          <div className={`${styles.heroWidget} ${styles.heroWidgetSkills}`} aria-hidden="true">
+            <p className={styles.heroWidgetLabel}>Skills</p>
+            {topSkills.map((skill) => (
+              <div key={skill.id} className={styles.heroSkillRow}>
+                <div className={styles.heroSkillRowHead}>
+                  <span>{skill.category}</span>
+                  <span>{skill.proficiency}%</span>
+                </div>
+                <div className={styles.heroSkillBar}>
+                  <div className={styles.heroSkillBarFill} style={{ width: `${skill.proficiency}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.heroKeywords} aria-hidden="true">
+            {KEYWORDS.map((word, i) => (
+              <span key={word} className={i === KEYWORDS.length - 1 ? styles.heroKeywordAccent : undefined}>
+                {word}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

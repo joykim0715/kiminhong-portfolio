@@ -1,0 +1,18 @@
+.sectionBlend {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  pointer-events: none;
+}
+
+.sectionBlendHeroBridge {
+  height: clamp(200px, 28vh, 320px);
+  margin-top: -1px;
+  background: var(--gradient-hero-bridge-tail);
+}
+
+.sectionBlendWorksStory {
+  height: clamp(180px, 24vh, 300px);
+  margin-top: -1px;
+  background: var(--gradient-works-story);
+}
