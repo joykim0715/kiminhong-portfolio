@@ -51,17 +51,12 @@
 
   --gradient-hero-bridge-tail: linear-gradient(
     to bottom,
-    #c5d4d8 0%,
-    #b0c8c6 12%,
-    #9ab8b4 24%,
-    #84a8a2 36%,
-    #6e9890 48%,
-    #5a8680 60%,
-    #487470 66%,
-    #3a6460 74%,
-    #2f5652 82%,
-    #264a46 90%,
-    #1c2b30 100%
+    #1c2b30 0%,
+    #1e302e 20%,
+    #223632 40%,
+    #263a36 60%,
+    #2a423e 80%,
+    #2e4a44 100%
   );
 
   --gradient-works-story: linear-gradient(

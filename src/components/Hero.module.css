@@ -2,18 +2,17 @@
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
-  background: var(--clr-bg);
-  color: var(--clr-text);
+  background: #080c0b;
+  color: #f5f7f6;
 }
 
 .heroGlow {
   position: absolute;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 45% at 72% 38%, color-mix(in srgb, var(--clr-primary) 14%, transparent), transparent 68%),
-    radial-gradient(ellipse 40% 35% at 20% 80%, color-mix(in srgb, var(--clr-secondary) 10%, transparent), transparent 70%);
+    radial-gradient(ellipse 55% 45% at 72% 38%, color-mix(in srgb, var(--clr-primary) 28%, transparent), transparent 68%),
+    radial-gradient(ellipse 40% 35% at 20% 80%, color-mix(in srgb, var(--clr-secondary) 12%, transparent), transparent 70%);
 }
 
 .heroBottomFade {
@@ -27,11 +26,11 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgb(247 248 246 / 0.35) 20%,
-    rgb(231 236 239 / 0.65) 42%,
-    rgb(212 224 221 / 0.82) 62%,
-    rgb(192 208 204 / 0.92) 80%,
-    #c5d4d8 100%
+    rgb(8 12 11 / 0.25) 18%,
+    rgb(8 12 11 / 0.55) 38%,
+    rgb(12 18 16 / 0.78) 58%,
+    rgb(16 24 21 / 0.92) 78%,
+    #1c2b30 100%
   );
 }
 
@@ -68,7 +67,7 @@
   font-size: clamp(0.95rem, 2vw, 1.125rem);
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--clr-muted);
+  color: rgb(255 255 255 / 0.88);
 }
 
 .heroHeadline {
@@ -76,7 +75,7 @@
   font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--clr-text);
+  color: #fff;
 }
 
 .heroBio {
@@ -84,7 +83,7 @@
   max-width: 32rem;
   font-size: clamp(0.95rem, 1.8vw, 1.05rem);
   line-height: 1.75;
-  color: var(--clr-muted);
+  color: rgb(255 255 255 / 0.62);
 }
 
 .heroCtaRow {
@@ -118,19 +117,19 @@
   align-items: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--clr-text) 22%, transparent);
+  border: 1px solid rgb(255 255 255 / 0.35);
   background: transparent;
   padding: 0.8rem 1.5rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--clr-text);
+  color: #fff;
   transition: transform 0.2s, background 0.2s, border-color 0.2s;
 }
 
 .heroBtnGhost:hover {
   transform: scale(1.03);
-  border-color: color-mix(in srgb, var(--clr-primary) 45%, transparent);
-  background: color-mix(in srgb, var(--clr-primary) 8%, transparent);
+  border-color: rgb(255 255 255 / 0.55);
+  background: rgb(255 255 255 / 0.06);
 }
 
 .heroSocial {
@@ -145,12 +144,12 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--clr-muted) 85%, transparent);
+  color: rgb(255 255 255 / 0.45);
   transition: color 0.2s;
 }
 
 .heroSocialLink:hover {
-  color: var(--clr-primary);
+  color: var(--clr-primary-light);
 }
 
 .heroVisual {
@@ -163,12 +162,12 @@
   inset: 6% 0 10% 8%;
   overflow: hidden;
   border-radius: 1rem;
-  opacity: 0.14;
+  opacity: 0.2;
   pointer-events: none;
   font-family: ui-monospace, monospace;
   font-size: 0.62rem;
   line-height: 1.55;
-  color: var(--clr-primary);
+  color: var(--clr-primary-light);
   white-space: pre;
   mask-image: linear-gradient(135deg, black 20%, transparent 85%);
 }
@@ -200,7 +199,7 @@
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: color-mix(in srgb, var(--clr-muted) 55%, transparent);
+  color: rgb(255 255 255 / 0.35);
 }
 
 .heroKeywordAccent {
