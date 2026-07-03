@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
-  background: #080c0b;
+  background: #000000;
   color: #f5f7f6;
 }
 
@@ -26,10 +26,10 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgb(8 12 11 / 0.25) 18%,
-    rgb(8 12 11 / 0.55) 38%,
-    rgb(12 18 16 / 0.78) 58%,
-    rgb(16 24 21 / 0.92) 78%,
+    rgb(0 0 0 / 0.3) 18%,
+    rgb(0 0 0 / 0.6) 38%,
+    rgb(8 12 11 / 0.82) 58%,
+    rgb(16 24 21 / 0.94) 78%,
     #1c2b30 100%
   );
 }
@@ -183,9 +183,9 @@
 
 .heroCutoutImage {
   object-fit: contain;
-  object-position: right bottom;
-  transform: scale(1.06);
-  transform-origin: right bottom;
+  object-position: right center;
+  transform: scale(1.02);
+  transform-origin: right center;
 }
 
 .heroKeywords {
