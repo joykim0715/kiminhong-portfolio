@@ -21,9 +21,9 @@
   z-index: 1;
   display: flex;
   width: 100%;
+  height: 100dvh;
   max-height: 100dvh;
   min-height: 0;
-  flex: 1;
   flex-direction: column;
   overflow: hidden;
   border-radius: 1.25rem 1.25rem 0 0;
@@ -35,6 +35,7 @@
   .shell {
     margin: 1.25rem;
     width: calc(100% - 2.5rem);
+    height: calc(100dvh - 2.5rem);
     max-height: calc(100dvh - 2.5rem);
     border-radius: 1.5rem;
   }

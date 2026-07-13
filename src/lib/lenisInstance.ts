@@ -4,10 +4,11 @@ let lenis: Lenis | null = null;
 let lockCount = 0;
 
 function isInsideScrollableOverlay(target: EventTarget | null) {
-  if (!(target instanceof Node)) return false;
+  if (!(target instanceof Element)) return false;
   return Boolean(
-    document.querySelector("[data-work-modal]")?.contains(target) ||
-      document.querySelector("[data-project-panel]")?.contains(target),
+    target.closest("[data-work-modal]") ||
+      target.closest("[data-project-panel]") ||
+      target.closest("[data-project-panel-scroll]"),
   );
 }
 

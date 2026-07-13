@@ -264,7 +264,11 @@ html.scroll-locked,
 body.scroll-locked {
   overflow: hidden !important;
   overscroll-behavior: none;
-  touch-action: none;
+}
+
+[data-project-panel-scroll] {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-bar.nav-bar--panel-hidden {

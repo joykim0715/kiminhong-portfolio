@@ -49,6 +49,24 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     setActiveBlockId(id);
   }, []);
 
+  const handlePanelWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    const canScroll = scrollHeight > clientHeight + 1;
+    if (!canScroll) return;
+
+    const atTop = scrollTop <= 0;
+    const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    const scrollingUp = e.deltaY < 0;
+    const scrollingDown = e.deltaY > 0;
+
+    if ((scrollingUp && !atTop) || (scrollingDown && !atBottom)) {
+      e.stopPropagation();
+    }
+  }, []);
+
   useEffect(() => {
     if (!work) return;
     setActiveBlockId(work.panel.blocks[0]?.id ?? "");
@@ -120,6 +138,18 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     );
 
     blocksEls.forEach((block) => revealObserver.observe(block));
+
+    requestAnimationFrame(() => {
+      blocksEls.forEach((block) => {
+        const rect = block.getBoundingClientRect();
+        const rootRect = scrollRef.current?.getBoundingClientRect();
+        if (!rootRect) return;
+        if (rect.top < rootRect.bottom && rect.bottom > rootRect.top) {
+          block.classList.add(styles.blockVisible);
+        }
+      });
+    });
+
     return () => revealObserver.disconnect();
   }, [work]);
 
@@ -154,6 +184,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             exit={{ y: "18%", opacity: 0 }}
             transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
+            onWheel={handlePanelWheel}
           >
             <div className={styles.toolbar}>
               <button type="button" className={styles.backButton} onClick={onClose}>
