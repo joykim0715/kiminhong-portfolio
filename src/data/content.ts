@@ -91,7 +91,7 @@ export const siteContent = {
 
   hero: {
     name: "김인홍",
-    tagline: "스포츠과학 × 디지털헬스 신입",
+    tagline: "스포츠과학 × 디지털헬스 경력 1년차",
     headline: "Finding the value of movement",
     bio: "헬스케어·디지털 헬스 분야에서 스포츠과학적 전문성과 데이터 분석으로 솔루션을 탐색합니다.",
     profileImage: "/images/profile.png",
