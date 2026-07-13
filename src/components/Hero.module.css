@@ -56,6 +56,7 @@
   position: relative;
   z-index: 3;
   max-width: 36rem;
+  overflow-x: clip;
 }
 
 .heroName {
@@ -94,6 +95,7 @@
   flex-wrap: wrap;
   gap: 0.875rem;
   margin-top: 2.25rem;
+  max-width: 100%;
 }
 
 .heroBtnPrimary {
@@ -175,7 +177,7 @@
 .heroCutoutImage {
   object-fit: contain;
   object-position: right center;
-  transform: scale(1.34);
+  transform: scale(1.34) translateX(6%);
   transform-origin: right center;
 }
 
