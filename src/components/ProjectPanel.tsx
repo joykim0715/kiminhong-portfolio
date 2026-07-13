@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
+import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
 import type { Work } from "@/data/works";
 import styles from "./ProjectPanel.module.css";
 
@@ -57,6 +58,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   useEffect(() => {
     if (!work) return;
 
+    hideNavBarForPanel();
     lockPageScroll();
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -67,6 +69,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       unlockPageScroll();
+      showNavBarAfterPanel();
     };
   }, [work, onClose]);
 

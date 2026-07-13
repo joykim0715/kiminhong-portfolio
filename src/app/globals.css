@@ -267,6 +267,17 @@ body.scroll-locked {
   touch-action: none;
 }
 
+.nav-bar.nav-bar--panel-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-100%) !important;
+  transition:
+    opacity 0.28s ease,
+    visibility 0.28s ease,
+    transform 0.28s ease !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
