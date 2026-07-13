@@ -11,8 +11,9 @@ import CertificationBadge from "./CertificationBadge";
 import ProjectCard from "./ProjectCard";
 
 const WorkModal = dynamic(() => import("./WorkModal"), { ssr: false });
+const CaseStudyPanel = dynamic(() => import("./CaseStudyPanel"), { ssr: false });
 
-const { works, certifications } = siteContent;
+const { works, certifications, caseStudy } = siteContent;
 const projects = works.projects;
 
 const STACK_STEP_VH = 0.9;
@@ -61,12 +62,21 @@ function scrollToPinZone(pinZone: HTMLElement) {
 export default function WorkGallery() {
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [selected, setSelected] = useState<Work | null>(null);
+  const [caseStudyWork, setCaseStudyWork] = useState<Work | null>(null);
   const [activeStackIndex, setActiveStackIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
   const prevTabRef = useRef<TabId>("projects");
 
   const stackLabel = works.stackLabels[activeTab];
+
+  const handleProjectClick = useCallback((work: Work) => {
+    if (work.caseStudyId === caseStudy.id) {
+      setCaseStudyWork(work);
+      return;
+    }
+    setSelected(work);
+  }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
     if (tab === activeTab) return;
@@ -157,7 +167,7 @@ export default function WorkGallery() {
                 <ProjectCard
                   key={work.id}
                   work={work}
-                  onClick={() => setSelected(work)}
+                  onClick={() => handleProjectClick(work)}
                   className="gallery-card"
                 />
               ))}
@@ -184,7 +194,7 @@ export default function WorkGallery() {
                       i === activeStackIndex ? "pointer-events-auto" : "pointer-events-none"
                     }`}
                   >
-                    <ProjectCard compact work={work} onClick={() => setSelected(work)} />
+                    <ProjectCard compact work={work} onClick={() => handleProjectClick(work)} />
                   </div>
                 ))}
               </div>
@@ -214,6 +224,9 @@ export default function WorkGallery() {
       </div>
 
       {selected && <WorkModal work={selected} onClose={() => setSelected(null)} />}
+      {caseStudyWork && (
+        <CaseStudyPanel work={caseStudyWork} onClose={() => setCaseStudyWork(null)} />
+      )}
     </section>
   );
 }

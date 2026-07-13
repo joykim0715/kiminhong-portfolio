@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
-import { scrollToSection } from "@/lib/scrollToSection";
-import { siteContent } from "@/data/content";
 import type { Work } from "@/data/works";
 
 type WorkModalProps = {
@@ -14,10 +12,6 @@ type WorkModalProps = {
 };
 
 export default function WorkModal({ work, onClose }: WorkModalProps) {
-  const { caseStudy } = siteContent;
-  const hasCaseStudy =
-    work?.caseStudyId != null && work.caseStudyId === caseStudy.id;
-
   useEffect(() => {
     if (!work) return;
 
@@ -33,13 +27,6 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
       unlockPageScroll();
     };
   }, [work, onClose]);
-
-  const openCaseStudy = () => {
-    onClose();
-    requestAnimationFrame(() => {
-      scrollToSection("case-study");
-    });
-  };
 
   return (
     <AnimatePresence>
@@ -115,21 +102,6 @@ export default function WorkModal({ work, onClose }: WorkModalProps) {
                   ))}
                 </ul>
               )}
-
-              {hasCaseStudy ? (
-                <div className="mt-6 border-t border-border pt-6">
-                  <button
-                    type="button"
-                    onClick={openCaseStudy}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary/20 sm:w-auto"
-                  >
-                    {caseStudy.ctaFromWork}
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                </div>
-              ) : null}
             </div>
           </motion.div>
         </motion.div>

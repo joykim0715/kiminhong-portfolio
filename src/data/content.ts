@@ -77,7 +77,6 @@ export const siteContent = {
       { id: "education", label: "Education" },
       { id: "experience", label: "Experience" },
       { id: "works", label: "Work" },
-      { id: "case-study", label: "Case Study" },
       { id: "story", label: "Story" },
       { id: "contact", label: "Contact" },
     ],
@@ -409,7 +408,8 @@ export const siteContent = {
         ],
       },
     ] satisfies CaseStudyBlock[],
-    ctaFromWork: "케이스 스터디 보기",
+    ctaFromWork: "케이스 스터디 열기",
+    openHint: "탭하여 케이스 스터디",
   },
 
   certifications: [

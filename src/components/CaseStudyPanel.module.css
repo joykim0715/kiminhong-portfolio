@@ -1,0 +1,241 @@
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(12 20 24 / 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: var(--clr-bg);
+  box-shadow: 0 -24px 80px rgb(28 43 48 / 0.28);
+}
+
+@media (min-width: 768px) {
+  .shell {
+    margin: 1.25rem;
+    height: calc(100dvh - 2.5rem);
+    border-radius: 1.5rem;
+  }
+}
+
+.hero {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--clr-dark);
+  color: #fff;
+}
+
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 80% at 85% 20%, color-mix(in srgb, var(--clr-primary) 22%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 60% at 10% 100%, color-mix(in srgb, var(--clr-secondary) 18%, transparent), transparent 72%);
+}
+
+.heroGrid {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .heroGrid {
+    grid-template-columns: 7.5rem 1fr;
+    align-items: end;
+    padding: 1.5rem 2rem 1.75rem;
+  }
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: var(--clr-dark-surf);
+}
+
+.body {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: 11rem 1fr;
+  }
+}
+
+.rail {
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--clr-border);
+  background: color-mix(in srgb, var(--clr-surface) 55%, var(--clr-bg));
+  padding: 1.25rem 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .rail {
+    display: flex;
+  }
+}
+
+.railButton {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--clr-muted);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.railButton:hover {
+  background: rgb(95 168 163 / 0.08);
+  color: var(--clr-text);
+}
+
+.railButtonActive {
+  border-color: color-mix(in srgb, var(--clr-primary) 35%, transparent);
+  background: rgb(95 168 163 / 0.12);
+  color: var(--clr-primary);
+}
+
+.railIndex {
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgb(95 168 163 / 0.14);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.mobileNav {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--clr-border);
+  background: color-mix(in srgb, var(--clr-surface) 55%, var(--clr-bg));
+  padding: 0.75rem 1rem;
+  scrollbar-width: none;
+}
+
+.mobileNav::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .mobileNav {
+    display: none;
+  }
+}
+
+.mobilePill {
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--clr-muted);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.mobilePillActive {
+  border-color: color-mix(in srgb, var(--clr-primary) 40%, transparent);
+  background: rgb(95 168 163 / 0.12);
+  color: var(--clr-primary);
+}
+
+.content {
+  padding: 1.25rem 1.25rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding: 1.5rem 2rem 2.5rem;
+  }
+}
+
+.block {
+  scroll-margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+  padding: 1.25rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.blockVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(0 0 0 / 0.28);
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.close:hover {
+  transform: scale(1.04);
+  background: rgb(0 0 0 / 0.42);
+}
