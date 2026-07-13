@@ -4,11 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
-import { siteContent } from "@/data/content";
 import type { Work } from "@/data/works";
-import styles from "./CaseStudyPanel.module.css";
-
-const { caseStudy } = siteContent;
+import styles from "./ProjectPanel.module.css";
 
 const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
 
@@ -28,14 +25,16 @@ function highlightMetrics(text: string) {
   );
 }
 
-type CaseStudyPanelProps = {
+type ProjectPanelProps = {
   work: Work | null;
   onClose: () => void;
 };
 
-export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
+export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeBlockId, setActiveBlockId] = useState(caseStudy.blocks[0]?.id ?? "");
+  const panel = work?.panel;
+  const blocks = panel?.blocks ?? [];
+  const [activeBlockId, setActiveBlockId] = useState(blocks[0]?.id ?? "");
   const blockRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const scrollToBlock = useCallback((id: string) => {
@@ -48,6 +47,12 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
     });
     setActiveBlockId(id);
   }, []);
+
+  useEffect(() => {
+    if (!work) return;
+    setActiveBlockId(work.panel.blocks[0]?.id ?? "");
+    blockRefs.current = {};
+  }, [work]);
 
   useEffect(() => {
     if (!work) return;
@@ -87,18 +92,18 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
       },
     );
 
-    caseStudy.blocks.forEach((block) => {
+    blocks.forEach((block) => {
       const el = blockRefs.current[block.id];
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [work]);
+  }, [work, blocks]);
 
   useEffect(() => {
     if (!work || !scrollRef.current) return;
 
-    const blocks = scrollRef.current.querySelectorAll<HTMLElement>(`.${styles.block}`);
+    const blocksEls = scrollRef.current.querySelectorAll<HTMLElement>(`.${styles.block}`);
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -108,16 +113,16 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
           }
         });
       },
-      { root: scrollRef.current, threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      { root: scrollRef.current, threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
 
-    blocks.forEach((block) => revealObserver.observe(block));
+    blocksEls.forEach((block) => revealObserver.observe(block));
     return () => revealObserver.disconnect();
   }, [work]);
 
   return (
     <AnimatePresence>
-      {work ? (
+      {work && panel ? (
         <motion.div
           className={styles.panel}
           initial={{ opacity: 0 }}
@@ -126,12 +131,12 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
           transition={{ duration: 0.28 }}
           role="dialog"
           aria-modal="true"
-          aria-labelledby="case-study-panel-title"
+          aria-labelledby="project-panel-title"
         >
           <motion.button
             type="button"
             className={styles.backdrop}
-            aria-label="케이스 스터디 닫기"
+            aria-label="프로젝트 상세 닫기"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -140,19 +145,25 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
 
           <motion.div
             className={styles.shell}
+            data-project-panel
             initial={{ y: "100%", opacity: 0.9 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "18%", opacity: 0 }}
             transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
+            <div className={styles.toolbar}>
+              <button type="button" className={styles.backButton} onClick={onClose}>
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M15 19l-7-7 7-7" />
+                </svg>
+                뒤로 가기
+              </button>
+              <span className={styles.toolbarLabel}>{panel.sectionLabel}</span>
+            </div>
+
             <header className={styles.hero}>
               <div className={styles.heroGlow} aria-hidden="true" />
-              <button type="button" className={styles.close} onClick={onClose} aria-label="닫기">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
 
               <div className={`section-container ${styles.heroGrid}`}>
                 <div className={styles.thumb}>
@@ -170,35 +181,40 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
 
                 <div className="min-w-0">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-primary-light">
-                    {caseStudy.sectionLabel}
+                    {work.category}
                   </p>
-                  <h2 id="case-study-panel-title" className="mt-2 text-xl font-bold tracking-tight sm:text-2xl">
-                    {caseStudy.title}
+                  <h2 id="project-panel-title" className="mt-2 text-xl font-bold tracking-tight sm:text-2xl">
+                    {work.title}
                   </h2>
                   <p className="mt-2 break-keep text-sm leading-relaxed text-white/72 sm:text-base">
-                    {caseStudy.subtitle}
+                    {panel.subtitle}
                   </p>
 
-                  <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    {caseStudy.metrics.map((metric) => (
-                      <div
-                        key={metric.label}
-                        className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-center"
-                      >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">
-                          {metric.label}
-                        </p>
-                        <p className="mt-1 text-lg font-black text-primary-light sm:text-xl">{metric.value}</p>
-                      </div>
-                    ))}
-                  </div>
+                  {panel.metrics && panel.metrics.length > 0 ? (
+                    <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                      {panel.metrics.map((metric) => (
+                        <div
+                          key={metric.label}
+                          className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-center"
+                        >
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">
+                            {metric.label}
+                          </p>
+                          <p className="mt-1 text-lg font-black text-primary-light sm:text-xl">{metric.value}</p>
+                          {metric.note ? (
+                            <p className="mt-1 text-[10px] text-white/45">{metric.note}</p>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </header>
 
             <div className={styles.body}>
-              <nav className={styles.rail} aria-label="케이스 스터디 목차">
-                {caseStudy.blocks.map((block, index) => (
+              <nav className={styles.rail} aria-label="프로젝트 목차">
+                {blocks.map((block, index) => (
                   <button
                     key={block.id}
                     type="button"
@@ -213,9 +229,9 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
                 ))}
               </nav>
 
-              <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-                <div className={styles.mobileNav} aria-label="케이스 스터디 목차">
-                  {caseStudy.blocks.map((block) => (
+              <div className={styles.contentColumn}>
+                <div className={styles.mobileNav} aria-label="프로젝트 목차">
+                  {blocks.map((block) => (
                     <button
                       key={block.id}
                       type="button"
@@ -229,10 +245,10 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
                   ))}
                 </div>
 
-                <div ref={scrollRef} className={styles.scroll}>
+                <div ref={scrollRef} className={styles.scroll} data-project-panel-scroll>
                   <div className={`section-container ${styles.content}`}>
                     <dl className="mb-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-                      {caseStudy.meta.map((item) => (
+                      {panel.meta.map((item) => (
                         <div
                           key={item.label}
                           className="rounded-xl border border-border bg-bg/80 px-4 py-3"
@@ -245,7 +261,7 @@ export default function CaseStudyPanel({ work, onClose }: CaseStudyPanelProps) {
                       ))}
                     </dl>
 
-                    {caseStudy.blocks.map((block, index) => (
+                    {blocks.map((block, index) => (
                       <article
                         key={block.id}
                         id={block.id}

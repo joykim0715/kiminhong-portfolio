@@ -10,10 +10,9 @@ import type { Work } from "@/data/content";
 import CertificationBadge from "./CertificationBadge";
 import ProjectCard from "./ProjectCard";
 
-const WorkModal = dynamic(() => import("./WorkModal"), { ssr: false });
-const CaseStudyPanel = dynamic(() => import("./CaseStudyPanel"), { ssr: false });
+const ProjectPanel = dynamic(() => import("./ProjectPanel"), { ssr: false });
 
-const { works, certifications, caseStudy } = siteContent;
+const { works, certifications } = siteContent;
 const projects = works.projects;
 
 const STACK_STEP_VH = 0.9;
@@ -61,8 +60,7 @@ function scrollToPinZone(pinZone: HTMLElement) {
 
 export default function WorkGallery() {
   const [activeTab, setActiveTab] = useState<TabId>("projects");
-  const [selected, setSelected] = useState<Work | null>(null);
-  const [caseStudyWork, setCaseStudyWork] = useState<Work | null>(null);
+  const [panelWork, setPanelWork] = useState<Work | null>(null);
   const [activeStackIndex, setActiveStackIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
@@ -71,11 +69,7 @@ export default function WorkGallery() {
   const stackLabel = works.stackLabels[activeTab];
 
   const handleProjectClick = useCallback((work: Work) => {
-    if (work.caseStudyId === caseStudy.id) {
-      setCaseStudyWork(work);
-      return;
-    }
-    setSelected(work);
+    setPanelWork(work);
   }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
@@ -223,10 +217,7 @@ export default function WorkGallery() {
         </div>
       </div>
 
-      {selected && <WorkModal work={selected} onClose={() => setSelected(null)} />}
-      {caseStudyWork && (
-        <CaseStudyPanel work={caseStudyWork} onClose={() => setCaseStudyWork(null)} />
-      )}
+      {panelWork && <ProjectPanel work={panelWork} onClose={() => setPanelWork(null)} />}
     </section>
   );
 }

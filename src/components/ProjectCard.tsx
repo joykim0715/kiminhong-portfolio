@@ -4,7 +4,7 @@ import Image from "next/image";
 import { siteContent } from "@/data/content";
 import type { Work } from "@/data/content";
 
-const { caseStudy } = siteContent;
+const { works } = siteContent;
 
 type ProjectCardProps = {
   work: Work;
@@ -25,11 +25,9 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
         <div className="border-b border-border px-5 py-4 text-center sm:px-6">
           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">{work.category}</p>
           <h3 className="mt-1.5 text-base font-bold tracking-tight text-text sm:text-lg">{work.title}</h3>
-          {work.caseStudyId === caseStudy.id ? (
-            <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
-              {caseStudy.openHint}
-            </p>
-          ) : null}
+          <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
+            {works.openHint}
+          </p>
         </div>
         <div className="relative flex aspect-[5/3] items-center justify-center overflow-hidden bg-dark-surf p-4 sm:p-5 transform-gpu will-change-transform">
           {work.image ? (
@@ -80,11 +78,9 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       <div className="border-t border-border p-5 text-center sm:p-6">
         <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">{work.category}</p>
         <h3 className="mt-2 text-lg font-bold tracking-tight text-text sm:text-xl">{work.title}</h3>
-        {work.caseStudyId === caseStudy.id ? (
-          <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">
-            {caseStudy.openHint}
-          </p>
-        ) : null}
+        <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">
+          {works.openHint}
+        </p>
       </div>
     </button>
   );

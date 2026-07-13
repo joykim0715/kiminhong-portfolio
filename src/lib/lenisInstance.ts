@@ -3,13 +3,16 @@ import type Lenis from "lenis";
 let lenis: Lenis | null = null;
 let lockCount = 0;
 
-function isInsideScrollableDialog(target: EventTarget | null) {
+function isInsideScrollableOverlay(target: EventTarget | null) {
   if (!(target instanceof Node)) return false;
-  return Boolean(document.querySelector("[data-work-modal]")?.contains(target));
+  return Boolean(
+    document.querySelector("[data-work-modal]")?.contains(target) ||
+      document.querySelector("[data-project-panel]")?.contains(target),
+  );
 }
 
 function blockScrollGesture(e: Event) {
-  if (isInsideScrollableDialog(e.target)) return;
+  if (isInsideScrollableOverlay(e.target)) return;
   e.preventDefault();
 }
 
