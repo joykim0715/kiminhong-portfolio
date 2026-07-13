@@ -12,6 +12,20 @@ export type Work = {
   image?: string;
   description: string;
   details?: string[];
+  caseStudyId?: string;
+};
+
+export type CaseStudyMetric = {
+  label: string;
+  value: string;
+  note?: string;
+};
+
+export type CaseStudyBlock = {
+  id: string;
+  title: string;
+  summary?: string;
+  bullets: string[];
 };
 
 export type Certification = {
@@ -63,6 +77,7 @@ export const siteContent = {
       { id: "education", label: "Education" },
       { id: "experience", label: "Experience" },
       { id: "works", label: "Work" },
+      { id: "case-study", label: "Case Study" },
       { id: "story", label: "Story" },
       { id: "contact", label: "Contact" },
     ],
@@ -228,8 +243,9 @@ export const siteContent = {
         title: "시니어 헬스케어 실증사업 데이터 운영",
         category: "Digital Health",
         image: "/works/01.jpg",
+        caseStudyId: "senior-healthcare",
         description:
-          "시니어 헬스케어 실증 데이터를 수집·운영하고, 사용자 리텐션과 서비스 운영 전략을 설계한 프로젝트입니다.",
+          "시니어 헬스케어 실증사업에서 건강 데이터 수집·운영 전 과정을 담당했습니다. 참여자 이탈과 데이터 blackout을 현장 중심으로 관리해 분석 유효성 85%, 리텐션 83%를 확보했습니다.",
         details: [
           "역할: 연구원 / 데이터 플랫폼 센터",
           "소속: 가천대학교 산학협력단 지능형 홈케어 기반구축 사업단",
@@ -308,6 +324,92 @@ export const siteContent = {
         ],
       },
     ] satisfies Work[],
+  },
+
+  caseStudy: {
+    id: "senior-healthcare",
+    projectId: "01",
+    sectionLabel: "Case Study",
+    title: "시니어 헬스케어 실증 — 데이터 운영과 리텐션 관리",
+    subtitle:
+      "224명 대상 1년 실증에서 수집·운영·현장 관리를 맡아, 분석 가능한 데이터 품질과 참여 유지를 동시에 확보한 사례입니다.",
+    meta: [
+      { label: "역할", value: "연구원 / 데이터 플랫폼 센터" },
+      { label: "소속", value: "가천대학교 산학협력단 지능형 홈케어 기반구축 사업단" },
+      { label: "기간", value: "2025.03 ~ 2026.03" },
+      { label: "도구", value: "SQL, SPSS, Figma" },
+    ],
+    metrics: [
+      { label: "수집 데이터", value: "6.9만 건", note: "스마트링·워치 기반" },
+      { label: "분석 유효성", value: "85%", note: "blackout 구간 관리 후" },
+      { label: "참여 유지율", value: "83%", note: "최종 서비스 기준" },
+      { label: "실제 참여", value: "150명", note: "224명 중 67%" },
+    ] satisfies CaseStudyMetric[],
+    blocks: [
+      {
+        id: "problem",
+        title: "문제",
+        summary: "장기 실증에서 데이터의 ‘양’보다 ‘연속성’이 핵심 과제였습니다.",
+        bullets: [
+          "224명 대상 1년 운영 중 참여자 이탈로 건강 데이터가 끊기는 구간이 반복 발생",
+          "웨어러블 미착용·충전 누락 등 blackout으로 분석에 쓸 수 없는 공백 데이터 누적",
+          "현장 상황과 플랫폼 데이터 사이 품질 격차로 분석 신뢰도가 떨어짐",
+          "사업 성과와 운영 현황을 이해관계자에게 설명할 가시화 수단이 부족함",
+        ],
+      },
+      {
+        id: "role",
+        title: "내 역할",
+        summary: "수집 운영, 현장 관리, 분석 지원을 연결하는 허브 역할을 맡았습니다.",
+        bullets: [
+          "스마트링·워치 기반 건강 데이터 수집 파이프라인 운영 및 품질 모니터링",
+          "참여자 이탈·blackout 구간 식별 후 현장 밀착 관리로 데이터 연속성 확보",
+          "InBody 970, FRA-510s 등 전문 장비 검사 수행 및 결과 기록",
+          "사업 홍보·B2B 의사결정을 위한 Figma 대시보드 프로토타입 기획",
+        ],
+      },
+      {
+        id: "method",
+        title: "방법",
+        summary: "SQL·SPSS로 데이터를 읽고, 운영 프로세스로 현장을 움직였습니다.",
+        bullets: [
+          "blackout 구간을 운영 기준에 맞게 정의하고, 누락 패턴을 주기적으로 점검",
+          "이탈 신호가 보이는 참여자에게 우선 follow-up하는 현장 대응 루틴 운영",
+          "수집 데이터를 SQL로 추출·정제하고 SPSS로 분석 가능 여부를 검증",
+          "의사결정자가 한눈에 보는 사업 현황판을 Figma로 프로토타이핑해 공유",
+        ],
+      },
+      {
+        id: "results",
+        title: "결과",
+        summary: "참여 규모·데이터 품질·유지율을 동시에 끌어올렸습니다.",
+        bullets: [
+          "6.9만 건 건강 데이터 수집 및 운영 체계 안정화",
+          "blackout 구간 현장 관리로 분석 유효성 85% 확보",
+          "참여자 리텐션 83% 달성, 150명(67%)이 끝까지 서비스 참여",
+          "대시보드 프로토타입으로 B2B 용역 체결 의사결정 지원 5건",
+        ],
+      },
+      {
+        id: "insights",
+        title: "인사이트",
+        bullets: [
+          "헬스케어 실증에서 리텐션은 기술 문제이기 전에 운영·신뢰 문제다",
+          "데이터가 많아도 blackout이 많으면 분석 가치는 급격히 떨어진다",
+          "대시보드는 꾸밈이 아니라, 현장과 의사결정을 잇는 커뮤니케이션 도구다",
+        ],
+      },
+      {
+        id: "learnings",
+        title: "배운 점",
+        bullets: [
+          "초기에 blackout·이탈 기준을 표준화하면 후반 운영 부담이 크게 줄어든다",
+          "다음에는 리스크 참여자를 자동 태깅하는 룰을 SQL·대시보드에 붙이고 싶다",
+          "현장 경험과 데이터 분석을 함께 가져가는 인력이 디지털 헬스에서 특히 필요하다",
+        ],
+      },
+    ] satisfies CaseStudyBlock[],
+    ctaFromWork: "케이스 스터디 보기",
   },
 
   certifications: [

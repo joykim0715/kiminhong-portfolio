@@ -7,6 +7,7 @@ import SkillsDial from "@/components/SkillsDial";
 import Education from "@/components/Education";
 import Experience from "@/components/Experience";
 import WorkGallery from "@/components/WorkGallery";
+import CaseStudy from "@/components/CaseStudy";
 import StorySection from "@/components/StorySection";
 import ContactCTA from "@/components/ContactCTA";
 import PageLoadEntrance from "@/components/PageLoadEntrance";
@@ -25,6 +26,7 @@ export default function Home() {
         <Education />
         <Experience />
         <WorkGallery />
+        <CaseStudy />
         <SectionBlend variant="works-story" />
         <StorySection />
         <ContactCTA />
