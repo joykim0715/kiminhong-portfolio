@@ -1,18 +1,17 @@
-.bridgeBottomFade {
+.bridgeSection {
+  position: relative;
+  z-index: 1;
+  min-height: 90vh;
+  margin-top: clamp(-220px, -18vh, -120px);
+  padding-top: clamp(120px, 18vh, 220px);
+  overflow: hidden;
+  background-color: #1c2b30;
+}
+
+.bridgeGradient {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  height: clamp(160px, 22vh, 260px);
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgb(247 248 246 / 0.08) 18%,
-    rgb(247 248 246 / 0.35) 40%,
-    rgb(247 248 246 / 0.65) 62%,
-    rgb(247 248 246 / 0.88) 82%,
-    #f7f8f6 100%
-  );
+  inset: 0;
+  background: var(--gradient-bridge);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }

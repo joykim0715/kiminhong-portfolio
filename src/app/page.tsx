@@ -17,7 +17,6 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="relative z-[3]">
         <Hero />
-        <SectionBlend variant="hero-bridge" />
         <GradientTransition />
         <SectionBlend variant="bridge-values" />
         <Values />
