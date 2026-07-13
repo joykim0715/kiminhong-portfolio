@@ -2,10 +2,10 @@
   position: relative;
   z-index: 1;
   min-height: 90vh;
-  margin-top: clamp(-220px, -18vh, -120px);
-  padding-top: clamp(120px, 18vh, 220px);
+  margin-top: clamp(-280px, -24vh, -160px);
+  padding-top: clamp(160px, 24vh, 280px);
   overflow: hidden;
-  background-color: #1c2b30;
+  background-color: #000000;
 }
 
 .bridgeGradient {
@@ -14,4 +14,25 @@
   background: var(--gradient-bridge);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+
+.bridgeTopFade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: clamp(220px, 30vh, 400px);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #000000 10%,
+    rgb(0 0 0 / 0.94) 22%,
+    rgb(0 0 0 / 0.82) 36%,
+    rgb(0 0 0 / 0.62) 50%,
+    rgb(0 0 0 / 0.38) 64%,
+    rgb(0 0 0 / 0.16) 78%,
+    transparent 100%
+  );
 }

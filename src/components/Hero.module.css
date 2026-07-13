@@ -21,16 +21,19 @@
   left: 0;
   right: 0;
   z-index: 3;
-  height: clamp(200px, 26vh, 300px);
+  height: clamp(240px, 34vh, 420px);
   pointer-events: none;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgb(0 0 0 / 0.3) 18%,
-    rgb(0 0 0 / 0.6) 38%,
-    rgb(8 12 11 / 0.82) 58%,
-    rgb(16 24 21 / 0.94) 78%,
-    #1c2b30 100%
+    rgb(0 0 0 / 0.15) 12%,
+    rgb(0 0 0 / 0.35) 24%,
+    rgb(0 0 0 / 0.55) 36%,
+    rgb(4 8 7 / 0.72) 48%,
+    rgb(8 14 13 / 0.84) 60%,
+    rgb(12 20 18 / 0.92) 72%,
+    rgb(16 24 22 / 0.97) 84%,
+    #000000 100%
   );
 }
 
