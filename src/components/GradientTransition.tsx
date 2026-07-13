@@ -32,6 +32,7 @@ export default function GradientTransition() {
     >
       <div className={styles.bridgeGradient} aria-hidden="true" />
       <div className={styles.bridgeTopFade} aria-hidden="true" />
+      <div className={styles.bridgeBottomFade} aria-hidden="true" />
 
       <div className="gradient-reveal-text relative z-10 flex min-h-[inherit] items-center justify-center px-6 py-24">
         <p className="max-w-2xl break-keep text-center text-2xl font-medium tracking-tight text-white sm:text-3xl lg:text-4xl">

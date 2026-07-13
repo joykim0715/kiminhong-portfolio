@@ -35,18 +35,24 @@
     #487872 72%,
     #51877f 76%,
     #5a9d95 80%,
-    #5fa8a3 84%,
-    #67afb0 87%,
-    #6faed9 90%,
-    #8abfd4 93%,
-    #b8d5d8 96%,
-    #e3ebe8 98%,
+    #5fa8a3 83%,
+    #64ada8 86%,
+    #72b5b0 89%,
+    #84c0bb 92%,
+    #9dcec9 94%,
+    #b8dbd6 96%,
+    #d4e8e4 97.5%,
+    #e8f1ee 98.5%,
+    #f3f6f4 99.2%,
     #f7f8f6 100%
   );
 
   --gradient-bridge-values: linear-gradient(
     to bottom,
-    #f7f8f6 0%,
+    #e8f1ee 0%,
+    #edf3f1 20%,
+    #f1f5f3 45%,
+    #f5f7f6 70%,
     #f7f8f6 100%
   );
 

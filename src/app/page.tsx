@@ -18,7 +18,6 @@ export default function Home() {
       <main id="main-content" className="relative z-[3]">
         <Hero />
         <GradientTransition />
-        <SectionBlend variant="bridge-values" />
         <Values />
         <SkillsDial />
         <Education />
