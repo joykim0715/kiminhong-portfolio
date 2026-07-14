@@ -206,7 +206,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                       src={work.image}
                       alt={work.title}
                       fill
-                      className="object-contain sharp-image p-3"
+                      className="object-contain sharp-image"
                       sizes="120px"
                       quality={88}
                     />
