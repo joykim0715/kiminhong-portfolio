@@ -1,11 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
+import { getWorkImages } from "@/lib/workImages";
 import type { Work } from "@/data/works";
+import ProjectImages from "./ProjectImages";
 import styles from "./ProjectPanel.module.css";
 
 const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
@@ -35,6 +36,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const panel = work?.panel;
   const blocks = panel?.blocks ?? [];
+  const images = work ? getWorkImages(work) : [];
   const [activeBlockId, setActiveBlockId] = useState(blocks[0]?.id ?? "");
   const blockRefs = useRef<Record<string, HTMLElement | null>>({});
 
@@ -199,19 +201,17 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             <header className={styles.hero}>
               <div className={styles.heroGlow} aria-hidden="true" />
 
-              <div className={`section-container ${styles.heroGrid}`}>
-                <div className={styles.thumb}>
-                  {work.image ? (
-                    <Image
-                      src={work.image}
+              <div className={`section-container ${styles.heroGrid} ${images.length > 1 ? styles.heroGridMulti : ""}`}>
+                {images.length > 0 ? (
+                  <div className={images.length > 1 ? styles.thumbPair : styles.thumb}>
+                    <ProjectImages
+                      images={images.length > 1 ? images.slice(0, 2) : images}
                       alt={work.title}
-                      fill
-                      className="object-contain sharp-image"
-                      sizes="120px"
+                      sizes="160px"
                       quality={88}
                     />
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
 
                 <div className="min-w-0">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-primary-light">
@@ -281,6 +281,17 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
                 <div ref={scrollRef} className={styles.scroll} data-project-panel-scroll>
                   <div className={`section-container ${styles.content}`}>
+                    {images.length > 1 ? (
+                      <div className={`${styles.gallery} mb-5`}>
+                        <ProjectImages
+                          images={images}
+                          alt={work.title}
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          quality={90}
+                        />
+                      </div>
+                    ) : null}
+
                     <dl className="mb-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                       {panel.meta.map((item) => (
                         <div

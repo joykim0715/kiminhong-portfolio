@@ -129,6 +129,34 @@
   background: var(--clr-dark-surf);
 }
 
+.thumbPair {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: var(--clr-dark-surf);
+}
+
+.heroGridMulti {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .heroGridMulti {
+    grid-template-columns: 11rem 1fr;
+  }
+}
+
+.gallery {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-dark-surf);
+}
+
 .body {
   display: grid;
   min-height: 0;

@@ -9,7 +9,9 @@ export type Work = {
   id: string;
   title: string;
   category: string;
+  /** @deprecated images 배열을 사용하세요 */
   image?: string;
+  images?: string[];
   description: string;
   panel: ProjectPanel;
 };
@@ -403,11 +405,11 @@ export const siteContent = {
       },
       {
         id: "03",
-        title: "총학생회 인권복지국-교내 도서관 리모델링 사업",
+        title: "총학생회 인권복지국원 활동",
         category: "Teamwork",
-        image: "/works/03.jpg",
+        images: ["/works/03.jpg", "/works/03-b.jpg"],
         description:
-          "총학생회 소속으로 학생 설문 데이터를 수집·분석하여 공간 리모델링 방향을 도출하고, 이해관계자 의견을 조율한 프로젝트입니다.",
+          "총학생회 소속으로 학생 설문 데이터를 수집·분석하여 도서관 리모델링 방향을 도출하고, 배리어프리맵 설계 의견을 조율한 프로젝트입니다.",
         panel: {
           sectionLabel: "Research Case",
           subtitle:
@@ -471,7 +473,6 @@ export const siteContent = {
         id: "04",
         title: "스포츠과학대학 학생회-학과 맞춤형 기업 제휴 사업",
         category: "Teamwork",
-        image: "/works/04.jpg",
         description:
           "재학생 니즈 분석을 바탕으로 학과 맞춤형 기업 제휴를 기획·추진한 프로젝트입니다.",
         panel: {
@@ -537,7 +538,7 @@ export const siteContent = {
         id: "05",
         title: "대한체육회 국대스마터즈 1기",
         category: "Sports Marketing",
-        image: "/works/05.jpg",
+        images: ["/works/05.jpg", "/works/05-b.jpg"],
         description:
           "스포츠 종목 홍보 콘텐츠를 기획·제작하고, 디지털 채널 기반 마케팅 전략을 수행한 프로젝트입니다.",
         panel: {
