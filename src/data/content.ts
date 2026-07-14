@@ -309,7 +309,7 @@ export const siteContent = {
               bullets: [
                 "6.9만 건 건강 데이터 수집 및 운영 체계 안정화",
                 "blackout 구간 현장 관리로 분석 유효성 85% 확보",
-                "참여자 리텐션 83% 달성, 150명(67%)이 끝까지 서비스 참여",
+                "참여자 최종 유지율 83% 달성",
                 "대시보드 프로토타입으로 B2B 용역 체결 의사결정 지원 5건",
               ],
             },
@@ -319,7 +319,7 @@ export const siteContent = {
               bullets: [
                 "헬스케어 실증에서 리텐션은 기술 문제이기 전에 운영·신뢰 문제다",
                 "데이터가 많아도 blackout이 많으면 분석 가치는 급격히 떨어진다",
-                "대시보드는 꾸밈이 아니라, 현장과 의사결정을 잇는 커뮤니케이션 도구다",
+                "대시보드는 심미성 확보 이전에, 현장과 의사결정을 잇는 커뮤니케이션 도구가 될 수 있다",
               ],
             },
             {
@@ -327,7 +327,7 @@ export const siteContent = {
               title: "배운 점",
               bullets: [
                 "초기에 blackout·이탈 기준을 표준화하면 후반 운영 부담이 크게 줄어든다",
-                "다음에는 리스크 참여자를 자동 태깅하는 룰을 SQL·대시보드에 붙이고 싶다",
+                "다음에는 리스크 참여자를 자동 태깅하는 룰을 SQL·대시보드에 추가해보고 싶다",
                 "현장 경험과 데이터 분석을 함께 가져가는 인력이 디지털 헬스에서 특히 필요하다",
               ],
             },
@@ -336,15 +336,15 @@ export const siteContent = {
       },
       {
         id: "02",
-        title: "de:light — fNIRS 기반 식습관 관리 링",
+        title: "삼성생명 산학협력 프로젝트 '라이프놀로지 랩 1기'",
         category: "Digital Health",
         image: "/works/02.jpg",
         description:
-          "fNIRS 센서 기반 웨어러블 링과 앱 서비스를 기획하고, UX 플로우와 프로토타입을 설계한 프로젝트입니다.",
+          "fNIRS 센서 기반 웨어러블 링과 앱 서비스 'de:light'를 기획하고, UX 플로우와 프로토타입을 설계한 산학 협력 프로젝트입니다.",
         panel: {
           sectionLabel: "UX Case Study",
           subtitle:
-            "fNIRS 뇌 활동 신호로 식욕·섭취 패턴을 읽는 웨어러블 링과 앱 서비스를 팀 단위로 기획·프로토타이핑한 디지털 헬스 프로젝트입니다.",
+            "fNIRS 센서를 활용한 웨어러블 링과 연동 앱 서비스를 팀 단위로 기획·프로토타이핑한 디지털 헬스 프로젝트입니다.",
           meta: [
             { label: "역할", value: "팀원 / 기획·UX" },
             { label: "소속", value: "SKKU-삼성생명 라이프놀로지랩 1기" },
@@ -354,7 +354,7 @@ export const siteContent = {
           metrics: [
             { label: "프로그램", value: "라이프놀로지랩 1기", note: "SKKU × 삼성생명" },
             { label: "산출물", value: "앱 프로토타입", note: "웨어러블 연동 UX" },
-            { label: "핵심 센서", value: "fNIRS", note: "뇌 활동 기반" },
+            { label: "핵심 센서", value: "fNIRS", note: "기능적 근적외선 분광법 기반" },
             { label: "서비스 영역", value: "식습관", note: "개입·관리" },
           ],
           blocks: [
@@ -371,7 +371,7 @@ export const siteContent = {
             {
               id: "role",
               title: "내 역할",
-              summary: "앱 경험 설계와 프로토타입 제작을 맡아 팀 산출물의 중심 흐름을 잡았습니다.",
+              summary: "초기 기획과 경험 설계, 목업 설계 등을 맡아 팀 산출물의 중심 흐름을 잡았습니다.",
               bullets: [
                 "식습관 개입 시나리오별 앱 핵심 화면 플로우·인터랙션 기획",
                 "Figma 프로토타입 제작 및 팀 내 사용자 여정 정리",
@@ -403,11 +403,11 @@ export const siteContent = {
       },
       {
         id: "03",
-        title: "교내 도서관 리모델링 설문·기획",
-        category: "Research",
+        title: "총학생회 인권복지국-교내 도서관 리모델링 사업",
+        category: "Teamwork",
         image: "/works/03.jpg",
         description:
-          "학생 설문 데이터를 수집·분석하여 공간 리모델링 방향을 도출하고, 이해관계자 의견을 조율한 프로젝트입니다.",
+          "총학생회 소속으로 학생 설문 데이터를 수집·분석하여 공간 리모델링 방향을 도출하고, 이해관계자 의견을 조율한 프로젝트입니다.",
         panel: {
           sectionLabel: "Research Case",
           subtitle:
@@ -469,8 +469,8 @@ export const siteContent = {
       },
       {
         id: "04",
-        title: "학과 맞춤형 기업 제휴 사업",
-        category: "Business Planning",
+        title: "스포츠과학대학 학생회-학과 맞춤형 기업 제휴 사업",
+        category: "Teamwork",
         image: "/works/04.jpg",
         description:
           "재학생 니즈 분석을 바탕으로 학과 맞춤형 기업 제휴를 기획·추진한 프로젝트입니다.",
