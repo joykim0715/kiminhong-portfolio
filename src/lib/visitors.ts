@@ -5,7 +5,7 @@ import { hashVisitorIdentity } from "./visitorIdentity";
 const ALL_UNIQUE_SET = "visitors:unique:all";
 const LEGACY_TOTAL_KEY = "visitors:total";
 const TODAY_TTL_SECONDS = 60 * 60 * 48;
-const POST_RATE_LIMIT = 10;
+const POST_RATE_LIMIT = 60;
 const POST_RATE_WINDOW = "60 s" as const;
 
 function todayDateKST() {
@@ -87,11 +87,14 @@ export async function recordVisit(
   const redis = getRedis();
   if (!redis) return { stats: null, rateLimited: false };
 
-  const { success } = await getRateLimiter(redis).limit(`post:${ip}`);
-  if (!success) return { stats: null, rateLimited: true };
+  const identity = hashVisitorIdentity(ip, fingerprint);
+  const { success } = await getRateLimiter(redis).limit(`post:${identity}`);
+  if (!success) {
+    const stats = await getVisitorStats();
+    return { stats, rateLimited: true };
+  }
 
   try {
-    const identity = hashVisitorIdentity(ip, fingerprint);
     const eventsKey = todayEventsKey();
 
     const [, todayEvents] = await Promise.all([

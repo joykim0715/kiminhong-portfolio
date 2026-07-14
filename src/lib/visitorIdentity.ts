@@ -13,10 +13,15 @@ export function getClientIp(request: Request): string {
   return "unknown";
 }
 
+export function sanitizeFingerprint(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed || trimmed.length > 64) return "";
+  return trimmed.replace(/[^\w-]/g, "").slice(0, 64);
+}
+
 export function getClientFingerprint(request: Request): string {
-  const raw = request.headers.get("x-visitor-fp")?.trim() ?? "";
-  if (!raw || raw.length > 64) return "";
-  return raw.replace(/[^\w-]/g, "").slice(0, 64);
+  const raw = request.headers.get("x-visitor-fp") ?? "";
+  return sanitizeFingerprint(raw);
 }
 
 export function hashVisitorIdentity(ip: string, fingerprint: string): string {

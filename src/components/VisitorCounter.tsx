@@ -9,18 +9,32 @@ type VisitorResponse = {
 };
 
 const FINGERPRINT_KEY = "portfolio-visitor-fp";
+let sessionFingerprint: string | null = null;
 
 function formatCount(value: number) {
   return value.toLocaleString("ko-KR");
 }
 
 function getVisitorFingerprint(): string {
-  let fp = localStorage.getItem(FINGERPRINT_KEY);
-  if (!fp) {
-    fp = crypto.randomUUID();
-    localStorage.setItem(FINGERPRINT_KEY, fp);
+  try {
+    let fp = localStorage.getItem(FINGERPRINT_KEY);
+    if (!fp) {
+      fp = crypto.randomUUID();
+      localStorage.setItem(FINGERPRINT_KEY, fp);
+    }
+    return fp;
+  } catch {
+    if (!sessionFingerprint) {
+      sessionFingerprint = crypto.randomUUID();
+    }
+    return sessionFingerprint;
   }
-  return fp;
+}
+
+async function fetchVisitorStats(): Promise<VisitorResponse | null> {
+  const getRes = await fetch("/api/visitors", { cache: "no-store" });
+  if (!getRes.ok) return null;
+  return (await getRes.json()) as VisitorResponse;
 }
 
 export default function VisitorCounter() {
@@ -29,21 +43,31 @@ export default function VisitorCounter() {
   useEffect(() => {
     const load = async () => {
       try {
+        const fingerprint = getVisitorFingerprint();
         const postRes = await fetch("/api/visitors", {
           method: "POST",
-          headers: { "X-Visitor-Fp": getVisitorFingerprint() },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Visitor-Fp": fingerprint,
+          },
+          body: JSON.stringify({ fingerprint }),
+          cache: "no-store",
         });
-        if (postRes.ok) {
-          setStats((await postRes.json()) as VisitorResponse);
+
+        const postData = (await postRes.json()) as VisitorResponse;
+        if (postData.enabled && postData.total !== null && postData.today !== null) {
+          setStats(postData);
           return;
         }
-        if (postRes.status !== 429) return;
 
-        const getRes = await fetch("/api/visitors");
-        if (getRes.ok) {
-          setStats((await getRes.json()) as VisitorResponse);
-        }
+        const fallback = await fetchVisitorStats();
+        if (fallback) setStats(fallback);
       } catch {
+        const fallback = await fetchVisitorStats();
+        if (fallback) {
+          setStats(fallback);
+          return;
+        }
         setStats({ enabled: false, total: null, today: null });
       }
     };
