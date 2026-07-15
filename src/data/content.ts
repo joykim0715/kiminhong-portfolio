@@ -73,7 +73,7 @@ export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
     description:
-      "헬스케어 신입 김인홍의 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
+      "헬스케어 경력 1년차 김인홍의 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
   },
 
   nav: {
@@ -682,7 +682,7 @@ export const siteContent = {
     {
       name: "AI-POT 2급",
       fullName: "AI 프롬프트 활용능력",
-      issuer: "관련 발급기관",
+      issuer: "KPC(한국생산성본부)",
       date: "2026.04.30",
       type: "cert",
       description: "역설계 프롬프팅 및 커넥터·MCP 기반 업무 자동화 역량",
@@ -690,7 +690,7 @@ export const siteContent = {
     {
       name: "AIBT 2급",
       fullName: "AI 비즈니스 활용",
-      issuer: "관련 발급기관",
+      issuer: "KPC(한국생산성본부)",
       date: "2026.04.02",
       type: "cert",
       description: "AI 기술의 비즈니스 적용 원리 이해 및 실무 자동화 역량",
@@ -706,7 +706,7 @@ export const siteContent = {
     {
       name: "스마트홈 헬스케어 지도사 2급",
       fullName: "스마트홈 헬스케어 지도사",
-      issuer: "관련 발급기관",
+      issuer: "한국스마트홈헬스케어협회(KSHA)",
       date: "2025.11.14",
       type: "cert",
       description: "스마트홈 기술과 보건 의료 서비스 결합, 시니어 맞춤 기획 역량",
