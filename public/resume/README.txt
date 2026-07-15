@@ -1,9 +1,17 @@
-이력서 PDF 넣는 방법
-==================
+지원용 — 이력서·연락처 설정
+==========================
 
-1. 이력서 PDF 파일을 이 폴더에 넣습니다.
-2. 파일 이름: kiminhong-resume.pdf  (content.ts 의 resumeUrl 과 동일해야 함)
-3. git add → commit → push 하면 배포 후 히어로 "이력서 확인하기" 버튼에서 열립니다.
+[1] 이력서 PDF (필수, 영문)
+  - 이 폴더에 kiminhong-resume.pdf 로 저장
+  - 히어로·Contact "영문 이력서 확인하기" / 하단 "Resume (EN)" 에서 새 탭으로 열림
 
-경로: public/resume/kiminhong-resume.pdf
-URL:  https://사이트주소/resume/kiminhong-resume.pdf
+[2] 연락처 (content.ts 상단 contact 객체)
+  - email, phone 수정
+
+[3] 사람인 프로필 링크
+  - 사람인은 외부 공개용 프로필 URL을 제공하지 않습니다.
+  - 채용 담당자는 로그인·기업회원 권한이 있어야 이력서를 볼 수 있습니다.
+  - 포트폴리오에는 PDF 이력서 링크를 쓰고, 사람인 공고는 해당 공고에서 입사지원하세요.
+
+[4] 배포
+  - PDF 넣은 뒤 git push → Vercel 자동 배포

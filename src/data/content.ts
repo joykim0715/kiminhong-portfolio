@@ -69,6 +69,16 @@ export type ExperienceItem = {
   sections: ExperienceSection[];
 };
 
+/** 지원·채용 담당자용 연락처 — 이메일·전화만 여기 수정 */
+const contact = {
+  email: "recead0715@naver.com",
+  phone: "010-4272-3945",
+} as const;
+
+/** public/resume/ 폴더의 PDF 파일명과 동일해야 함 (영문 이력서) */
+const resumePath = "/resume/kiminhong-resume.pdf" as const;
+const resumeCtaLabel = "영문 이력서 확인하기" as const;
+
 export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
@@ -107,8 +117,8 @@ export const siteContent = {
       desktop: "마우스를 올려 사진을 둘러보세요",
       mobile: "탭해서 사진 둘러보기",
     },
-    resumeCtaLabel: "이력서 확인하기",
-    resumeUrl: "/resume/kiminhong-resume.pdf",
+    resumeCtaLabel,
+    resumeUrl: resumePath,
     noProfileImage: "프로필 이미지 없음",
   },
 
@@ -755,17 +765,17 @@ export const siteContent = {
     sectionLabel: "About",
     headline: "건강한 삶의 가치를 함께 찾겠습니다.",
     bio: "헬스케어 경력 1년차 김인홍입니다. 스포츠과학 전문성과 데이터 문해력을 바탕으로 차세대 헬스케어 시장을 만들어 나가겠습니다.",
-    email: "recead0715@naver.com",
-    phone: "010-4272-3945",
+    email: contact.email,
+    phone: contact.phone,
     copyright: "김인홍",
-    ctaButton: "Get in touch",
+    ctaButton: contact.email,
     phoneCtaLabel: "전화하기",
     rightsReserved: "All rights reserved.",
   },
 
   socialLinks: [
-    { label: "Saramin", href: "https://www.saramin.co.kr" },
-    { label: "Email", href: "mailto:recead0715@naver.com" },
-    { label: "Phone", href: "tel:01042723945" },
+    { label: "Email", href: `mailto:${contact.email}` },
+    { label: "Phone", href: `tel:${contact.phone.replace(/[^\d]/g, "")}` },
+    { label: "Resume (EN)", href: resumePath },
   ],
 };

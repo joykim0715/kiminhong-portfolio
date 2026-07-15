@@ -5,11 +5,11 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
 import { siteContent } from "@/data/content";
-import { isExternalHref, mailtoHref, telHref } from "@/lib/contact";
+import { isExternalHref, mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
 import Button from "./ui/Button";
 
 export default function ContactCTA() {
-  const { about, socialLinks } = siteContent;
+  const { about, hero, socialLinks } = siteContent;
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -62,6 +62,15 @@ export default function ContactCTA() {
         <div className="cta-button mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <Button href={mailtoHref(about.email)} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">
             {about.ctaButton}
+          </Button>
+          <Button
+            href={hero.resumeUrl}
+            target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
+            rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}
+            variant="ghost"
+            className="!border-white/25 !text-white/90 hover:!border-white/40 hover:!bg-white/10"
+          >
+            {hero.resumeCtaLabel}
           </Button>
           <Button
             href={telHref(about.phone)}
