@@ -26,8 +26,6 @@ export default function Hero() {
 
   return (
     <section id="hero" className={`${styles.hero} relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16`}>
-      <div className={styles.heroGlow} aria-hidden="true" />
-
       <div className={`section-container ${styles.heroGrid}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
