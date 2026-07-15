@@ -42,7 +42,7 @@ export type Certification = {
   fullName: string;
   issuer: string;
   date: string;
-  type: "cert" | "award";
+  type: "cert" | "award" | "english";
   description: string;
 };
 
@@ -714,6 +714,22 @@ export const siteContent = {
       date: "2026.02.03",
       type: "cert",
       description: "이벤트 기반 사용자 행동 패턴 및 유입 경로 분석 역량",
+    },
+    {
+      name: "TOEIC",
+      fullName: "850점",
+      issuer: "ETS",
+      date: "2025.01.26",
+      type: "english",
+      description: "영어 독해·업무 문서 이해 역량",
+    },
+    {
+      name: "OPIc",
+      fullName: "Intermediate High",
+      issuer: "ACTFL",
+      date: "2025.08.03",
+      type: "english",
+      description: "영어 말하기 의사소통 역량",
     },
     {
       name: "스마트홈 헬스케어 지도사 2급",
