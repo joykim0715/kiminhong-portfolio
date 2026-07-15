@@ -44,7 +44,7 @@ export default function ContactCTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative z-[1] flex min-h-screen flex-col items-center justify-center overflow-hidden bg-dark py-24 text-white"
+      className="relative z-[1] -mt-px flex min-h-screen flex-col items-center justify-center overflow-hidden bg-dark py-24 text-white"
       aria-labelledby="contact-heading"
     >
       <div

@@ -80,9 +80,11 @@
     #1c2b30 100%
   );
   --gradient-contact: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--clr-primary) 35%, var(--clr-dark)) 0%,
-    var(--clr-dark) 50%,
+    180deg,
+    var(--clr-dark) 0%,
+    var(--clr-dark) 18%,
+    color-mix(in srgb, var(--clr-primary) 28%, var(--clr-dark)) 50%,
+    color-mix(in srgb, var(--clr-primary) 14%, var(--clr-dark)) 78%,
     var(--clr-dark-surf) 100%
   );
 }
