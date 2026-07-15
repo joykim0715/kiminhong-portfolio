@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { siteContent } from "@/data/content";
+import { shouldOpenInNewTab } from "@/lib/contact";
 import styles from "./Hero.module.css";
 
 const { hero, nav, socialLinks } = siteContent;
@@ -36,7 +37,12 @@ export default function Hero() {
           <p className={`${styles.heroBio} hero-desc-line`}>{hero.bio}</p>
 
           <div className={`${styles.heroCtaRow} hero-cta`}>
-            <a href={hero.resumeUrl} className={styles.heroBtnPrimary} target="_blank" rel="noopener noreferrer">
+            <a
+              href={hero.resumeUrl}
+              className={styles.heroBtnPrimary}
+              target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
+              rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}
+            >
               {hero.resumeCtaLabel}
               <ArrowIcon />
             </a>
@@ -52,8 +58,8 @@ export default function Hero() {
                 key={link.label}
                 href={link.href}
                 className={styles.heroSocialLink}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                target={shouldOpenInNewTab(link.href) ? "_blank" : undefined}
+                rel={shouldOpenInNewTab(link.href) ? "noopener noreferrer" : undefined}
               >
                 {link.label}
               </a>

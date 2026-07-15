@@ -5,6 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
 import { siteContent } from "@/data/content";
+import { isExternalHref, mailtoHref, telHref } from "@/lib/contact";
 import Button from "./ui/Button";
 
 export default function ContactCTA() {
@@ -58,9 +59,16 @@ export default function ContactCTA() {
         </h2>
         <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
 
-        <div className="cta-button mt-12">
-          <Button href={`mailto:${about.email}`} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">
+        <div className="cta-button mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <Button href={mailtoHref(about.email)} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">
             {about.ctaButton}
+          </Button>
+          <Button
+            href={telHref(about.phone)}
+            variant="ghost"
+            className="!border-white/25 !text-white/90 hover:!border-white/40 hover:!bg-white/10"
+          >
+            {about.phoneCtaLabel} · {about.phone}
           </Button>
         </div>
 
@@ -72,8 +80,8 @@ export default function ContactCTA() {
             <a
               key={link.label}
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={isExternalHref(link.href) ? "_blank" : undefined}
+              rel={isExternalHref(link.href) ? "noopener noreferrer" : undefined}
               className="cta-logo text-sm font-semibold uppercase tracking-[0.2em] text-white/50 transition hover:text-primary-light sm:text-base"
             >
               {link.label}

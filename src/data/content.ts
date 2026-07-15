@@ -108,7 +108,7 @@ export const siteContent = {
       mobile: "탭해서 사진 둘러보기",
     },
     resumeCtaLabel: "이력서 확인하기",
-    resumeUrl: "#",
+    resumeUrl: "/resume/kiminhong-resume.pdf",
     noProfileImage: "프로필 이미지 없음",
   },
 
@@ -759,11 +759,13 @@ export const siteContent = {
     phone: "010-4272-3945",
     copyright: "김인홍",
     ctaButton: "Get in touch",
+    phoneCtaLabel: "전화하기",
     rightsReserved: "All rights reserved.",
   },
 
   socialLinks: [
     { label: "Saramin", href: "https://www.saramin.co.kr" },
     { label: "Email", href: "mailto:recead0715@naver.com" },
+    { label: "Phone", href: "tel:01042723945" },
   ],
 };
