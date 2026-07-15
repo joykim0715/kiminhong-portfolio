@@ -5,7 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
 import { siteContent } from "@/data/content";
-import { isExternalHref, mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
+import { mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
 import Button from "./ui/Button";
 
 export default function ContactCTA() {
@@ -89,8 +89,8 @@ export default function ContactCTA() {
             <a
               key={link.label}
               href={link.href}
-              target={isExternalHref(link.href) ? "_blank" : undefined}
-              rel={isExternalHref(link.href) ? "noopener noreferrer" : undefined}
+              target={shouldOpenInNewTab(link.href) ? "_blank" : undefined}
+              rel={shouldOpenInNewTab(link.href) ? "noopener noreferrer" : undefined}
               className="cta-logo text-sm font-semibold uppercase tracking-[0.2em] text-white/50 transition hover:text-primary-light sm:text-base"
             >
               {link.label}

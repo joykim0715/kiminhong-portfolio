@@ -75,6 +75,9 @@ const contact = {
   phone: "010-4272-3945",
 } as const;
 
+/** 홈케어 사업단 공식 소속명 — Experience·프로젝트 meta 에 동일하게 사용 */
+const homeCareOrganization = "취약계층 지능형 홈케어 기반구축 사업단" as const;
+
 /** public/resume/ 폴더의 PDF 파일명과 동일해야 함 (영문 이력서) */
 export const resumeFilePath = "/resume/kiminhong-resume.pdf" as const;
 /** 브라우저 내 PDF 뷰어 페이지 — 버튼·링크는 여기로 연결 */
@@ -85,7 +88,7 @@ export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
     description:
-      "헬스케어 경력 1년차 김인홍의 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
+      "헬스케어 실무 경력 1년의 김인홍 포트폴리오. 스포츠과학, 데이터 분석, 디지털 헬스케어 프로젝트를 소개합니다.",
   },
 
   nav: {
@@ -105,7 +108,7 @@ export const siteContent = {
 
   hero: {
     name: "김인홍",
-    tagline: "스포츠과학 × 디지털헬스 경력 1년차",
+    tagline: "스포츠과학 × 디지털헬스 | 실무 경력 1년",
     headline: "Finding the value of movement",
     bio: "헬스케어·디지털 헬스 분야에서 스포츠과학적 전문성과 데이터 분석으로 솔루션을 탐색합니다.",
     profileImage: "/images/profile.png",
@@ -150,7 +153,7 @@ export const siteContent = {
       {
         id: "oa",
         category: "OA",
-        tools: "MS Word, Excel, Powerpoint",
+        tools: "MS Word, Excel, PowerPoint",
         proficiency: 90,
         details: ["데이터 관리 및 시각화", "페이퍼워크 작업", "기타 자료 제작"],
       },
@@ -200,7 +203,7 @@ export const siteContent = {
     title: "경험",
     items: [
       {
-        organization: "AAL 지능형 홈케어 기반구축사업단",
+        organization: homeCareOrganization,
         role: "데이터 플랫폼 센터 연구원",
         period: "2025.03 ~ 2026.03",
         employmentType: "계약직",
@@ -273,7 +276,7 @@ export const siteContent = {
             "인천광역시 거주 중인 65세 이상 액티브 시니어를 대상으로 건강 데이터를 수집하고 관리했습니다. 분석 가능한 데이터 품질과 참여 유지를 동시에 확보한 사례입니다.",
           meta: [
             { label: "역할", value: "연구원 / 데이터 플랫폼 센터" },
-            { label: "소속", value: "취약계층 지능형 홈케어 기반구축 사업단" },
+            { label: "소속", value: homeCareOrganization },
             { label: "기간", value: "2025.03 ~ 2026.03" },
             { label: "도구", value: "MySQL, SPSS, Figma" },
           ],
@@ -613,72 +616,6 @@ export const siteContent = {
           ],
         },
       },
-      {
-        id: "06",
-        title: "사업 홍보용 인터랙티브 대시보드 기획",
-        category: "Data Analysis",
-        image: "/works/06.jpg",
-        description:
-          "사업 추진 현황을 한눈에 파악할 수 있도록 데이터 기반 인터랙티브 대시보드를 기획한 프로젝트입니다.",
-        panel: {
-          sectionLabel: "Data Viz Case",
-          subtitle:
-            "시니어 헬스케어 실증사업의 참여·데이터·성과 지표를 한 화면에 모아, B2B 미팅과 홍보에서 즉시 설명 가능한 인터랙티브 대시보드를 Figma로 기획한 프로젝트입니다.",
-          meta: [
-            { label: "역할", value: "연구원 / 기획" },
-            { label: "소속", value: "가천대학교 산학협력단 지능형 홈케어 기반구축 사업단" },
-            { label: "기간", value: "2025.03 ~ 2026.03" },
-            { label: "도구", value: "Figma, Looker Studio" },
-          ],
-          metrics: [
-            { label: "B2B 지원", value: "5건", note: "의사결정 지원" },
-            { label: "핵심 KPI", value: "4종", note: "참여·데이터·성과" },
-            { label: "산출물", value: "프로토타입", note: "Figma 인터랙티브" },
-          ],
-          blocks: [
-            {
-              id: "problem",
-              title: "문제",
-              summary: "사업 성과를 설명할 때 수치가 엑셀·보고서에 흩어져 의사결정이 느렸습니다.",
-              bullets: [
-                "참여자 수·리텐션·데이터 유효성 등 KPI가 파일마다 다른 형식으로 존재",
-                "B2B 미팅·홍보 현장에서 즉시 보여줄 시각 자료가 없음",
-                "운영 현황과 성과를 하나의 스토리로 연결하는 도구 부재",
-              ],
-            },
-            {
-              id: "role",
-              title: "내 역할",
-              summary: "대시보드 IA 설계부터 KPI 정의, Figma 프로토타입 제작까지 기획 전반을 담당했습니다.",
-              bullets: [
-                "참여자·데이터 품질·성과 지표를 연결하는 대시보드 정보 구조(IA) 설계",
-                "B2B 미팅 맥락에 맞는 핵심 KPI 선정 및 시각화 우선순위 정의",
-                "Figma 기반 인터랙티브 프로토타입 제작 및 이해관계자 공유",
-              ],
-            },
-            {
-              id: "method",
-              title: "방법",
-              summary: "현장 운영 데이터를 읽고, 의사결정자 시선에서 화면을 설계했습니다.",
-              bullets: [
-                "운영팀·연구팀이 자주 쓰는 지표를 인터뷰·회의로 수집",
-                "Overview → 참여 현황 → 데이터 품질 → 성과 순 화면 흐름 구성",
-                "Figma 컴포넌트로 필터·드릴다운 인터랙션을 프로토타이핑",
-              ],
-            },
-            {
-              id: "outcome",
-              title: "성과",
-              summary: "사업 현황을 한눈에 설명하는 대시보드 프로토타입을 완성했습니다.",
-              bullets: [
-                "사업 현황·성과를 설명하는 인터랙티브 대시보드 프로토타입 완성",
-                "B2B 용역 체결 의사결정 지원 5건에 활용",
-                "데이터 기획과 시각화 역량을 연결한 실무 산출물 확보",
-              ],
-            },
-          ],
-        },
-      },
     ] satisfies Work[],
   },
 
@@ -782,7 +719,7 @@ export const siteContent = {
   about: {
     sectionLabel: "About",
     headline: "건강한 삶의 가치를 함께 찾겠습니다.",
-    bio: "헬스케어 경력 1년차 김인홍입니다. 스포츠과학 전문성과 데이터 문해력을 바탕으로 차세대 헬스케어 시장을 만들어 나가겠습니다.",
+    bio: "헬스케어 실무 경력 1년의 김인홍입니다. 스포츠과학 전문성과 데이터 문해력을 바탕으로 차세대 헬스케어 시장을 만들어 나가겠습니다.",
     email: contact.email,
     phone: contact.phone,
     copyright: "김인홍",

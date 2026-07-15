@@ -6,6 +6,8 @@
   - 히어로·Contact "영문 이력서 확인하기" → /resume (브라우저 뷰어)
   - 직접 PDF: /resume/kiminhong-resume.pdf (다운로드용)
 
+  국문 이력서는 지원 페이지 첨부용 — 웹사이트에 배포하지 않습니다.
+
 [2] 연락처 (content.ts 상단 contact 객체)
   - email, phone 수정
 
