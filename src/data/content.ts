@@ -754,7 +754,7 @@ export const siteContent = {
   about: {
     sectionLabel: "About",
     headline: "건강한 삶의 가치를 함께 찾겠습니다.",
-    bio: "헬스케어 신입 김인홍입니다. 스포츠과학 전문성과 데이터 문해력을 바탕으로 차세대 헬스케어 시장을 이끌겠습니다.",
+    bio: "헬스케어 경력 1년차 김인홍입니다. 스포츠과학 전문성과 데이터 문해력을 바탕으로 차세대 헬스케어 시장을 만들어 나가겠습니다.",
     email: "recead0715@naver.com",
     phone: "010-4272-3945",
     copyright: "김인홍",
