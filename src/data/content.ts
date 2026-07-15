@@ -240,6 +240,7 @@ export const siteContent = {
       projects: "Projects",
       certifications: "Certifications",
     },
+    tabHint: "탭을 선택해 내용을 확인하세요",
     stackLabels: {
       projects: "프로젝트",
       certifications: "자격증",

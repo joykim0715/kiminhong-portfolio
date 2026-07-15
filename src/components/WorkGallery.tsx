@@ -21,9 +21,9 @@ const NAV_OFFSET = 64;
 type TabId = "projects" | "certifications";
 
 const TAB_CLASS_ACTIVE =
-  "rounded-full bg-accent px-4 py-1.5 text-[13px] font-medium text-white transition-all duration-200";
+  "rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 sm:px-7 sm:py-3 sm:text-base";
 const TAB_CLASS_IDLE =
-  "rounded-full bg-surface px-4 py-1.5 text-[13px] font-medium text-muted transition-all duration-200 hover:bg-primary/10";
+  "rounded-full border border-border bg-surface px-6 py-2.5 text-sm font-semibold text-muted transition-all duration-200 hover:border-primary/30 hover:bg-primary/10 hover:text-text sm:px-7 sm:py-3 sm:text-base";
 
 function WorksTabs({
   activeTab,
@@ -33,17 +33,22 @@ function WorksTabs({
   onTabChange: (tab: TabId) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {(["projects", "certifications"] as const).map((tab) => (
-        <button
-          key={tab}
-          type="button"
-          onClick={() => onTabChange(tab)}
-          className={activeTab === tab ? TAB_CLASS_ACTIVE : TAB_CLASS_IDLE}
-        >
-          {works.tabs[tab]}
-        </button>
-      ))}
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <div className="flex flex-wrap gap-3" role="tablist" aria-label="프로젝트 및 자격증">
+        {(["projects", "certifications"] as const).map((tab) => (
+          <button
+            key={tab}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab}
+            onClick={() => onTabChange(tab)}
+            className={activeTab === tab ? TAB_CLASS_ACTIVE : TAB_CLASS_IDLE}
+          >
+            {works.tabs[tab]}
+          </button>
+        ))}
+      </div>
+      <p className="text-xs leading-snug text-muted sm:text-sm">{works.tabHint}</p>
     </div>
   );
 }
