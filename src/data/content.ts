@@ -76,7 +76,9 @@ const contact = {
 } as const;
 
 /** public/resume/ 폴더의 PDF 파일명과 동일해야 함 (영문 이력서) */
-const resumePath = "/resume/kiminhong-resume.pdf" as const;
+export const resumeFilePath = "/resume/kiminhong-resume.pdf" as const;
+/** 브라우저 내 PDF 뷰어 페이지 — 버튼·링크는 여기로 연결 */
+export const resumePagePath = "/resume" as const;
 const resumeCtaLabel = "영문 이력서 확인하기" as const;
 
 export const siteContent = {
@@ -118,7 +120,7 @@ export const siteContent = {
       mobile: "탭해서 사진 둘러보기",
     },
     resumeCtaLabel,
-    resumeUrl: resumePath,
+    resumeUrl: resumePagePath,
     noProfileImage: "프로필 이미지 없음",
   },
 
@@ -776,6 +778,6 @@ export const siteContent = {
   socialLinks: [
     { label: "Email", href: `mailto:${contact.email}` },
     { label: "Phone", href: `tel:${contact.phone.replace(/[^\d]/g, "")}` },
-    { label: "Resume (EN)", href: resumePath },
+    { label: "Resume (EN)", href: resumePagePath },
   ],
 };

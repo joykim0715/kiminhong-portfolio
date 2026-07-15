@@ -3,7 +3,8 @@
 
 [1] 이력서 PDF (필수, 영문)
   - 이 폴더에 kiminhong-resume.pdf 로 저장
-  - 히어로·Contact "영문 이력서 확인하기" / 하단 "Resume (EN)" 에서 새 탭으로 열림
+  - 히어로·Contact "영문 이력서 확인하기" → /resume (브라우저 뷰어)
+  - 직접 PDF: /resume/kiminhong-resume.pdf (다운로드용)
 
 [2] 연락처 (content.ts 상단 contact 객체)
   - email, phone 수정
