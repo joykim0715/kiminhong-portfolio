@@ -54,10 +54,7 @@ export default function ContactCTA() {
       />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
-        <h2
-          id="contact-heading"
-          className="cta-headline text-gradient-light mx-auto max-w-3xl break-keep text-[clamp(1.75rem,4.2vw,3rem)] font-bold leading-[1.4] tracking-[0.03em]"
-        >
+        <h2 id="contact-heading" className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight">
           {about.headline}
         </h2>
         <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
