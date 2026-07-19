@@ -57,9 +57,15 @@ export function scrollPinStack(options: PinStackOptions) {
       scrub,
       invalidateOnRefresh: true,
       onUpdate(self) {
+        // segmentDuration = 전환(1) + 홀드. floor만 쓰면 홀드 구간 내내 이전 인덱스가 유지되어
+        // 화면에 보이는 카드와 클릭 대상이 어긋남 (예: 라이프놀로지 카드인데 01 패널 오픈).
+        // 전환 중반(0.5)을 넘기면 다음 카드로 인덱스를 올려 표시·클릭을 맞춘다.
         const timelinePos = self.progress * steps * segmentDuration;
-        const index = Math.min(steps, Math.floor(timelinePos / segmentDuration));
-        options.onIndex?.(index);
+        const visualIndex = Math.min(
+          steps,
+          Math.max(0, Math.floor(timelinePos / segmentDuration + 0.5)),
+        );
+        options.onIndex?.(visualIndex);
       },
     },
   });

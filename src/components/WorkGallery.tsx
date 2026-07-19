@@ -189,9 +189,11 @@ export default function WorkGallery() {
                 {projects.map((work, i) => (
                   <div
                     key={work.id}
-                    className={`stack-card absolute inset-x-0 top-0 ${
-                      i === activeStackIndex ? "pointer-events-auto" : "pointer-events-none"
-                    }`}
+                    className="stack-card absolute inset-x-0 top-0"
+                    style={{
+                      // 활성(맨 앞) 카드만 클릭 가능 — 인덱스는 전환 중반부터 갱신됨
+                      pointerEvents: i === activeStackIndex ? "auto" : "none",
+                    }}
                   >
                     <ProjectCard compact work={work} onClick={() => handleProjectClick(work)} />
                   </div>
@@ -222,7 +224,9 @@ export default function WorkGallery() {
         </div>
       </div>
 
-      {panelWork && <ProjectPanel work={panelWork} onClose={() => setPanelWork(null)} />}
+      {panelWork ? (
+        <ProjectPanel key={panelWork.id} work={panelWork} onClose={() => setPanelWork(null)} />
+      ) : null}
     </section>
   );
 }
