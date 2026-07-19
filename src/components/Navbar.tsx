@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { siteContent } from "@/data/content";
+import { useRecruitSafe } from "./RecruitSafeProvider";
 import VisitorCounter from "./VisitorCounter";
 
 const { nav } = siteContent;
@@ -29,11 +30,16 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 export default function Navbar() {
+  const recruitSafe = useRecruitSafe();
+  const sections = useMemo(
+    () => (recruitSafe ? nav.sections.filter((s) => s.id !== "contact") : nav.sections),
+    [recruitSafe],
+  );
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const observers = nav.sections.map(({ id }) => {
+    const observers = sections.map(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return null;
 
@@ -49,7 +55,7 @@ export default function Navbar() {
     });
 
     return () => observers.forEach((o) => o?.disconnect());
-  }, []);
+  }, [sections]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -88,7 +94,7 @@ export default function Navbar() {
         </div>
 
         <ul className="hidden items-center gap-6 md:flex">
-          {nav.sections.map(({ id, label }) => (
+          {sections.map(({ id, label }) => (
             <li key={id}>
               <a href={`#${id}`} className={sectionLinkClass(id)}>
                 {label}
@@ -109,13 +115,23 @@ export default function Navbar() {
             <MenuIcon open={menuOpen} />
           </button>
 
-          <a
-            href="#contact"
-            className="rounded-full border border-primary/50 px-3 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:px-4 sm:text-sm"
-            onClick={() => setMenuOpen(false)}
-          >
-            {nav.contactCta}
-          </a>
+          {!recruitSafe ? (
+            <a
+              href="#contact"
+              className="rounded-full border border-primary/50 px-3 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:px-4 sm:text-sm"
+              onClick={() => setMenuOpen(false)}
+            >
+              {nav.contactCta}
+            </a>
+          ) : (
+            <a
+              href="#works"
+              className="rounded-full border border-primary/50 px-3 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:px-4 sm:text-sm"
+              onClick={() => setMenuOpen(false)}
+            >
+              Work
+            </a>
+          )}
         </div>
       </nav>
 
@@ -125,7 +141,7 @@ export default function Navbar() {
           className="border-t border-white/10 bg-[#0a1211]/95 backdrop-blur-md md:hidden"
         >
           <ul className="section-container grid grid-cols-2 gap-1 py-3">
-            {nav.sections.map(({ id, label }) => (
+            {sections.map(({ id, label }) => (
               <li key={id}>
                 <a
                   href={`#${id}`}

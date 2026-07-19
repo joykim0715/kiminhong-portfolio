@@ -6,9 +6,11 @@ import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
 import { siteContent } from "@/data/content";
 import { mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
+import { useRecruitSafe } from "./RecruitSafeProvider";
 import Button from "./ui/Button";
 
 export default function ContactCTA() {
+  const recruitSafe = useRecruitSafe();
   const { about, hero, socialLinks } = siteContent;
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -39,6 +41,38 @@ export default function ContactCTA() {
 
     return () => ctx.revert();
   }, []);
+
+  /** 채용 제출용: 연락처·이력서 없이 클로징 문구만 */
+  if (recruitSafe) {
+    return (
+      <section
+        id="closing"
+        ref={sectionRef}
+        className="relative z-[1] -mt-px flex min-h-[50vh] flex-col items-center justify-center overflow-hidden bg-dark py-24 text-white"
+        aria-labelledby="closing-heading"
+      >
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{ background: "var(--gradient-contact)" }}
+        />
+        <div className="section-container relative z-10 flex flex-col items-center text-center">
+          <h2
+            id="closing-heading"
+            className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight"
+          >
+            {about.headline}
+          </h2>
+          <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">
+            {about.bio}
+          </p>
+          <p className="cta-body mt-16 text-xs text-white/40 sm:text-sm">
+            &copy; {new Date().getFullYear()} {about.copyright}. {about.rightsReserved}
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
