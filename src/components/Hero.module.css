@@ -1,7 +1,9 @@
 .hero {
   position: relative;
   min-height: 100dvh;
-  overflow: hidden;
+  /* CTA·소셜 링크가 잘리지 않도록 세로 overflow는 허용 */
+  overflow-x: hidden;
+  overflow-y: visible;
   background: #000000;
   color: #f5f7f6;
 }
@@ -11,29 +13,29 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 2;
-  height: clamp(160px, 22vh, 280px);
+  /* 그리드(텍스트·CTA)보다 뒤에 있어야 버튼이 가려지지 않음 */
+  z-index: 0;
+  height: clamp(140px, 18vh, 240px);
   pointer-events: none;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgb(0 0 0 / 0.12) 18%,
-    rgb(0 0 0 / 0.32) 40%,
-    rgb(4 8 7 / 0.55) 62%,
-    rgb(8 14 13 / 0.78) 82%,
+    rgb(0 0 0 / 0.1) 25%,
+    rgb(0 0 0 / 0.28) 55%,
+    rgb(4 8 7 / 0.5) 78%,
     #000000 100%
   );
 }
 
 .heroGrid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   flex: 1;
   align-items: center;
   gap: 3rem;
   padding-block: clamp(2rem, 5vw, 4rem);
-  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+  padding-bottom: clamp(3.5rem, 9vh, 6rem);
   isolation: isolate;
 }
 

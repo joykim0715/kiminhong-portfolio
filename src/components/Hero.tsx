@@ -30,7 +30,7 @@ export default function Hero() {
     : socialLinks;
 
   return (
-    <section id="hero" className={`${styles.hero} relative z-[1] flex min-h-screen flex-col overflow-hidden pt-16`}>
+    <section id="hero" className={`${styles.hero} relative z-[1] flex min-h-screen flex-col pt-16`}>
       <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
