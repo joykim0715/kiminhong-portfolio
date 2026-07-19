@@ -1,9 +1,10 @@
 .bridgeSection {
   position: relative;
+  /* Hero(z-index: 3) 아래에 두어 CTA 겹침 방지. 블렌드는 유지하되 덜 공격적으로 */
   z-index: 1;
   min-height: 90vh;
-  margin-top: clamp(-280px, -24vh, -160px);
-  padding-top: clamp(160px, 24vh, 280px);
+  margin-top: clamp(-96px, -10vh, -48px);
+  padding-top: clamp(96px, 12vh, 140px);
   overflow: hidden;
   background-color: #000000;
 }
