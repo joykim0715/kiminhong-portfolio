@@ -14,6 +14,6 @@ export function isExternalHref(href: string): boolean {
 
 export function shouldOpenInNewTab(href: string): boolean {
   if (href === "#" || href.startsWith("#")) return false;
-  if (href === "/resume") return true;
+  if (href === "/resume" || href === "/resume/naver") return true;
   return isExternalHref(href) || href.endsWith(".pdf");
 }

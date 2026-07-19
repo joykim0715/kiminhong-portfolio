@@ -84,6 +84,11 @@ export const resumeFilePath = "/resume/kiminhong-resume.pdf" as const;
 export const resumePagePath = "/resume" as const;
 const resumeCtaLabel = "영문 이력서 확인하기" as const;
 
+/** 네이버 채용 제출용 국문 CV (`/naver` 전용) */
+export const naverResumeFilePath = "/resume/kiminhong-resume-naver.pdf" as const;
+export const naverResumePagePath = "/resume/naver" as const;
+const naverResumeCtaLabel = "국문 이력서 확인하기" as const;
+
 export const siteContent = {
   meta: {
     title: "김인홍 — Healthcare Portfolio",
@@ -124,6 +129,9 @@ export const siteContent = {
     },
     resumeCtaLabel,
     resumeUrl: resumePagePath,
+    /** `/naver` 채용 제출용 */
+    naverResumeCtaLabel,
+    naverResumeUrl: naverResumePagePath,
     noProfileImage: "프로필 이미지 없음",
   },
 

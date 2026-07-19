@@ -26,7 +26,7 @@ export default function Hero() {
   const recruitSafe = useRecruitSafe();
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
   const publicSocialLinks = recruitSafe
-    ? socialLinks.filter((link) => !link.href.startsWith("mailto:") && !link.href.startsWith("tel:") && link.href !== "/resume")
+    ? []
     : socialLinks;
 
   return (
@@ -41,10 +41,21 @@ export default function Hero() {
 
           <div className={`${styles.heroCtaRow} hero-cta`}>
             {recruitSafe ? (
-              <a href="#works" className={styles.heroBtnPrimary}>
-                프로젝트 보기
-                <ArrowIcon />
-              </a>
+              <>
+                <a
+                  href={hero.naverResumeUrl}
+                  className={styles.heroBtnPrimary}
+                  target={shouldOpenInNewTab(hero.naverResumeUrl) ? "_blank" : undefined}
+                  rel={shouldOpenInNewTab(hero.naverResumeUrl) ? "noopener noreferrer" : undefined}
+                >
+                  {hero.naverResumeCtaLabel}
+                  <ArrowIcon />
+                </a>
+                <a href="#works" className={styles.heroBtnGhost}>
+                  프로젝트 보기
+                  <ArrowIcon />
+                </a>
+              </>
             ) : (
               <>
                 <a

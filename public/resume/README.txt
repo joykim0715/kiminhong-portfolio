@@ -1,20 +1,20 @@
 지원용 — 이력서·연락처 설정
 ==========================
 
-[1] 이력서 PDF (필수, 영문)
-  - 이 폴더에 kiminhong-resume.pdf 로 저장
-  - 히어로·Contact "영문 이력서 확인하기" → /resume (브라우저 뷰어)
-  - 직접 PDF: /resume/kiminhong-resume.pdf (다운로드용)
+[1] 영문 이력서 (원본 포트폴리오 /)
+  - 파일: kiminhong-resume.pdf
+  - 뷰어: /resume
+  - 히어로·Contact "영문 이력서 확인하기"
 
-  국문 이력서는 지원 페이지 첨부용 — 웹사이트에 배포하지 않습니다.
+[2] 네이버 지원용 국문 CV (/naver 전용)
+  - 파일: kiminhong-resume-naver.pdf
+  - 뷰어: /resume/naver
+  - /naver 히어로 "국문 이력서 확인하기"
+  - 원본(/)에는 노출되지 않습니다.
 
-[2] 연락처 (content.ts 상단 contact 객체)
+[3] 연락처 (content.ts 상단 contact 객체)
   - email, phone 수정
-
-[3] 사람인 프로필 링크
-  - 사람인은 외부 공개용 프로필 URL을 제공하지 않습니다.
-  - 채용 담당자는 로그인·기업회원 권한이 있어야 이력서를 볼 수 있습니다.
-  - 포트폴리오에는 PDF 이력서 링크를 쓰고, 사람인 공고는 해당 공고에서 입사지원하세요.
+  - /naver 페이지에서는 연락처·사진을 숨깁니다.
 
 [4] 배포
   - PDF 넣은 뒤 git push → Vercel 자동 배포
