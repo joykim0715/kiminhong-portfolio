@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
@@ -305,6 +306,23 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                         </div>
                       ))}
                     </dl>
+
+                    {panel.demoHref && panel.demoCtaLabel ? (
+                      <div className="mb-5">
+                        <Link
+                          href={panel.demoHref}
+                          className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
+                        >
+                          {panel.demoCtaLabel}
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
+                        <p className="mt-2 text-xs text-muted">
+                          Figma 기획을 웹으로 구현한 의사결정용 미니 대시보드 (합성 데이터)
+                        </p>
+                      </div>
+                    ) : null}
 
                     {blocks.map((block, index) => (
                       <article

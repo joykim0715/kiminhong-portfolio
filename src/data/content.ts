@@ -5,6 +5,10 @@
  *       works, certifications, story, about, socialLinks
  */
 
+import { dashboardDemoPath } from "./dashboardDemo";
+
+export { dashboardDemoPath };
+
 export type Work = {
   id: string;
   title: string;
@@ -35,6 +39,9 @@ export type ProjectPanel = {
   meta: { label: string; value: string }[];
   metrics?: ProjectPanelMetric[];
   blocks: ProjectPanelBlock[];
+  /** 인터랙티브 데모 등 외부/내부 링크 CTA */
+  demoHref?: string;
+  demoCtaLabel?: string;
 };
 
 export type Certification = {
@@ -358,6 +365,8 @@ export const siteContent = {
               ],
             },
           ],
+          demoHref: dashboardDemoPath,
+          demoCtaLabel: "대시보드 데모 보기",
         },
       },
       {
