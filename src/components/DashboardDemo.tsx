@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { dashboardDemo } from "@/data/dashboardDemo";
 import styles from "./DashboardDemo.module.css";
@@ -9,9 +9,54 @@ type SeriesKey = "active" | "retention" | "validity";
 
 const SERIES_KEYS: SeriesKey[] = ["active", "retention", "validity"];
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return reduced;
+}
+
+function useInViewOnce<T extends Element>(options?: IntersectionObserverInit) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || inView) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35, rootMargin: "0px 0px -8% 0px", ...options },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [inView, options]);
+
+  return { ref, inView };
+}
+
 function TrendChart() {
   const { weeks, series } = dashboardDemo.trend;
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const { ref, inView } = useInViewOnce<HTMLDivElement>();
+  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
+  const [pathLengths, setPathLengths] = useState<number[]>([0, 0, 0]);
+  const lengthsReady = pathLengths.some((length) => length > 0);
+  const animate = (inView && lengthsReady) || reducedMotion;
 
   const { paths, points, width, height, pad } = useMemo(() => {
     const width = 640;
@@ -19,7 +64,6 @@ function TrendChart() {
     const pad = { top: 16, right: 12, bottom: 28, left: 36 };
     const innerW = width - pad.left - pad.right;
     const innerH = height - pad.top - pad.bottom;
-    const n = weeks.length;
 
     const scales: Record<SeriesKey, (v: number) => number> = {
       active: (v) => pad.top + innerH - ((v - 110) / (155 - 110)) * innerH,
@@ -60,12 +104,17 @@ function TrendChart() {
     return { paths, points, width, height, pad };
   }, [weeks, series]);
 
+  useLayoutEffect(() => {
+    const lengths = pathRefs.current.map((path) => (path ? path.getTotalLength() : 0));
+    setPathLengths(lengths);
+  }, [paths]);
+
   const active = hoverIndex !== null ? points[hoverIndex] : points[points.length - 1];
 
   return (
-    <div className={styles.chartWrap}>
+    <div ref={ref} className={styles.chartWrap}>
       <svg
-        className={styles.chart}
+        className={`${styles.chart} ${animate ? styles.chartAnimate : ""}`}
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label="주간 활성 참여자, 리텐션, 유효성 추이"
@@ -85,9 +134,32 @@ function TrendChart() {
           );
         })}
 
-        {paths.map((p) => (
-          <path key={p.key} d={p.d} fill="none" stroke={p.color} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
-        ))}
+        {paths.map((p, index) => {
+          const length = pathLengths[index] || 0;
+          return (
+            <path
+              key={p.key}
+              ref={(el) => {
+                pathRefs.current[index] = el;
+              }}
+              d={p.d}
+              fill="none"
+              stroke={p.color}
+              strokeWidth={2.4}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={styles.linePath}
+              style={
+                {
+                  ["--line-delay" as string]: `${index * 160}ms`,
+                  strokeDasharray: reducedMotion || !length ? undefined : length,
+                  strokeDashoffset: reducedMotion || !length ? undefined : length,
+                  opacity: lengthsReady || reducedMotion ? 1 : 0,
+                }
+              }
+            />
+          );
+        })}
 
         {points.map((p) => (
           <g key={p.week}>
@@ -115,11 +187,23 @@ function TrendChart() {
           />
         ) : null}
 
-        {SERIES_KEYS.map((key) => {
+        {SERIES_KEYS.map((key, index) => {
           const pt = active;
           if (!pt) return null;
           const color = series.find((s) => s.id === key)?.color ?? "var(--clr-primary)";
-          return <circle key={key} cx={pt.x} cy={pt.ys[key]} r={4.2} fill={color} stroke="#fff" strokeWidth={1.5} />;
+          return (
+            <circle
+              key={key}
+              cx={pt.x}
+              cy={pt.ys[key]}
+              r={4.2}
+              fill={color}
+              stroke="#fff"
+              strokeWidth={1.5}
+              className={styles.lineDot}
+              style={{ ["--dot-delay" as string]: `${480 + index * 80}ms` }}
+            />
+          );
         })}
       </svg>
 
@@ -149,15 +233,29 @@ function TrendChart() {
 function BlackoutBars() {
   const weeks = dashboardDemo.trend.weeks;
   const max = Math.max(...weeks.map((w) => w.blackout));
+  const reducedMotion = usePrefersReducedMotion();
+  const { ref, inView } = useInViewOnce<HTMLDivElement>();
+  const animate = inView || reducedMotion;
 
   return (
-    <div className={styles.barChart} role="img" aria-label="주간 blackout 비율">
-      {weeks.map((w) => (
+    <div
+      ref={ref}
+      className={`${styles.barChart} ${animate ? styles.barChartAnimate : ""}`}
+      role="img"
+      aria-label="주간 blackout 비율"
+    >
+      {weeks.map((w, index) => (
         <div key={w.week} className={styles.barCol}>
           <div className={styles.barTrack}>
             <div
               className={styles.barFill}
-              style={{ height: `${(w.blackout / max) * 100}%` }}
+              style={
+                {
+                  ["--bar-height" as string]: `${(w.blackout / max) * 100}%`,
+                  ["--bar-delay" as string]: `${index * 70}ms`,
+                  height: reducedMotion ? `${(w.blackout / max) * 100}%` : undefined,
+                }
+              }
               title={`${w.week}: ${w.blackout}%`}
             />
           </div>
