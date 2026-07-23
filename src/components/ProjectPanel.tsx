@@ -319,7 +319,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                           </svg>
                         </Link>
                         <p className="mt-2 text-xs text-muted">
-                          Figma 기획을 웹으로 구현한 의사결정용 미니 대시보드 (합성 데이터)
+                          실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)
                         </p>
                       </div>
                     ) : null}
