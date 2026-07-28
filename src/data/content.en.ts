@@ -36,7 +36,7 @@ export const siteContentEn: SiteContent = {
 
   hero: {
     name: "Inhong Kim",
-    tagline: "Sports Science × Digital Health | 1 year of professional experience",
+    tagline: "Sports Science × Digital Health |\n1 year of professional experience",
     headline: "Finding the value of movement",
     bio: "I explore healthcare and digital health solutions by combining sports science expertise with data analysis.",
     profileImage: "/images/profile.png",
