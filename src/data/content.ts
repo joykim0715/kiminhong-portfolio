@@ -66,7 +66,7 @@ export type ExperienceSection = {
   points: string[];
 };
 
-export type EmploymentType = "정규직" | "계약직" | "인턴" | "아르바이트";
+export type EmploymentType = string;
 
 export type ExperienceItem = {
   organization: string;
@@ -83,18 +83,18 @@ const contact = {
 } as const;
 
 /** 홈케어 사업 소속 — Experience·프로젝트 meta 에 동일하게 사용 */
-const homeCareOrganization = "가천대학교 메디컬캠퍼스 산학협력단" as const;
+const homeCareOrganization: string = "가천대학교 메디컬캠퍼스 산학협력단";
 
 /** public/resume/ 폴더의 PDF 파일명과 동일해야 함 (영문 이력서) */
 export const resumeFilePath = "/resume/kiminhong-resume.pdf" as const;
 /** 브라우저 내 PDF 뷰어 페이지 — 버튼·링크는 여기로 연결 */
 export const resumePagePath = "/resume" as const;
-const resumeCtaLabel = "영문 이력서 확인하기" as const;
+const resumeCtaLabel: string = "영문 이력서 확인하기";
 
 /** 네이버 채용 제출용 국문 CV (`/naver` 전용) */
 export const naverResumeFilePath = "/resume/kiminhong-resume-naver.pdf" as const;
 export const naverResumePagePath = "/resume/naver" as const;
-const naverResumeCtaLabel = "국문 이력서 확인하기" as const;
+const naverResumeCtaLabel: string = "국문 이력서 확인하기";
 
 export const siteContent = {
   meta: {
@@ -251,16 +251,16 @@ export const siteContent = {
         role: "보조사범",
         period: "2023.04 ~ 2023.12",
         employmentType: "아르바이트",
-        sections: [],
+        sections: [] as ExperienceSection[],
       },
       {
         organization: "mvm휘트니스 성복점",
         role: "CS매니저",
         period: "2021.02 ~ 2022.08",
         employmentType: "아르바이트",
-        sections: [],
+        sections: [] as ExperienceSection[],
       },
-    ] satisfies ExperienceItem[],
+    ] as ExperienceItem[],
   },
 
   works: {
@@ -751,3 +751,5 @@ export const siteContent = {
     { label: "Resume (EN)", href: resumePagePath },
   ],
 };
+
+export type SiteContent = typeof siteContent;

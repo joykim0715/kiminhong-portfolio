@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function DemoPage() {
-  return <DashboardDemo />;
+  return <DashboardDemo data={dashboardDemo} />;
 }

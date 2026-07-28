@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { dashboardDemo } from "@/data/dashboardDemo";
+import { dashboardDemo as dashboardDemoKo } from "@/data/dashboardDemo";
+import { dashboardDemoEn } from "@/data/dashboardDemo.en";
 import styles from "./DashboardDemo.module.css";
+
+type DashboardData = typeof dashboardDemoKo | typeof dashboardDemoEn;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -44,8 +47,8 @@ function useInViewOnce<T extends Element>() {
   return { ref, inView };
 }
 
-function AgeBandChart() {
-  const bands = dashboardDemo.demographics.ageBands;
+function AgeBandChart({ data }: { data: DashboardData }) {
+  const bands = data.demographics.ageBands;
   const max = Math.max(...bands.map((b) => b.count));
   const reducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
@@ -80,8 +83,8 @@ function AgeBandChart() {
   );
 }
 
-function CenterCollectionBars() {
-  const centers = dashboardDemo.collection.centers;
+function CenterCollectionBars({ data }: { data: DashboardData }) {
+  const centers = data.collection.centers;
   const reducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
   const animate = inView || reducedMotion;
@@ -119,8 +122,12 @@ function CenterCollectionBars() {
   );
 }
 
-export default function DashboardDemo() {
-  const { header, kpis, demographics, collection, risks, insight, footerNote } = dashboardDemo;
+export default function DashboardDemo({
+  data = dashboardDemoKo,
+}: {
+  data?: DashboardData;
+}) {
+  const { header, kpis, demographics, collection, risks, insight, footerNote } = data;
 
   return (
     <div className={styles.page}>
@@ -175,7 +182,7 @@ export default function DashboardDemo() {
 
           <div className={styles.demoGrid}>
             <div className={styles.subPanel}>
-              <p className={styles.subTitle}>성별 구성</p>
+              <p className={styles.subTitle}>{demographics.genderTitle}</p>
               <div className={styles.genderSplit}>
                 {demographics.gender.map((g) => (
                   <div key={g.id} className={styles.genderCard}>
@@ -186,15 +193,18 @@ export default function DashboardDemo() {
                     <div className={styles.genderTrack}>
                       <div className={styles.genderFill} style={{ width: `${g.pct}%` }} />
                     </div>
-                    <p className={styles.genderCount}>{g.value}명</p>
+                    <p className={styles.genderCount}>
+                      {g.value}
+                      {demographics.countSuffix}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className={styles.subPanel}>
-              <p className={styles.subTitle}>연령대 분포</p>
-              <AgeBandChart />
+              <p className={styles.subTitle}>{demographics.ageTitle}</p>
+              <AgeBandChart data={data} />
             </div>
           </div>
         </section>
@@ -219,7 +229,7 @@ export default function DashboardDemo() {
             ))}
           </div>
 
-          <CenterCollectionBars />
+          <CenterCollectionBars data={data} />
         </section>
 
         {/* 03 스마트홈 위험 */}

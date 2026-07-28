@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { siteContent } from "@/data/content";
 import { shouldOpenInNewTab } from "@/lib/contact";
+import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import styles from "./Hero.module.css";
-
-const { hero, nav, socialLinks } = siteContent;
 
 function ArrowIcon() {
   return (
@@ -23,11 +21,10 @@ function ArrowIcon() {
 }
 
 export default function Hero() {
+  const { hero, nav, socialLinks } = useSiteContent();
   const recruitSafe = useRecruitSafe();
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
-  const publicSocialLinks = recruitSafe
-    ? []
-    : socialLinks;
+  const publicSocialLinks = recruitSafe ? [] : socialLinks;
 
   return (
     <section id="hero" className={`${styles.hero} relative flex min-h-screen flex-col pt-16`}>
@@ -52,7 +49,7 @@ export default function Hero() {
                   <ArrowIcon />
                 </a>
                 <a href="#works" className={styles.heroBtnGhost}>
-                  프로젝트 보기
+                  View projects
                   <ArrowIcon />
                 </a>
               </>
@@ -97,7 +94,7 @@ export default function Hero() {
             <div className={styles.heroCutoutWrap}>
               <Image
                 src={cutoutSrc}
-                alt={`${hero.name} 프로필`}
+                alt={`${hero.name} profile`}
                 fill
                 priority
                 quality={100}

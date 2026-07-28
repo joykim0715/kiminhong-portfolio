@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { siteContent } from "@/data/content";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import VisitorCounter from "./VisitorCounter";
-
-const { nav } = siteContent;
+import { useLocale, useSiteContent } from "./ContentProvider";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -30,10 +28,12 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 export default function Navbar() {
+  const { nav } = useSiteContent();
+  const { otherLocaleHref, otherLocaleLabel, locale } = useLocale();
   const recruitSafe = useRecruitSafe();
   const sections = useMemo(
     () => (recruitSafe ? nav.sections.filter((s) => s.id !== "contact") : nav.sections),
-    [recruitSafe],
+    [recruitSafe, nav.sections],
   );
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -104,6 +104,15 @@ export default function Navbar() {
         </ul>
 
         <div className="flex shrink-0 items-center gap-2">
+          {!recruitSafe ? (
+            <a
+              href={otherLocaleHref}
+              className="rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white/75 transition hover:border-white/35 hover:bg-white/10 hover:text-white"
+              aria-label={locale === "en" ? "Switch to Korean" : "Switch to English"}
+            >
+              {otherLocaleLabel}
+            </a>
+          ) : null}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white/35 hover:bg-white/10 hover:text-white md:hidden"

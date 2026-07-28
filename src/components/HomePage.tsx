@@ -11,29 +11,39 @@ import StorySection from "@/components/StorySection";
 import ContactCTA from "@/components/ContactCTA";
 import PageLoadEntrance from "@/components/PageLoadEntrance";
 import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
+import { ContentProvider, type Locale } from "@/components/ContentProvider";
+import { siteContent, type SiteContent } from "@/data/content";
 
 type HomePageProps = {
   /** true면 사진·연락처·이력서 링크를 숨긴 채용 제출용 뷰 */
   recruitSafe?: boolean;
+  locale?: Locale;
+  content?: SiteContent;
 };
 
-export default function HomePage({ recruitSafe = false }: HomePageProps) {
+export default function HomePage({
+  recruitSafe = false,
+  locale = "ko",
+  content = siteContent,
+}: HomePageProps) {
   return (
-    <RecruitSafeProvider enabled={recruitSafe}>
-      <Navbar />
-      <main id="main-content" className="relative z-[3]">
-        <Hero />
-        <GradientTransition />
-        <Values />
-        <SkillsDial />
-        <Education />
-        <Experience />
-        <WorkGallery />
-        <SectionBlend variant="works-story" />
-        <StorySection />
-        <ContactCTA />
-      </main>
-      <PageLoadEntrance />
-    </RecruitSafeProvider>
+    <ContentProvider locale={locale} content={content}>
+      <RecruitSafeProvider enabled={recruitSafe}>
+        <Navbar />
+        <main id="main-content" className="relative z-[3]">
+          <Hero />
+          <GradientTransition />
+          <Values />
+          <SkillsDial />
+          <Education />
+          <Experience />
+          <WorkGallery />
+          <SectionBlend variant="works-story" />
+          <StorySection />
+          <ContactCTA />
+        </main>
+        <PageLoadEntrance />
+      </RecruitSafeProvider>
+    </ContentProvider>
   );
 }

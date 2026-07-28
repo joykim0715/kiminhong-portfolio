@@ -1,11 +1,9 @@
 "use client";
 
-import { siteContent } from "@/data/content";
 import type { Work } from "@/data/content";
 import { getWorkImages } from "@/lib/workImages";
+import { useSiteContent } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
-
-const { works } = siteContent;
 
 type ProjectCardProps = {
   work: Work;
@@ -16,6 +14,7 @@ type ProjectCardProps = {
 };
 
 export default function ProjectCard({ work, onClick, className = "", compact = false }: ProjectCardProps) {
+  const { works } = useSiteContent();
   const images = getWorkImages(work);
 
   if (compact) {

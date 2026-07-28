@@ -4,14 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
-import { siteContent } from "@/data/content";
 import { mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
+import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import Button from "./ui/Button";
 
 export default function ContactCTA() {
   const recruitSafe = useRecruitSafe();
-  const { about, hero, socialLinks } = siteContent;
+  const { about, hero, socialLinks } = useSiteContent();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

@@ -4,7 +4,7 @@
  * 수치는 합성 데이터이며 실제 참여자·원본 로그는 포함하지 않습니다.
  */
 
-export const dashboardDemoPath = "/demo" as const;
+export const dashboardDemoPath: string = "/demo";
 
 export const dashboardDemo = {
   meta: {
@@ -63,6 +63,9 @@ export const dashboardDemo = {
     sectionLabel: "01 · Participants",
     title: "사용자 일반 정보 현황",
     description: "나이·성별·키·체중 등 기본 프로필을 한눈에 파악하는 영역입니다.",
+    genderTitle: "성별 구성",
+    ageTitle: "연령대 분포",
+    countSuffix: "명",
     summary: [
       { label: "평균 연령", value: "72.4세" },
       { label: "평균 키", value: "158.2cm" },

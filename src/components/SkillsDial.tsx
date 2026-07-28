@@ -2,10 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { siteContent, type SkillItem } from "@/data/content";
+import { type SkillItem } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 
-const skillsContent = siteContent.skills;
-const skills = skillsContent.items;
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 const NAV_OFFSET = 64;
 const SKILLS_SCROLL_VH = 1.5;
@@ -95,6 +94,8 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
 }
 
 export default function SkillsDial() {
+  const skillsContent = useSiteContent().skills;
+  const skills = skillsContent.items;
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
   const pinPanelRef = useRef<HTMLDivElement>(null);

@@ -7,6 +7,7 @@ import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
 import { getWorkImages } from "@/lib/workImages";
 import type { Work } from "@/data/works";
+import { useLocale } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
 import styles from "./ProjectPanel.module.css";
 
@@ -34,6 +35,7 @@ type ProjectPanelProps = {
 };
 
 export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
+  const { locale } = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const panel = work?.panel;
   const blocks = panel?.blocks ?? [];
@@ -172,7 +174,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
           <motion.button
             type="button"
             className={styles.backdrop}
-            aria-label="프로젝트 상세 닫기"
+            aria-label={locale === "en" ? "Close project details" : "프로젝트 상세 닫기"}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -194,7 +196,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M15 19l-7-7 7-7" />
                 </svg>
-                뒤로 가기
+                {locale === "en" ? "Back" : "뒤로 가기"}
               </button>
               <span className={styles.toolbarLabel}>{panel.sectionLabel}</span>
             </div>
@@ -248,7 +250,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             </header>
 
             <div className={styles.body}>
-              <nav className={styles.rail} aria-label="프로젝트 목차">
+              <nav className={styles.rail} aria-label={locale === "en" ? "Project outline" : "프로젝트 목차"}>
                 {blocks.map((block, index) => (
                   <button
                     key={block.id}
@@ -265,7 +267,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
               </nav>
 
               <div className={styles.contentColumn}>
-                <div className={styles.mobileNav} aria-label="프로젝트 목차">
+                <div className={styles.mobileNav} aria-label={locale === "en" ? "Project outline" : "프로젝트 목차"}>
                   {blocks.map((block) => (
                     <button
                       key={block.id}
@@ -319,7 +321,9 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                           </svg>
                         </Link>
                         <p className="mt-2 text-xs text-muted">
-                          실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)
+                          {locale === "en"
+                            ? "Web reconstruction of the real ops screens (participants · center · smart-home risk) — synthetic data"
+                            : "실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)"}
                         </p>
                       </div>
                     ) : null}

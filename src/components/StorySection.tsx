@@ -3,13 +3,12 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { siteContent } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import HeroPortrait from "./HeroPortrait";
 
-const { story: storyContent, hero: heroContent } = siteContent;
-
 export default function StorySection() {
+  const { story: storyContent, hero: heroContent } = useSiteContent();
   const recruitSafe = useRecruitSafe();
   const sectionRef = useRef<HTMLElement>(null);
 

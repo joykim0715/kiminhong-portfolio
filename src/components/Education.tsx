@@ -3,11 +3,10 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { siteContent } from "@/data/content";
-
-const { education: educationContent } = siteContent;
+import { useSiteContent } from "./ContentProvider";
 
 export default function Education() {
+  const { education: educationContent } = useSiteContent();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

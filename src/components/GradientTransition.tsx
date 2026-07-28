@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
-import { siteContent } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 import styles from "./GradientTransition.module.css";
 
 export default function GradientTransition() {
-  const { bridge } = siteContent;
+  const { bridge } = useSiteContent();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

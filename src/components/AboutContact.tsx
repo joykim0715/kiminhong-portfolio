@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 
 export default function AboutContact() {
-  const { about, socialLinks } = siteContent;
+  const { about, socialLinks } = useSiteContent();
 
   return (
     <section

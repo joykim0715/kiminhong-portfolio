@@ -3,14 +3,12 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
-import { siteContent } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 
-const { experience: experienceContent } = siteContent;
-
-const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
+const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+k$|^\d+%$|^\d+건$|^\d+명$/;
 
 function highlightMetrics(text: string) {
-  const parts = text.split(/(\d+\.?\d*만\s*건|\d+%|\d+건|\d+명)/g);
+  const parts = text.split(/(\d+\.?\d*만\s*건|\d+k|\d+%|\d+건|\d+명)/g);
   return parts.map((part, i) =>
     METRIC_RE.test(part) ? (
       <span
@@ -26,6 +24,7 @@ function highlightMetrics(text: string) {
 }
 
 export default function Experience() {
+  const { experience: experienceContent } = useSiteContent();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

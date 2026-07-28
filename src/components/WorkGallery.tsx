@@ -5,15 +5,12 @@ import dynamic from "next/dynamic";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib/scrollInteractions";
 import { getLenisInstance } from "@/lib/lenisInstance";
-import { siteContent } from "@/data/content";
 import type { Work } from "@/data/content";
+import { useSiteContent } from "./ContentProvider";
 import CertificationBadge from "./CertificationBadge";
 import ProjectCard from "./ProjectCard";
 
 const ProjectPanel = dynamic(() => import("./ProjectPanel"), { ssr: false });
-
-const { works, certifications } = siteContent;
-const projects = works.projects;
 
 const STACK_STEP_VH = 0.9;
 const NAV_OFFSET = 64;
@@ -32,9 +29,10 @@ function WorksTabs({
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
 }) {
+  const { works } = useSiteContent();
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-      <div className="flex flex-wrap gap-3" role="tablist" aria-label="프로젝트 및 자격증">
+      <div className="flex flex-wrap gap-3" role="tablist" aria-label={works.title}>
         {(["projects", "certifications"] as const).map((tab) => (
           <button
             key={tab}
@@ -64,6 +62,8 @@ function scrollToPinZone(pinZone: HTMLElement) {
 }
 
 export default function WorkGallery() {
+  const { works, certifications } = useSiteContent();
+  const projects = works.projects;
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [panelWork, setPanelWork] = useState<Work | null>(null);
   const [activeStackIndex, setActiveStackIndex] = useState(0);
