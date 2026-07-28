@@ -31,6 +31,8 @@ export default function Navbar() {
   const { nav } = useSiteContent();
   const { otherLocaleHref, otherLocaleLabel, locale } = useLocale();
   const recruitSafe = useRecruitSafe();
+  const localeSwitchLabel = locale === "en" ? "한국어로 보기" : "View in English";
+  const localeSwitchFlag = locale === "en" ? "🇰🇷" : "🇺🇸";
   const sections = useMemo(
     () => (recruitSafe ? nav.sections.filter((s) => s.id !== "contact") : nav.sections),
     [recruitSafe, nav.sections],
@@ -107,10 +109,16 @@ export default function Navbar() {
           {!recruitSafe ? (
             <a
               href={otherLocaleHref}
-              className="rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white/75 transition hover:border-white/35 hover:bg-white/10 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3.5 py-2 text-xs font-semibold tracking-wide text-white/80 transition hover:border-white/35 hover:bg-white/10 hover:text-white sm:px-4 sm:text-sm"
               aria-label={locale === "en" ? "Switch to Korean" : "Switch to English"}
             >
-              {otherLocaleLabel}
+              <span className="text-base leading-none" aria-hidden="true">
+                {localeSwitchFlag}
+              </span>
+              <span>{localeSwitchLabel}</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/45 sm:text-[11px]">
+                {otherLocaleLabel}
+              </span>
             </a>
           ) : null}
           <button

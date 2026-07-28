@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "./ContentProvider";
 
 type VisitorResponse = {
   enabled: boolean;
@@ -38,6 +39,7 @@ async function fetchVisitorStats(): Promise<VisitorResponse | null> {
 }
 
 export default function VisitorCounter() {
+  const { locale } = useLocale();
   const [stats, setStats] = useState<VisitorResponse | null>(null);
 
   useEffect(() => {
@@ -82,10 +84,14 @@ export default function VisitorCounter() {
   return (
     <p
       className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 text-xs font-bold leading-snug text-text sm:text-sm"
-      aria-label={`총 방문자 수 ${stats.total}명, 오늘 방문자 수 ${stats.today}명`}
+      aria-label={
+        locale === "en"
+          ? `Total visitors ${stats.total}, today visitors ${stats.today}`
+          : `총 방문자 수 ${stats.total}명, 오늘 방문자 수 ${stats.today}명`
+      }
     >
       <span>
-        총 방문자 수{" "}
+        {locale === "en" ? "Total visitors " : "총 방문자 수 "}
         <span className="text-base font-extrabold tabular-nums text-primary sm:text-lg">
           {formatCount(stats.total)}
         </span>
@@ -94,7 +100,7 @@ export default function VisitorCounter() {
         /
       </span>
       <span>
-        오늘 방문자 수{" "}
+        {locale === "en" ? "Today visitors " : "오늘 방문자 수 "}
         <span className="text-base font-extrabold tabular-nums text-primary sm:text-lg">
           {formatCount(stats.today)}
         </span>
