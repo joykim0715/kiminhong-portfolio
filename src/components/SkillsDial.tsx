@@ -82,7 +82,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           <span className="text-base font-bold leading-tight text-text sm:text-lg">{skill.tools}</span>
           <ul className="mt-2 w-full space-y-0.5">
             {skill.details.map((detail) => (
-              <li key={detail} className="text-[10px] leading-snug text-muted sm:text-xs">
+              <li key={detail} className="text-preline text-[10px] leading-snug text-muted sm:text-xs">
                 · {detail}
               </li>
             ))}

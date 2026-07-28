@@ -35,7 +35,7 @@ export default function GradientTransition() {
       <div className={styles.bridgeBottomFade} aria-hidden="true" />
 
       <div className="gradient-reveal-text relative z-10 flex min-h-[inherit] items-center justify-center px-6 py-24">
-        <p className="max-w-2xl break-keep text-center text-2xl font-medium tracking-tight text-white sm:text-3xl lg:text-4xl">
+        <p className="text-preline max-w-2xl break-keep text-center text-2xl font-medium tracking-tight text-white sm:text-3xl lg:text-4xl">
           {bridge.line1}
           <span className="mt-2 block font-bold text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)]">
             {bridge.line2}

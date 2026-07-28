@@ -54,7 +54,7 @@ export default function Education() {
                   <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">{item.school}</h3>
                   <p className="text-sm text-muted">{item.period}</p>
                 </div>
-                <p className="mt-3 break-keep text-base font-semibold text-primary sm:text-lg">
+                <p className="mt-3 text-preline break-keep text-base font-semibold text-primary sm:text-lg">
                   {item.major}
                 </p>
               </div>

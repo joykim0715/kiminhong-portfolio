@@ -220,10 +220,10 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-primary-light">
                     {work.category}
                   </p>
-                  <h2 id="project-panel-title" className="mt-2 text-xl font-bold tracking-tight sm:text-2xl">
+                  <h2 id="project-panel-title" className="text-preline mt-2 text-xl font-bold tracking-tight sm:text-2xl">
                     {work.title}
                   </h2>
-                  <p className="mt-2 break-keep text-sm leading-relaxed text-white/72 sm:text-base">
+                  <p className="text-preline mt-2 break-keep text-sm leading-relaxed text-white/72 sm:text-base">
                     {panel.subtitle}
                   </p>
 
@@ -239,7 +239,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                           </p>
                           <p className="mt-1 text-lg font-black text-primary-light sm:text-xl">{metric.value}</p>
                           {metric.note ? (
-                            <p className="mt-1 text-[10px] text-white/45">{metric.note}</p>
+                            <p className="text-preline mt-1 text-[10px] text-white/45">{metric.note}</p>
                           ) : null}
                         </div>
                       ))}
@@ -304,7 +304,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                           <dt className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
                             {item.label}
                           </dt>
-                          <dd className="mt-1.5 text-sm font-medium leading-snug text-text">{item.value}</dd>
+                          <dd className="text-preline mt-1.5 text-sm font-medium leading-snug text-text">{item.value}</dd>
                         </div>
                       ))}
                     </dl>

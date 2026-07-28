@@ -41,7 +41,7 @@ export default function Values() {
               className="value-item flex items-start gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm"
             >
               <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-              <span className="break-keep text-base font-medium text-text sm:text-lg">{item}</span>
+              <span className="text-preline break-keep text-base font-medium text-text sm:text-lg">{item}</span>
             </li>
           ))}
         </ul>

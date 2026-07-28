@@ -64,7 +64,7 @@ export default function Experience() {
             >
               <header className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">
+                  <h3 className="text-preline text-lg font-bold tracking-tight text-text sm:text-xl">
                     {item.organization}
                   </h3>
                   <p className="mt-1 text-sm font-medium text-primary sm:text-base">{item.role}</p>
@@ -79,7 +79,7 @@ export default function Experience() {
                 <div className="mt-6 space-y-5">
                   {item.sections.map((section) => (
                     <div key={section.title}>
-                      <h4 className="text-sm font-semibold text-text sm:text-base">{section.title}</h4>
+                      <h4 className="text-preline text-sm font-semibold text-text sm:text-base">{section.title}</h4>
                       <ul className="mt-2.5 space-y-2">
                         {section.points.map((point) => (
                           <li
@@ -87,7 +87,7 @@ export default function Experience() {
                             className="flex items-start gap-3 text-sm text-text sm:text-base"
                           >
                             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                            <span className="break-keep leading-relaxed">{highlightMetrics(point)}</span>
+                            <span className="text-preline break-keep leading-relaxed">{highlightMetrics(point)}</span>
                           </li>
                         ))}
                       </ul>

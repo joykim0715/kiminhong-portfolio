@@ -28,7 +28,7 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 className="text-base font-bold tracking-tight text-text sm:text-lg">{cert.name}</h3>
-          <p className="mt-0.5 text-sm text-primary">{cert.fullName}</p>
+          <p className="text-preline mt-0.5 text-sm text-primary">{cert.fullName}</p>
         </div>
         <span
           className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${badgeClass}`}
@@ -39,7 +39,7 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
       <p className="mt-3 text-sm text-muted">
         {cert.issuer} · {cert.date}
       </p>
-      <p className="mt-2 break-keep text-sm leading-relaxed text-text/80">{cert.description}</p>
+      <p className="text-preline mt-2 break-keep text-sm leading-relaxed text-text/80">{cert.description}</p>
     </article>
   );
 }

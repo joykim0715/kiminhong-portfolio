@@ -30,7 +30,7 @@ export default function HomePage({
     <ContentProvider locale={locale} content={content}>
       <RecruitSafeProvider enabled={recruitSafe}>
         <Navbar />
-        <main id="main-content" className="relative z-[3]">
+        <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
           <Hero />
           <GradientTransition />
           <Values />

@@ -26,7 +26,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       >
         <div className="border-b border-border px-5 py-4 text-center sm:px-6">
           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">{work.category}</p>
-          <h3 className="mt-1.5 text-base font-bold tracking-tight text-text sm:text-lg">{work.title}</h3>
+          <h3 className="text-preline mt-1.5 text-base font-bold tracking-tight text-text sm:text-lg">{work.title}</h3>
           <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
             {works.openHint}
           </p>
@@ -59,7 +59,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       </div>
       <div className="border-t border-border p-5 text-center sm:p-6">
         <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">{work.category}</p>
-        <h3 className="mt-2 text-lg font-bold tracking-tight text-text sm:text-xl">{work.title}</h3>
+        <h3 className="text-preline mt-2 text-lg font-bold tracking-tight text-text sm:text-xl">{work.title}</h3>
         <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">
           {works.openHint}
         </p>

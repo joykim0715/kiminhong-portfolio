@@ -59,11 +59,11 @@ export default function ContactCTA() {
         <div className="section-container relative z-10 flex flex-col items-center text-center">
           <h2
             id="closing-heading"
-            className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight"
+            className="cta-headline hero-title text-preline text-gradient-light max-w-4xl tracking-tight"
           >
             {about.headline}
           </h2>
-          <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">
+          <p className="cta-body text-preline mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">
             {about.bio}
           </p>
           <p className="cta-body mt-16 text-xs text-white/40 sm:text-sm">
@@ -88,10 +88,10 @@ export default function ContactCTA() {
       />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
-        <h2 id="contact-heading" className="cta-headline hero-title text-gradient-light max-w-4xl tracking-tight">
+        <h2 id="contact-heading" className="cta-headline hero-title text-preline text-gradient-light max-w-4xl tracking-tight">
           {about.headline}
         </h2>
-        <p className="cta-body mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
+        <p className="cta-body text-preline mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
 
         <div className="cta-button mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <Button href={mailtoHref(about.email)} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">

@@ -6,7 +6,8 @@ const contact = {
   phone: "010-4272-3945",
 } as const;
 
-const homeCareOrganization = "Gachon University Medical Campus Industry–University Cooperation Foundation";
+const homeCareOrganization =
+  "Gachon University Medical Campus\nIndustry–University Cooperation Foundation";
 
 /**
  * English portfolio copy for `/en`.
@@ -58,20 +59,20 @@ export const siteContentEn: SiteContent = {
   },
 
   bridge: {
-    line1: "At the intersection of sports science and digital health,",
+    line1: "At the intersection of\nsports science and digital health,",
     line2: "I look for the value of healthier living — together.",
   },
 
   values: {
     sectionLabel: "Values",
-    title: "Building health value through movement and data",
+    title: "Building health value\nthrough movement and data",
     description:
       "I combine sports-medicine expertise with data analysis to deliver trustworthy healthcare insights.",
     items: [
       "Evidence-based decision making",
       "User-centered digital health experiences",
       "Reading movement and recovery through data",
-      "Practical solutions that connect research and the field",
+      "Practical solutions\nthat connect research and the field",
     ],
   },
 
@@ -93,7 +94,7 @@ export const siteContentEn: SiteContent = {
         tools: "SPSS, MySQL",
         proficiency: 70,
         details: [
-          "Hypothesis testing, regression, and multi-angle statistical analysis",
+          "Hypothesis testing, regression,\nand multi-angle statistical analysis",
           "Efficient data extraction queries and management",
         ],
       },
@@ -121,7 +122,7 @@ export const siteContentEn: SiteContent = {
       {
         school: "Sungkyunkwan University",
         period: "2020 – Aug 2025 (Graduated)",
-        major: "B.S. Sports Science (primary) + International Trade (double major)",
+        major: "B.S. Sports Science (primary)\n+ International Trade (double major)",
       },
       {
         school: "Giheung High School",
@@ -142,23 +143,23 @@ export const siteContentEn: SiteContent = {
         employmentType: "Contract",
         sections: [
           {
-            title: "① Health log extraction, preprocessing & analysis quality",
+            title: "① Health log extraction,\npreprocessing & analysis quality",
             points: [
-              "Extracted 69k log records with SQL and secured 85% analysis validity via SPSS preprocessing",
-              "Identified wearable blackout/missing intervals and maintained analyzable continuity through field follow-up",
+              "Extracted 69k log records with SQL\nand secured 85% analysis validity via SPSS preprocessing",
+              "Identified wearable blackout/missing intervals\nand maintained analyzable continuity through field follow-up",
             ],
           },
           {
-            title: "② Retention improvement via insight-based health guidance",
+            title: "② Retention improvement\nvia insight-based health guidance",
             points: [
-              "Diagnosed churn drivers through field observation and designed guidance linking biometrics to daily habits",
-              "Rephrased complex health data into action-focused language with generative AI — achieved 83% user retention",
+              "Diagnosed churn drivers through field observation\nand designed guidance linking biometrics to daily habits",
+              "Rephrased complex health data into action-focused language with generative AI\n— achieved 83% user retention",
             ],
           },
           {
-            title: "③ Interactive decision dashboard design",
+            title: "③ Interactive decision\ndashboard design",
             points: [
-              "Designed a Figma interactive dashboard centered on active users and churn-risk cohorts",
+              "Designed a Figma interactive dashboard\ncentered on active users and churn-risk cohorts",
               "Used as decision material supporting 5 MOU / service contracts",
             ],
           },
@@ -183,7 +184,7 @@ export const siteContentEn: SiteContent = {
 
   works: {
     sectionLabel: "Portfolio",
-    title: "Major projects & Certificates",
+    title: "Major projects\n& Certificates",
     tabs: {
       projects: "Projects",
       certifications: "Certifications",
@@ -198,7 +199,7 @@ export const siteContentEn: SiteContent = {
     projects: [
       {
         id: "01",
-        title: "Senior healthcare national project — data collection & operations",
+        title: "Senior healthcare national project\n— data collection & operations",
         category: "Digital Health",
         image: "/works/01.jpg",
         description:
@@ -206,16 +207,16 @@ export const siteContentEn: SiteContent = {
         panel: {
           sectionLabel: "Case Study",
           subtitle:
-            "A national senior healthcare pilot where biometric/device logs were operated reliably, and participation was sustained through field observation and generative-AI health guidance.",
+            "A national senior healthcare pilot where biometric/device logs were operated reliably,\nand participation was sustained through field observation and generative-AI health guidance.",
           meta: [
-            { label: "Role", value: "Researcher, National Senior Healthcare Project" },
+            { label: "Role", value: "Researcher,\nNational Senior Healthcare Project" },
             { label: "Org", value: homeCareOrganization },
             { label: "Period", value: "Mar 2025 – Feb 2026" },
             { label: "Tools", value: "MySQL, SPSS, Figma, Generative AI" },
           ],
           metrics: [
             { label: "Collected data", value: "69k", note: "SQL log extraction & analysis" },
-            { label: "Analysis validity", value: "85%", note: "After SPSS preprocessing & QC" },
+            { label: "Analysis validity", value: "85%", note: "After SPSS preprocessing\n& QC" },
             { label: "Retention", value: "83%", note: "After personalized health guidance" },
             { label: "Decision support", value: "5", note: "MOU / service contracts" },
           ],
@@ -289,7 +290,7 @@ export const siteContentEn: SiteContent = {
       },
       {
         id: "02",
-        title: "Samsung Life × SKKU LifeNology Lab Cohort 1 — de:light",
+        title: "Samsung Life × SKKU LifeNology Lab\nCohort 1 — de:light",
         category: "Digital Health",
         image: "/works/02.jpg",
         description:
@@ -297,7 +298,7 @@ export const siteContentEn: SiteContent = {
         panel: {
           sectionLabel: "UX Case Study",
           subtitle:
-            "A digital health project where a team planned and prototyped an fNIRS wearable ring and connected app experience.",
+            "A digital health project where a team planned and prototyped\nan fNIRS wearable ring and connected app experience.",
           meta: [
             { label: "Role", value: "Team member / Planning · UX" },
             { label: "Org", value: "SKKU–Samsung Life LifeNology Lab Cohort 1" },
@@ -307,7 +308,7 @@ export const siteContentEn: SiteContent = {
           metrics: [
             { label: "Program", value: "LifeNology Lab 1", note: "SKKU × Samsung Life" },
             { label: "Output", value: "App prototype", note: "Wearable-linked UX" },
-            { label: "Core sensor", value: "fNIRS", note: "Functional near-infrared spectroscopy" },
+            { label: "Core sensor", value: "fNIRS", note: "Functional near-infrared\nspectroscopy" },
             { label: "Domain", value: "Eating habits", note: "Intervention & management" },
           ],
           blocks: [
@@ -356,7 +357,7 @@ export const siteContentEn: SiteContent = {
       },
       {
         id: "03",
-        title: "Student council — Human Rights & Welfare Bureau",
+        title: "Student council\n— Human Rights & Welfare Bureau",
         category: "Teamwork",
         images: ["/works/03.jpg", "/works/03-b.jpg"],
         description:
@@ -364,7 +365,7 @@ export const siteContentEn: SiteContent = {
         panel: {
           sectionLabel: "Research Case",
           subtitle:
-            "Designed and analyzed a survey of ~800 students to prioritize library remodeling and mediate between student council and the university.",
+            "Designed and analyzed a survey of ~800 students to prioritize library remodeling\nand mediate between student council and the university.",
           meta: [
             { label: "Role", value: "Human Rights & Welfare officer" },
             { label: "Org", value: "55th Student Council, Sungkyunkwan University" },
@@ -422,14 +423,14 @@ export const siteContentEn: SiteContent = {
       },
       {
         id: "04",
-        title: "College of Sports Science — tailored corporate partnerships",
+        title: "College of Sports Science\n— tailored corporate partnerships",
         category: "Teamwork",
         description:
           "Planned and executed major-specific corporate partnerships based on student needs analysis.",
         panel: {
           sectionLabel: "Business Case",
           subtitle:
-            "A partnership project that set priorities from a 200-student needs survey, then planned, negotiated, and delivered tailored deals.",
+            "A partnership project that set priorities from a 200-student needs survey,\nthen planned, negotiated, and delivered tailored deals.",
           meta: [
             { label: "Role", value: "Deputy, External Relations", },
             { label: "Org", value: "Student Council, College of Sports Science, SKKU" },
@@ -487,7 +488,7 @@ export const siteContentEn: SiteContent = {
       },
       {
         id: "05",
-        title: "Korea Sports Council — Kookdae Smartzers Cohort 1",
+        title: "Korea Sports Council\n— Kookdae Smartzers Cohort 1",
         category: "Sports Marketing",
         images: ["/works/05.jpg", "/works/05-b.jpg"],
         description:
@@ -498,7 +499,7 @@ export const siteContentEn: SiteContent = {
             "An external sports-marketing program promoting swimming through planned, produced, and distributed digital content.",
           meta: [
             { label: "Role", value: "Program team member" },
-            { label: "Org", value: "Kookdae Smartzers Cohort 1 (Swimming), Korea Sports Council" },
+            { label: "Org", value: "Kookdae Smartzers Cohort 1 (Swimming),\nKorea Sports Council" },
             { label: "Period", value: "Apr 2022 – Nov 2022" },
             { label: "Channels", value: "SNS & digital media" },
           ],
@@ -609,11 +610,11 @@ export const siteContentEn: SiteContent = {
       issuer: "KSHA",
       date: "2025.11.14",
       type: "cert",
-      description: "Combining smart-home tech with health services for senior-focused planning",
+      description: "Combining smart-home tech with health services\nfor senior-focused planning",
     },
     {
       name: "Outstanding Poster Award",
-      fullName: "2025 Fall Conference Outstanding Poster — Korean Society of Exercise Rehabilitation",
+      fullName: "2025 Fall Conference Outstanding Poster\n— Korean Society of Exercise Rehabilitation",
       issuer: "Korean Society of Exercise Rehabilitation",
       date: "2025.11",
       type: "award",
@@ -639,7 +640,7 @@ export const siteContentEn: SiteContent = {
 
   story: {
     sectionLabel: "Story",
-    title: "I study movement and design living",
+    title: "I study movement\nand design living",
     paragraphs: [
       "Through sports science and healthcare data analysis, I have explored how people can move more healthily.",
       "My goal is to create practical insight while moving between the lab, the field, and digital services.",
@@ -653,8 +654,8 @@ export const siteContentEn: SiteContent = {
 
   about: {
     sectionLabel: "About",
-    headline: "Let’s find the value of healthier living together.",
-    bio: "I’m Inhong Kim, with 1 year of healthcare experience. With sports science expertise and data literacy, I aim to help shape the next generation of healthcare.",
+    headline: "Let’s find the value of\nhealthier living together.",
+    bio: "I’m Inhong Kim, with 1 year of healthcare experience.\nWith sports science expertise and data literacy, I aim to help shape the next generation of healthcare.",
     email: contact.email,
     phone: contact.phone,
     copyright: "Inhong Kim",

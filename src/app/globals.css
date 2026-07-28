@@ -169,6 +169,16 @@ img {
   letter-spacing: -0.025em;
   word-break: keep-all;
   overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+.text-preline {
+  white-space: pre-line;
+}
+
+[lang="en"] .section-title,
+[lang="en"] .hero-title {
+  word-break: normal;
 }
 
 .hero-title {
