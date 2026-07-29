@@ -322,7 +322,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                         </Link>
                         <p className="mt-2 text-xs text-muted">
                           {locale === "en"
-                            ? "Web reconstruction of the real ops screens (participants · center · smart-home risk) — synthetic data"
+                            ? "Web reconstruction of the real ops screens (participants · center · smart-home risk) — synthetic data only"
                             : "실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)"}
                         </p>
                       </div>

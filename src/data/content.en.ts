@@ -67,12 +67,12 @@ export const siteContentEn: SiteContent = {
     sectionLabel: "Values",
     title: "Building health value\nthrough movement and data",
     description:
-      "I combine sports-medicine expertise with data analysis to deliver trustworthy healthcare insights.",
+      "I combine sports medicine expertise with data analysis to deliver trustworthy healthcare insights.",
     items: [
-      "Evidence-based decision making",
+      "Evidence-based decision-making",
       "User-centered digital health experiences",
       "Reading movement and recovery through data",
-      "Practical solutions\nthat connect research and the field",
+      "Practical solutions that connect\nresearch and the field",
     ],
   },
 
@@ -94,8 +94,8 @@ export const siteContentEn: SiteContent = {
         tools: "SPSS, MySQL",
         proficiency: 70,
         details: [
-          "Hypothesis testing, regression,\nand multi-angle statistical analysis",
-          "Efficient data extraction queries and management",
+          "Hypothesis testing, regression,\nand multi-faceted statistical analysis",
+          "Efficient data extraction queries\nand management",
         ],
       },
       {
@@ -122,7 +122,7 @@ export const siteContentEn: SiteContent = {
       {
         school: "Sungkyunkwan University",
         period: "2020 – Aug 2025 (Graduated)",
-        major: "B.S. Sports Science (primary)\n+ International Trade (double major)",
+        major: "B.S. in Sports Science (primary)\n+ International Trade (double major)",
       },
       {
         school: "Giheung High School",
@@ -146,7 +146,7 @@ export const siteContentEn: SiteContent = {
             title: "① Health log extraction,\npreprocessing & analysis quality",
             points: [
               "Extracted 69k log records with SQL\nand secured 85% analysis validity via SPSS preprocessing",
-              "Identified wearable blackout/missing intervals\nand maintained analyzable continuity through field follow-up",
+              "Identified wearable blackout and missing intervals\nand maintained analyzable continuity through field follow-up",
             ],
           },
           {
@@ -160,7 +160,7 @@ export const siteContentEn: SiteContent = {
             title: "③ Interactive decision\ndashboard design",
             points: [
               "Designed a Figma interactive dashboard\ncentered on active users and churn-risk cohorts",
-              "Used as decision material supporting 5 MOU / service contracts",
+              "Used as decision-support material\nfor 5 MOUs / service contracts",
             ],
           },
         ],
@@ -184,7 +184,7 @@ export const siteContentEn: SiteContent = {
 
   works: {
     sectionLabel: "Portfolio",
-    title: "Major projects\n& Certificates",
+    title: "Major projects\n& certifications",
     tabs: {
       projects: "Projects",
       certifications: "Certifications",
@@ -192,7 +192,7 @@ export const siteContentEn: SiteContent = {
     tabHint: "Select a tab to explore",
     stackLabels: {
       projects: "Projects",
-      certifications: "Certificates",
+      certifications: "Certifications",
     },
     scrollHint: "Scroll to explore {label} ·",
     openHint: "Tap to view details",
@@ -203,11 +203,11 @@ export const siteContentEn: SiteContent = {
         category: "Digital Health",
         image: "/works/01.jpg",
         description:
-          "Managed and analyzed health logs in a national senior healthcare project, supporting 85% analysis validity, 83% retention, and 5 MOU/contracts via insight-based guidance and a decision dashboard.",
+          "Managed and analyzed health logs in a national senior healthcare project, supporting 85% analysis validity, 83% retention, and 5 MOUs/contracts through insight-based guidance and a decision dashboard.",
         panel: {
           sectionLabel: "Case Study",
           subtitle:
-            "A national senior healthcare pilot where biometric/device logs were operated reliably,\nand participation was sustained through field observation and generative-AI health guidance.",
+            "A national senior healthcare pilot where biometric and device logs were managed reliably,\nand participation was sustained through field observation and generative-AI health guidance.",
           meta: [
             { label: "Role", value: "Researcher,\nNational Senior Healthcare Project" },
             { label: "Org", value: homeCareOrganization },
@@ -218,7 +218,7 @@ export const siteContentEn: SiteContent = {
             { label: "Collected data", value: "69k", note: "SQL log extraction & analysis" },
             { label: "Analysis validity", value: "85%", note: "After SPSS preprocessing\n& QC" },
             { label: "Retention", value: "83%", note: "After personalized health guidance" },
-            { label: "Decision support", value: "5", note: "MOU / service contracts" },
+            { label: "Decision support", value: "5", note: "MOUs / service contracts" },
           ],
           blocks: [
             {
@@ -228,8 +228,8 @@ export const siteContentEn: SiteContent = {
               bullets: [
                 "Among 224 participants, wearable friction caused repeated data gaps and dropout",
                 "Blackouts and missingness accumulated into unusable analysis gaps",
-                "Participants struggled to understand what numbers meant in daily life, weakening motivation",
-                "Partners held lots of data but could not use it directly for decisions",
+                "Participants struggled to understand what the numbers meant in daily life, weakening motivation",
+                "Partners held large volumes of data but could not use them directly for decisions",
               ],
             },
             {
@@ -237,19 +237,19 @@ export const siteContentEn: SiteContent = {
               title: "My role",
               summary: "I connected data operations, field research, guidance design, and dashboarding.",
               bullets: [
-                "Managed extraction/preprocessing of 69k logs with SQL/SPSS and analysis validity",
+                "Managed extraction and preprocessing of 69k logs with SQL/SPSS to secure analysis validity",
                 "Observed churn drivers through site visits and interviews",
-                "Rebuilt biometric data into action-centered personalized guidance with generative AI",
-                "Designed a decision KPI dashboard in Figma to support MOU/contracts",
+                "Turned biometric data into action-centered personalized guidance with generative AI",
+                "Designed a decision KPI dashboard in Figma to support MOUs/contracts",
               ],
             },
             {
               id: "method",
               title: "Approach",
-              summary: "Hypotheses came from the field; validation and iteration used data and generative AI.",
+              summary: "Hypotheses came from the field; validation and iteration drew on data and generative AI.",
               bullets: [
-                "Interviewed at-risk participants (VoC) and confirmed poor numeric understanding as a core driver",
-                "Designed/improved a senior health-coach tone via prompt engineering and tuning",
+                "Interviewed at-risk participants (VoC) and confirmed poor understanding of metrics as a core driver",
+                "Designed and refined a senior health-coach tone via prompt engineering and tuning",
                 "Analyzed behavior patterns and churn factors with SQL/SPSS to inform ops and onboarding",
                 "Visualized active users and risk cohorts on a dashboard shared with partners",
               ],
@@ -261,7 +261,7 @@ export const siteContentEn: SiteContent = {
               bullets: [
                 "Secured 85% analysis validity",
                 "Reached 83% user retention",
-                "Supported 5 MOU / service contracts",
+                "Supported 5 MOUs / service contracts",
                 "Established a research loop: discover user problems → validate → connect to service opportunities",
               ],
             },
@@ -269,7 +269,7 @@ export const siteContentEn: SiteContent = {
               id: "insights",
               title: "Insights",
               bullets: [
-                "In healthcare pilots, retention is a meaning/trust problem before it is a device problem",
+                "In healthcare pilots, retention is a meaning and trust problem before it is a device problem",
                 "More data without behavior change lowers both analysis value and motivation",
                 "Generative AI can be an interface that translates complex health metrics into user language",
               ],
@@ -278,7 +278,7 @@ export const siteContentEn: SiteContent = {
               id: "learnings",
               title: "Learnings",
               bullets: [
-                "Standardizing churn/blackout rules and onboarding early sharply reduces later ops load",
+                "Standardizing churn and blackout rules and onboarding early sharply reduces later ops load",
                 "Prompt tuning must be a feedback loop, not a one-off",
                 "Dashboards should prioritize decision-ready metric structure over aesthetics",
               ],
@@ -298,7 +298,7 @@ export const siteContentEn: SiteContent = {
         panel: {
           sectionLabel: "UX Case Study",
           subtitle:
-            "A digital health project where a team planned and prototyped\nan fNIRS wearable ring and connected app experience.",
+            "A digital health project in which a team planned and prototyped\nan fNIRS wearable ring and connected app experience.",
           meta: [
             { label: "Role", value: "Team member / Planning · UX" },
             { label: "Org", value: "SKKU–Samsung Life LifeNology Lab Cohort 1" },
@@ -315,9 +315,10 @@ export const siteContentEn: SiteContent = {
             {
               id: "problem",
               title: "Problem",
-              summary: "Eating-habit interventions needed experience design that catches the moment of awareness, not willpower alone.",
+              summary:
+                "Eating-habit interventions needed experience design that catches the moment of awareness, not willpower alone.",
               bullets: [
-                "Simple calorie-logging apps often miss the moment appetite rises",
+                "Simple calorie-logging apps often miss the moment when appetite rises",
                 "fNIRS signals needed UX that everyday users could understand and trust",
                 "Ring wearability and app context had to be designed together",
               ],
@@ -329,7 +330,7 @@ export const siteContentEn: SiteContent = {
               bullets: [
                 "Planned key app screens and interactions for eating-intervention scenarios",
                 "Built Figma prototypes and clarified the user journey",
-                "Supported concept video/visual assets with Runway Gen and Fixcap",
+                "Supported concept video and visual assets with Runway Gen and Fixcap",
               ],
             },
             {
@@ -361,13 +362,13 @@ export const siteContentEn: SiteContent = {
         category: "Teamwork",
         images: ["/works/03.jpg", "/works/03-b.jpg"],
         description:
-          "Collected and analyzed student survey data to guide library remodeling priorities and coordinated barrier-free map design input.",
+          "Collected and analyzed student survey data to guide library remodeling priorities, and coordinated input on barrier-free map design.",
         panel: {
           sectionLabel: "Research Case",
           subtitle:
-            "Designed and analyzed a survey of ~800 students to prioritize library remodeling\nand mediate between student council and the university.",
+            "Designed and analyzed a survey of ~800 students to prioritize library remodeling\nand mediate between the student council and the university.",
           meta: [
-            { label: "Role", value: "Human Rights & Welfare officer" },
+            { label: "Role", value: "Human Rights & Welfare Officer" },
             { label: "Org", value: "55th Student Council, Sungkyunkwan University" },
             { label: "Period", value: "Nov 2022 – Nov 2023" },
             { label: "Tools", value: "Google Forms, Excel" },
@@ -381,20 +382,20 @@ export const siteContentEn: SiteContent = {
             {
               id: "problem",
               title: "Problem",
-              summary: "Remodeling need was shared, but student needs were not quantified.",
+              summary: "The need for remodeling was widely shared, but student needs were not quantified.",
               bullets: [
                 "Many complaints (seats, lighting, noise) lacked prioritized evidence",
-                "Objective data was needed between council proposals and university budget/timeline",
-                "Without survey design, decisions risked over-weighting unrepresentative opinions",
+                "Objective data was needed between council proposals and the university budget/timeline",
+                "Without survey design, decisions risked overweighting unrepresentative opinions",
               ],
             },
             {
               id: "role",
               title: "My role",
-              summary: "I owned the survey end-to-end and reflected analysis into planning.",
+              summary: "I owned the survey end-to-end and applied the analysis to planning.",
               bullets: [
                 "Designed items on purpose of use, pain points, and desired improvements",
-                "Collected/cleaned responses and ran frequency & cross analyses",
+                "Collected and cleaned responses, then ran frequency and cross-tabulation analyses",
                 "Fed results into space plans and mediated stakeholder views",
               ],
             },
@@ -432,25 +433,25 @@ export const siteContentEn: SiteContent = {
           subtitle:
             "A partnership project that set priorities from a 200-student needs survey,\nthen planned, negotiated, and delivered tailored deals.",
           meta: [
-            { label: "Role", value: "Deputy, External Relations", },
+            { label: "Role", value: "Deputy, External Relations" },
             { label: "Org", value: "Student Council, College of Sports Science, SKKU" },
             { label: "Period", value: "Oct 2021 – Oct 2022" },
             { label: "Tools", value: "Google Forms, Excel" },
           ],
           metrics: [
             { label: "Survey sample", value: "200", note: "Enrolled students" },
-            { label: "Partnership volume", value: "+30%", note: "vs previous" },
+            { label: "Partnership volume", value: "+30%", note: "vs. previous" },
             { label: "Scope", value: "Plan → run", note: "Full cycle" },
           ],
           blocks: [
             {
               id: "problem",
               title: "Problem",
-              summary: "Existing partnerships followed habit more than real student needs.",
+              summary: "Existing partnerships were driven more by habit than by real student needs.",
               bullets: [
                 "Needs were scattered across gear, supplements, and facility discounts",
-                "Little demand evidence to present to companies",
-                "Council needed better volume and terms",
+                "Little demand evidence was available to present to companies",
+                "The council needed better volume and terms",
               ],
             },
             {
@@ -470,7 +471,7 @@ export const siteContentEn: SiteContent = {
               bullets: [
                 "Cross-analyzed needs by year and sport to set partnership priorities",
                 "Built company-specific proposals around top demand items",
-                "Reflected outcomes into delivery schedules and allocation",
+                "Reflected outcomes in delivery schedules and allocation",
               ],
             },
             {
@@ -478,8 +479,8 @@ export const siteContentEn: SiteContent = {
               title: "Results",
               summary: "Shifted to needs-based partnerships and increased volume.",
               bullets: [
-                "Partnership goods volume +30% vs prior",
-                "Moved to a survey-evidence partnership structure",
+                "Partnership goods volume +30% vs. prior",
+                "Moved to a survey-evidence-based partnership structure",
                 "Practiced the full plan–negotiate–execute cycle",
               ],
             },
@@ -492,7 +493,7 @@ export const siteContentEn: SiteContent = {
         category: "Sports Marketing",
         images: ["/works/05.jpg", "/works/05-b.jpg"],
         description:
-          "Planned and produced sport promotion content and executed digital-channel marketing strategy.",
+          "Planned and produced sports promotion content and executed a digital-channel marketing strategy.",
         panel: {
           sectionLabel: "Marketing Case",
           subtitle:
@@ -532,9 +533,9 @@ export const siteContentEn: SiteContent = {
             {
               id: "method",
               title: "Approach",
-              summary: "Built storytelling content that improved sport understanding.",
+              summary: "Built storytelling content that improved understanding of the sport.",
               bullets: [
-                "Connected daily life, training, and highlights into story lines",
+                "Connected daily life, training, and highlights into storylines",
                 "Matched tone and format to each channel (Instagram, YouTube, etc.)",
                 "Aligned message and visuals through team feedback rounds",
               ],
@@ -544,7 +545,7 @@ export const siteContentEn: SiteContent = {
               title: "Outcome",
               summary: "Produced multiple swimming promo pieces and practiced marketing ops.",
               bullets: [
-                "Produced and distributed multiple sport promo assets",
+                "Produced and distributed multiple sports promo assets",
                 "Practiced plan–produce–distribute for sports marketing",
                 "Strengthened external collaboration and content planning skills",
               ],
@@ -618,7 +619,7 @@ export const siteContentEn: SiteContent = {
       issuer: "Korean Society of Exercise Rehabilitation",
       date: "2025.11",
       type: "award",
-      description: "Selected for outstanding research poster presentation",
+      description: "Selected for an outstanding research poster presentation",
     },
     {
       name: "SKKU Honors Graduation",
@@ -640,10 +641,10 @@ export const siteContentEn: SiteContent = {
 
   story: {
     sectionLabel: "Story",
-    title: "I study movement\nand design living",
+    title: "I study movement\nand design life",
     paragraphs: [
-      "Through sports science and healthcare data analysis, I have explored how people can move more healthily.",
-      "My goal is to create practical insight while moving between the lab, the field, and digital services.",
+      "Through sports science and healthcare data analysis, I have explored how people can move in healthier ways.",
+      "My goal is to create practical insights while moving between the lab, the field, and digital services.",
     ],
     photos: [
       { id: "p1", label: "Research", image: "/images/rs_p4_0.png" },

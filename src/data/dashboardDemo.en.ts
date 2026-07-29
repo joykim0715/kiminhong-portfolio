@@ -173,7 +173,7 @@ export const dashboardDemoEn = {
     points: [
       "Put profiles, center collection, and smart-home risks on one screen for ops and partner meetings",
       "Prioritize structure that answers who / which center / which risk — over aesthetics",
-      "Used as decision material supporting 5 MOU / service contracts (portfolio outcomes)",
+      "Used as decision-support material for 5 MOUs / service contracts (portfolio outcomes)",
     ],
   },
   footerNote: "Synthetic demo · reconstructed from actual dashboard IA (participants · center · smart-home risk)",

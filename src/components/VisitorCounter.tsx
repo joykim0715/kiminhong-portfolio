@@ -86,7 +86,7 @@ export default function VisitorCounter() {
       className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 text-xs font-bold leading-snug text-text sm:text-sm"
       aria-label={
         locale === "en"
-          ? `Total visitors ${stats.total}, today visitors ${stats.today}`
+          ? `Total visitors ${stats.total}, today's visitors ${stats.today}`
           : `총 방문자 수 ${stats.total}명, 오늘 방문자 수 ${stats.today}명`
       }
     >
@@ -100,7 +100,7 @@ export default function VisitorCounter() {
         /
       </span>
       <span>
-        {locale === "en" ? "Today visitors " : "오늘 방문자 수 "}
+        {locale === "en" ? "Today's visitors " : "오늘 방문자 수 "}
         <span className="text-base font-extrabold tabular-nums text-primary sm:text-lg">
           {formatCount(stats.today)}
         </span>
