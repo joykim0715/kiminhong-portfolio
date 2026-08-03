@@ -746,6 +746,7 @@ export const siteContent = {
   },
 
   socialLinks: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/inhongkim0715profile" },
     { label: "Email", href: `mailto:${contact.email}` },
     { label: "Phone", href: `tel:${contact.phone.replace(/[^\d]/g, "")}` },
     { label: "Resume (EN)", href: resumePagePath },
