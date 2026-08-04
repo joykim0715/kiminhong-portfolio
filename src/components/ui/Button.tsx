@@ -2,9 +2,11 @@
 
 import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
+type ButtonVariant = "primary" | "ghost" | "onDark" | "onDarkGhost";
+
 type ButtonBaseProps = {
   children: ReactNode;
-  variant?: "primary" | "ghost";
+  variant?: ButtonVariant;
   className?: string;
 };
 
@@ -17,13 +19,16 @@ type ButtonAsLink = ButtonBaseProps &
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const baseClass =
-  "inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-medium transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:text-base";
+  "inline-flex items-center justify-center rounded-md px-7 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-8 sm:py-3.5 sm:text-base";
 
-const variants = {
+const variants: Record<ButtonVariant, string> = {
   primary:
-    "border border-primary/60 bg-primary/10 text-text btn-glow hover:bg-primary/20 hover:border-primary",
-  ghost:
-    "border border-border bg-transparent text-text hover:border-primary/50 hover:text-text",
+    "border border-primary/55 bg-primary/10 text-text btn-glow hover:bg-primary/18 hover:border-primary",
+  ghost: "border border-border bg-transparent text-text hover:border-primary/45 hover:text-text",
+  onDark:
+    "border border-white/28 bg-white/10 text-white hover:border-white/40 hover:bg-white/16",
+  onDarkGhost:
+    "border border-white/22 bg-transparent text-white/90 hover:border-white/40 hover:bg-white/10",
 };
 
 export default function Button({

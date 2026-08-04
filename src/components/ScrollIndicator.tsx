@@ -12,9 +12,7 @@ export default function ScrollIndicator() {
       animate={{ opacity: 1 }}
       transition={{ delay: 1.2, duration: 0.8 }}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.35em] sm:text-xs">
-        Scroll
-      </span>
+      <span className="section-meta text-muted">Scroll</span>
       <motion.span
         className="flex h-10 w-6 items-start justify-center rounded-full border border-border p-1.5"
         animate={{ y: [0, 6, 0] }}

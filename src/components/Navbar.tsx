@@ -31,8 +31,7 @@ export default function Navbar() {
   const { nav } = useSiteContent();
   const { otherLocaleHref, otherLocaleLabel, locale } = useLocale();
   const recruitSafe = useRecruitSafe();
-  const localeSwitchLabel = locale === "en" ? "한국어로 보기" : "View in English";
-  const localeSwitchFlag = locale === "en" ? "🇰🇷" : "🇺🇸";
+  const localeSwitchLabel = locale === "en" ? "한국어" : "EN";
   const sections = useMemo(
     () => (recruitSafe ? nav.sections.filter((s) => s.id !== "contact") : nav.sections),
     [recruitSafe, nav.sections],
@@ -73,11 +72,11 @@ export default function Navbar() {
   const sectionLinkClass = (id: string, compact = false) =>
     [
       "transition-colors",
-      compact ? "block rounded-lg px-3 py-2.5 text-sm font-medium" : "text-sm",
+      compact ? "block rounded-lg px-3 py-2.5 text-sm font-medium" : "relative text-sm",
       active === id
         ? compact
-          ? "bg-primary/15 text-primary-light"
-          : "text-primary-light"
+          ? "bg-accent/15 text-accent"
+          : "text-accent after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:bg-accent/70"
         : compact
           ? "text-white/75 hover:bg-white/8 hover:text-white"
           : "text-white/60 hover:text-white",
@@ -85,17 +84,17 @@ export default function Navbar() {
 
   return (
     <header className="nav-bar glass-nav-dark fixed inset-x-0 top-0 z-50 text-white">
-      <nav className="section-container flex h-16 items-center justify-between gap-3">
-        <div className="nav-brand flex min-w-0 items-center gap-2 sm:gap-4">
+      <nav className="section-container flex h-16 items-center justify-between gap-2 sm:gap-3">
+        <div className="nav-brand flex min-w-0 items-center gap-2 sm:gap-3">
           <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-white sm:text-base">
             {nav.siteName}
           </a>
-          <div className="nav-visitor [&_p]:text-white/75 [&_span.text-primary]:text-primary-light">
+          <div className="nav-visitor hidden min-w-0 sm:block [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/50 [&_span.text-primary]:text-sm [&_span.text-primary]:font-semibold [&_span.text-primary]:text-accent">
             <VisitorCounter />
           </div>
         </div>
 
-        <ul className="hidden items-center gap-6 md:flex">
+        <ul className="hidden items-center gap-6 lg:flex">
           {sections.map(({ id, label }) => (
             <li key={id}>
               <a href={`#${id}`} className={sectionLinkClass(id)}>
@@ -105,25 +104,23 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {!recruitSafe ? (
             <a
               href={otherLocaleHref}
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3.5 py-2 text-xs font-semibold tracking-wide text-white/80 transition hover:border-white/35 hover:bg-white/10 hover:text-white sm:px-4 sm:text-sm"
+              className="inline-flex items-center rounded-md px-2 py-1.5 text-xs font-semibold tracking-wide text-white/55 transition hover:text-white sm:px-2.5"
               aria-label={locale === "en" ? "Switch to Korean" : "Switch to English"}
+              title={locale === "en" ? "한국어로 보기" : "View in English"}
             >
-              <span className="text-base leading-none" aria-hidden="true">
-                {localeSwitchFlag}
-              </span>
               <span>{localeSwitchLabel}</span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/45 sm:text-[11px]">
+              <span className="ml-1.5 hidden text-[10px] font-medium uppercase tracking-[0.14em] text-white/35 sm:inline">
                 {otherLocaleLabel}
               </span>
             </a>
           ) : null}
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white/35 hover:bg-white/10 hover:text-white md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition hover:border-white/30 hover:bg-white/8 hover:text-white lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav-menu"
             aria-label={menuOpen ? "메뉴 닫기" : "섹션 메뉴 열기"}
@@ -135,7 +132,7 @@ export default function Navbar() {
           {!recruitSafe ? (
             <a
               href="#contact"
-              className="rounded-full border border-primary/50 px-3 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:px-4 sm:text-sm"
+              className="rounded-md border border-white/20 px-3 py-1.5 text-xs font-medium text-white/85 transition hover:border-accent/50 hover:text-accent sm:px-3.5 sm:text-sm"
               onClick={() => setMenuOpen(false)}
             >
               {nav.contactCta}
@@ -143,7 +140,7 @@ export default function Navbar() {
           ) : (
             <a
               href="#works"
-              className="rounded-full border border-primary/50 px-3 py-1.5 text-xs font-medium text-primary-light transition hover:bg-primary/15 sm:px-4 sm:text-sm"
+              className="rounded-md border border-white/20 px-3 py-1.5 text-xs font-medium text-white/85 transition hover:border-accent/50 hover:text-accent sm:px-3.5 sm:text-sm"
               onClick={() => setMenuOpen(false)}
             >
               Work
@@ -155,7 +152,7 @@ export default function Navbar() {
       {menuOpen ? (
         <div
           id="mobile-nav-menu"
-          className="border-t border-white/10 bg-[#0a1211]/95 backdrop-blur-md md:hidden"
+          className="border-t border-white/10 bg-[#0a1211]/95 backdrop-blur-md lg:hidden"
         >
           <ul className="section-container grid grid-cols-2 gap-1 py-3">
             {sections.map(({ id, label }) => (
@@ -170,6 +167,9 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <div className="section-container border-t border-white/8 py-2.5 sm:hidden [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/45 [&_span.text-primary]:text-sm [&_span.text-primary]:text-accent">
+            <VisitorCounter />
+          </div>
         </div>
       ) : null}
     </header>

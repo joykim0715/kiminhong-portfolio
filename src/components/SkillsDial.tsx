@@ -20,7 +20,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
   return (
     <div
       ref={circleRef}
-      className="skill-ring relative mx-auto w-[240px] sm:w-[260px] lg:w-[280px]"
+      className="skill-ring relative mx-auto w-[220px] sm:w-[250px] lg:w-[270px]"
       style={{ aspectRatio: "1" }}
     >
       <svg
@@ -28,22 +28,13 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
         viewBox="0 0 120 120"
         aria-hidden="true"
       >
-        <defs>
-          <filter id={`skill-ring-glow-${skill.id}`} x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
         <circle
           cx="60"
           cy="60"
           r="52"
           fill="none"
-          className="stroke-primary/20"
-          strokeWidth="5"
+          className="stroke-primary/18"
+          strokeWidth="4"
         />
         <circle
           ref={ringGlowRef}
@@ -51,12 +42,11 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           cy="60"
           r="52"
           fill="none"
-          className="stroke-secondary/60"
-          strokeWidth="7"
+          className="stroke-accent/35"
+          strokeWidth="5.5"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
           strokeDashoffset={RING_CIRCUMFERENCE}
-          filter={`url(#skill-ring-glow-${skill.id})`}
         />
         <circle
           ref={ringRef}
@@ -65,25 +55,23 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           r="52"
           fill="none"
           className="stroke-secondary"
-          strokeWidth="4.5"
+          strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
           strokeDashoffset={RING_CIRCUMFERENCE}
         />
       </svg>
 
-      <div className="absolute inset-0 px-5 sm:px-6">
-        <div className="absolute inset-x-5 top-[21%] flex h-9 items-center justify-center sm:inset-x-6 sm:top-[22%] sm:h-10">
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-primary sm:text-xs">
-            {skill.category}
-          </span>
+      <div className="absolute inset-0 px-4 sm:px-5">
+        <div className="absolute inset-x-4 top-[20%] flex h-8 items-center justify-center sm:inset-x-5 sm:top-[21%] sm:h-9">
+          <span className="section-meta text-accent">{skill.category}</span>
         </div>
-        <div className="absolute inset-x-4 top-[38%] flex flex-col items-center text-center sm:inset-x-5 sm:top-[39%]">
-          <span className="text-base font-bold leading-tight text-text sm:text-lg">{skill.tools}</span>
-          <ul className="mt-2 w-full space-y-0.5">
+        <div className="absolute inset-x-3 top-[36%] flex flex-col items-center text-center sm:inset-x-4 sm:top-[37%]">
+          <span className="text-sm font-bold leading-tight text-text sm:text-base">{skill.tools}</span>
+          <ul className="mt-1.5 w-full max-w-[11rem] space-y-0.5 sm:mt-2 sm:max-w-[12.5rem]">
             {skill.details.map((detail) => (
-              <li key={detail} className="text-preline text-[10px] leading-snug text-muted sm:text-xs">
-                · {detail}
+              <li key={detail} className="text-preline text-[10px] leading-snug text-muted sm:text-[11px]">
+                {detail}
               </li>
             ))}
           </ul>
@@ -183,13 +171,11 @@ export default function SkillsDial() {
         <div ref={pinZoneRef}>
           <div ref={pinPanelRef} className="skills-pin-panel bg-bg py-2 sm:py-4">
             <div className="skills-heading text-center lg:text-left">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-                {skillsContent.sectionLabel}
-              </p>
+              <p className="section-eyebrow text-primary">{skillsContent.sectionLabel}</p>
               <h2 id="skills-heading" className="section-title mt-3 tracking-tight">
                 {skillsContent.title}
               </h2>
-              <p className="mx-auto mt-4 max-w-xl break-keep text-base leading-relaxed text-muted sm:text-lg lg:mx-0">
+              <p className="section-body mx-auto mt-4 max-w-xl break-keep text-muted lg:mx-0">
                 {skillsContent.description}
               </p>
             </div>

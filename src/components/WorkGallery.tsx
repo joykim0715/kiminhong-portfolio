@@ -18,9 +18,9 @@ const NAV_OFFSET = 64;
 type TabId = "projects" | "certifications";
 
 const TAB_CLASS_ACTIVE =
-  "rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 sm:px-7 sm:py-3 sm:text-base";
+  "rounded-md bg-accent px-5 py-2 text-sm font-semibold text-white transition-colors duration-200 sm:px-6 sm:py-2.5 sm:text-base";
 const TAB_CLASS_IDLE =
-  "rounded-full border border-border bg-surface px-6 py-2.5 text-sm font-semibold text-muted transition-all duration-200 hover:border-primary/30 hover:bg-primary/10 hover:text-text sm:px-7 sm:py-3 sm:text-base";
+  "rounded-md border border-border bg-transparent px-5 py-2 text-sm font-semibold text-muted transition-colors duration-200 hover:border-primary/35 hover:text-text sm:px-6 sm:py-2.5 sm:text-base";
 
 function WorksTabs({
   activeTab,
@@ -139,12 +139,12 @@ export default function WorkGallery() {
   return (
     <section id="works" ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
       <svg
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full text-text opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full text-text opacity-[0.035]"
         aria-hidden="true"
       >
         <defs>
-          <pattern id="dot-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1.5" fill="currentColor" />
+          <pattern id="dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1" fill="currentColor" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#dot-grid)" />
@@ -152,9 +152,7 @@ export default function WorkGallery() {
 
       <div className="section-container relative z-10">
         <div className="works-heading">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">
-            {works.sectionLabel}
-          </p>
+          <p className="section-eyebrow text-secondary">{works.sectionLabel}</p>
           <h2 className="section-title mt-3 tracking-tight text-text">{works.title}</h2>
         </div>
 

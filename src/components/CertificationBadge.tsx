@@ -17,9 +17,9 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
 
   return (
     <article
-      className={`cert-badge gallery-card rounded-2xl p-5 shadow-sm transition-colors sm:p-6 ${
+      className={`cert-badge gallery-card rounded-xl p-5 transition-colors sm:p-6 ${
         isAward
-          ? "border-2 border-dashed border-primary/40 bg-bg hover:border-primary"
+          ? "border border-dashed border-primary/40 bg-bg hover:border-primary"
           : isEnglish
             ? "border border-secondary/35 bg-surface hover:border-secondary/55"
             : "border border-border bg-surface hover:border-accent"
@@ -31,7 +31,7 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
           <p className="text-preline mt-0.5 text-sm text-primary">{cert.fullName}</p>
         </div>
         <span
-          className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${badgeClass}`}
+          className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${badgeClass}`}
         >
           {badgeLabel}
         </span>

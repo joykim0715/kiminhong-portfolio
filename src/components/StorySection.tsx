@@ -42,14 +42,12 @@ export default function StorySection() {
           }
         >
           <div className="story-text space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary-light">
-              {storyContent.sectionLabel}
-            </p>
+            <p className="section-eyebrow text-primary-light">{storyContent.sectionLabel}</p>
             <h2 id="story-heading" className="section-title tracking-tight">
               {storyContent.title}
             </h2>
             {storyContent.paragraphs.map((p) => (
-              <p key={p} className="break-keep text-base text-white/75 sm:text-lg">
+              <p key={p} className="section-body break-keep text-white/72">
                 {p}
               </p>
             ))}

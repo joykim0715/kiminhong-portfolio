@@ -32,9 +32,8 @@ export default function Hero() {
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
 
-          <p className={`${styles.heroTagline} hero-desc-line`}>{hero.tagline}</p>
           <p className={`${styles.heroHeadline} hero-desc-line`}>{hero.headline}</p>
-          <p className={`${styles.heroBio} hero-desc-line`}>{hero.bio}</p>
+          <p className={`${styles.heroTagline} hero-desc-line`}>{hero.tagline}</p>
 
           <div className={`${styles.heroCtaRow} hero-cta`}>
             {recruitSafe ? (

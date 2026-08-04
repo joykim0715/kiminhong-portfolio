@@ -27,7 +27,7 @@ export default function ContactCTA() {
 
       if (!reduced) {
         gsap.to(".cta-button", {
-          y: -12,
+          y: -8,
           ease: "none",
           scrollTrigger: {
             trigger: section,
@@ -63,7 +63,7 @@ export default function ContactCTA() {
           >
             {about.headline}
           </h2>
-          <p className="cta-body text-preline mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">
+          <p className="cta-body section-body text-preline mx-auto mt-6 max-w-xl break-keep text-white/70">
             {about.bio}
           </p>
           <p className="cta-body mt-16 text-xs text-white/40 sm:text-sm">
@@ -88,35 +88,35 @@ export default function ContactCTA() {
       />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
-        <h2 id="contact-heading" className="cta-headline hero-title text-preline text-gradient-light max-w-4xl tracking-tight">
+        <h2
+          id="contact-heading"
+          className="cta-headline hero-title text-preline text-gradient-light max-w-4xl tracking-tight"
+        >
           {about.headline}
         </h2>
-        <p className="cta-body text-preline mx-auto mt-6 max-w-xl break-keep text-base text-white/75 sm:text-lg">{about.bio}</p>
+        <p className="cta-body section-body text-preline mx-auto mt-6 max-w-xl break-keep text-white/70">
+          {about.bio}
+        </p>
 
-        <div className="cta-button mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <Button href={mailtoHref(about.email)} className="!border-white/30 !bg-white/10 !text-white hover:!bg-white/20">
+        <div className="cta-button mt-12 flex w-full max-w-lg flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
+          <Button href={mailtoHref(about.email)} variant="onDark">
             {about.ctaButton}
           </Button>
           <Button
             href={hero.resumeUrl}
             target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
             rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}
-            variant="ghost"
-            className="!border-white/25 !text-white/90 hover:!border-white/40 hover:!bg-white/10"
+            variant="onDarkGhost"
           >
             {hero.resumeCtaLabel}
           </Button>
-          <Button
-            href={telHref(about.phone)}
-            variant="ghost"
-            className="!border-white/25 !text-white/90 hover:!border-white/40 hover:!bg-white/10"
-          >
+          <Button href={telHref(about.phone)} variant="onDarkGhost">
             {about.phoneCtaLabel} · {about.phone}
           </Button>
         </div>
 
         <nav
-          className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4"
+          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:mt-16 sm:gap-x-10"
           aria-label="Social links"
         >
           {socialLinks.map((link) => (
@@ -125,7 +125,7 @@ export default function ContactCTA() {
               href={link.href}
               target={shouldOpenInNewTab(link.href) ? "_blank" : undefined}
               rel={shouldOpenInNewTab(link.href) ? "noopener noreferrer" : undefined}
-              className="cta-logo text-sm font-semibold uppercase tracking-[0.2em] text-white/50 transition hover:text-primary-light sm:text-base"
+              className="cta-logo section-meta text-white/45 transition hover:text-accent"
             >
               {link.label}
             </a>

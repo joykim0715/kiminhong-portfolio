@@ -67,7 +67,7 @@ export const siteContentEn: SiteContent = {
     sectionLabel: "Values",
     title: "Building health value\nthrough movement and data",
     description:
-      "I combine sports medicine expertise with data analysis to deliver trustworthy healthcare insights.",
+      "I explore healthcare and digital health solutions by combining sports science expertise with data analysis — delivering trustworthy, evidence-based insights.",
     items: [
       "Evidence-based decision-making",
       "User-centered digital health experiences",
