@@ -204,7 +204,13 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             <header className={styles.hero}>
               <div className={styles.heroGlow} aria-hidden="true" />
 
-              <div className={`section-container ${styles.heroGrid} ${images.length > 1 ? styles.heroGridMulti : ""}`}>
+              <div className={`section-container ${styles.heroGrid} ${
+                images.length > 1
+                  ? styles.heroGridMulti
+                  : images.length === 0
+                    ? styles.heroGridTextOnly
+                    : ""
+              }`}>
                 {images.length > 0 ? (
                   <div className={images.length > 1 ? styles.thumbPair : styles.thumb}>
                     <ProjectImages

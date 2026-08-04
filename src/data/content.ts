@@ -506,6 +506,7 @@ export const siteContent = {
         id: "04",
         title: "스포츠과학대학 학생회-학과 맞춤형 기업 제휴 사업",
         category: "Teamwork",
+        image: "/works/04.jpg",
         description:
           "재학생 니즈 분석을 바탕으로 학과 맞춤형 기업 제휴를 기획·추진한 프로젝트입니다.",
         panel: {

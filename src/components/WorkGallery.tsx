@@ -184,8 +184,8 @@ export default function WorkGallery() {
           <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
           <div className={activeTab === "projects" ? "" : "hidden"} aria-hidden={activeTab !== "projects"}>
-            <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-center bg-bg py-3">
-              <div className="relative mx-auto mt-5 h-[min(42vh,320px)] w-full max-w-xl">
+            <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-start bg-bg pb-6 pt-4 sm:pt-6">
+              <div className="relative mx-auto mt-2 h-[min(42vh,320px)] w-full max-w-xl">
                 {projects.map((work, i) => (
                   <div
                     key={work.id}

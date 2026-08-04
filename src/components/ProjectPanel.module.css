@@ -120,6 +120,17 @@
   }
 }
 
+.heroGridTextOnly {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .heroGridTextOnly {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
 .thumb {
   position: relative;
   aspect-ratio: 1;
