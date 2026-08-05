@@ -10,6 +10,7 @@ import WorkGallery from "@/components/WorkGallery";
 import StorySection from "@/components/StorySection";
 import ContactCTA from "@/components/ContactCTA";
 import PageLoadEntrance from "@/components/PageLoadEntrance";
+import HashScroll from "@/components/HashScroll";
 import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
 import { ContentProvider, type Locale } from "@/components/ContentProvider";
 import { siteContent, type SiteContent } from "@/data/content";
@@ -29,6 +30,7 @@ export default function HomePage({
   return (
     <ContentProvider locale={locale} content={content}>
       <RecruitSafeProvider enabled={recruitSafe}>
+        <HashScroll />
         <Navbar />
         <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
           <Hero />

@@ -352,7 +352,7 @@ export default function DashboardDemo({
                 <p className={styles.summaryLabel}>{item.label}</p>
                 <p className={styles.riskCount}>
                   {item.count}
-                  <span>건</span>
+                  {risks.countSuffix ? <span>{risks.countSuffix}</span> : null}
                 </p>
               </div>
             ))}

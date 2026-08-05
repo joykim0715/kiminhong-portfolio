@@ -8,15 +8,15 @@ export const dashboardDemoEn = {
     title: "Decision Dashboard Demo",
     pageTitle: "Operations Dashboard Demo — Inhong Kim",
     description:
-      "Interactive demo of a senior healthcare operations dashboard — participant profiles, health-center collection, and smart-home risk alerts.",
+      "Interactive demo of a senior healthcare operations dashboard — cohort profiles, visits & measures, and smart-home remote monitoring.",
   },
   header: {
     eyebrow: "Interactive Demo",
-    title: "Senior healthcare operations dashboard",
+    title: "AAL smart home-care operations dashboard",
     subtitle:
-      "Rebuilt from the real screen structure I planned and used: participants → center collection → smart-home risk detection for decision support.",
+      "Rebuilt from the feedback-aligned Figma IA in the original 3-section decision flow: cohort → visits & measures → smart-home remote monitoring (H-codes).",
     backLabel: "← Portfolio",
-    backHref: "/en",
+    backHref: "/en#works",
     projectLabel: "Project 01 · Case Study",
     disclaimer:
       "Synthetic demo data only. No real participant personal data or raw logs are included.",
@@ -27,7 +27,7 @@ export const dashboardDemoEn = {
       label: "Enrolled",
       value: "224",
       unit: "",
-      note: "Full pilot cohort",
+      note: "Full cohort",
       tone: "neutral" as const,
     },
     {
@@ -40,7 +40,7 @@ export const dashboardDemoEn = {
     },
     {
       id: "centers",
-      label: "Lab collection",
+      label: "Visit & measure rate",
       value: "92",
       unit: "%",
       note: "Completed vs planned",
@@ -48,17 +48,17 @@ export const dashboardDemoEn = {
     },
     {
       id: "risks",
-      label: "Live risk alerts",
+      label: "Monitoring alerts",
       value: "6",
       unit: "",
-      note: "Including unchecked",
+      note: "Including unchecked H-codes",
       tone: "warn" as const,
     },
   ],
   demographics: {
-    sectionLabel: "01 · Participants",
+    sectionLabel: "01 · Cohort",
     title: "Participant profile overview",
-    description: "Explore age, sex, height, weight, and BMI by visit round (1–5).",
+    description: "Explore cohort age, sex, height, weight, and BMI by center visit round (1–5).",
     boardTitle: "Distribution by visit",
     visitAxisLabel: "Center visit round",
     countSuffix: "",
@@ -114,8 +114,8 @@ export const dashboardDemoEn = {
     ],
   },
   collection: {
-    sectionLabel: "02 · Health Center",
-    title: "Health center data collection",
+    sectionLabel: "02 · Visits & Measures",
+    title: "Individual visits & measurements",
     description: "Track how each measurement lab is filling planned visits and measurements.",
     labsAriaLabel: "Collection rate by measurement lab",
     centers: [
@@ -125,27 +125,29 @@ export const dashboardDemoEn = {
       { id: "c4", name: "Fall-risk lab", planned: 38, collected: 31, rate: 82 },
     ],
     metrics: [
+      { label: "Cumulative visits", value: "4,820", unit: "" },
       { label: "Cumulative measures", value: "69k", unit: "" },
-      { label: "This week", value: "1,240", unit: "" },
       { label: "Incomplete visits", value: "18", unit: "" },
     ],
   },
   risks: {
     sectionLabel: "03 · Smart Home",
-    title: "Smart-home real-time risk detection",
-    description: "Prioritize signals that need field response — falls, blood pressure, and more.",
+    title: "Smart-home remote monitoring",
+    description:
+      "Prioritize cardiovascular, musculoskeletal, and mental-health signals by household H-code.",
     status: [
-      { id: "fall", label: "Fall detected", count: 2, tone: "high" as const },
-      { id: "bp", label: "BP anomaly", count: 3, tone: "high" as const },
-      { id: "hr", label: "HR anomaly", count: 1, tone: "med" as const },
+      { id: "cardio", label: "Cardiovascular", count: 3, tone: "high" as const },
+      { id: "msk", label: "Musculoskeletal", count: 2, tone: "high" as const },
+      { id: "mental", label: "Mental health", count: 1, tone: "med" as const },
     ],
+    countSuffix: "",
     columns: ["Time", "Code", "Type", "Location / sensor", "Status", "Priority"],
     rows: [
       {
         id: "r1",
         time: "14:22",
-        code: "H-001",
-        type: "Fall detected",
+        code: "H-014",
+        type: "MSK · fall",
         source: "Living room · motion",
         status: "Unchecked",
         priority: "High" as const,
@@ -153,8 +155,8 @@ export const dashboardDemoEn = {
       {
         id: "r2",
         time: "13:51",
-        code: "H-002",
-        type: "BP anomaly",
+        code: "H-001",
+        type: "Cardio · BP",
         source: "BP meter · SYS 168",
         status: "In review",
         priority: "High" as const,
@@ -162,8 +164,8 @@ export const dashboardDemoEn = {
       {
         id: "r3",
         time: "12:08",
-        code: "H-003",
-        type: "BP anomaly",
+        code: "H-007",
+        type: "Cardio · BP",
         source: "BP meter · DIA 98",
         status: "Unchecked",
         priority: "High" as const,
@@ -171,8 +173,8 @@ export const dashboardDemoEn = {
       {
         id: "r4",
         time: "11:40",
-        code: "H-004",
-        type: "HR anomaly",
+        code: "H-012",
+        type: "Cardio · HR",
         source: "Wearable · 118 bpm",
         status: "Monitoring",
         priority: "Med" as const,
@@ -180,8 +182,8 @@ export const dashboardDemoEn = {
       {
         id: "r5",
         time: "09:33",
-        code: "H-005",
-        type: "Fall detected",
+        code: "H-026",
+        type: "MSK · impact",
         source: "Bathroom · impact",
         status: "False alarm",
         priority: "Low" as const,
@@ -189,9 +191,9 @@ export const dashboardDemoEn = {
       {
         id: "r6",
         time: "08:47",
-        code: "H-006",
-        type: "BP anomaly",
-        source: "BP meter · SYS 152",
+        code: "H-021",
+        type: "Mental · inactivity",
+        source: "Living room · activity",
         status: "Guide sent",
         priority: "Low" as const,
       },
@@ -201,10 +203,11 @@ export const dashboardDemoEn = {
     sectionLabel: "Decision Note",
     title: "What this screen helped decide",
     points: [
-      "Put profiles, center collection, and smart-home risks on one screen for ops and partner meetings",
-      "Prioritize structure that answers who / which lab / which risk — over aesthetics",
+      "Tied cohort profiles, visits/measures, and smart-home monitoring into one flow for ops and partner meetings",
+      "Identified households with H-codes (not S-codes) and split response priority by cardio / MSK / mental health",
       "Used as decision-support material for 5 MOUs / service contracts (portfolio outcomes)",
     ],
   },
-  footerNote: "Synthetic demo · reconstructed from actual dashboard IA (participants · center · smart-home risk)",
+  footerNote:
+    "Synthetic demo · feedback-aligned IA (cohort · visits/measures · smart-home remote monitoring)",
 } as const;
