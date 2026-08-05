@@ -240,6 +240,198 @@
   }
 }
 
+.metricExplorer {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 900px) {
+  .metricExplorer {
+    grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+    align-items: stretch;
+  }
+}
+
+.metricTabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+@media (min-width: 560px) {
+  .metricTabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .metricTabs {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+}
+
+.metricTab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid var(--clr-border);
+  background: color-mix(in srgb, var(--clr-surface) 35%, white);
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.metricTab:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--clr-accent) 45%, transparent);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--clr-dark) 8%, transparent);
+}
+
+.metricTab:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
+.metricTabActive {
+  border-color: color-mix(in srgb, var(--clr-primary) 55%, transparent);
+  background: color-mix(in srgb, var(--clr-primary) 10%, white);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--clr-primary) 12%, transparent);
+}
+
+.metricTabLabel {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--clr-dark);
+}
+
+.metricTabHint {
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--clr-muted);
+  word-break: keep-all;
+}
+
+.metricBoard {
+  border-radius: 1rem;
+  border: 1px solid var(--clr-border);
+  background: color-mix(in srgb, var(--clr-surface) 40%, white);
+  padding: 0.95rem;
+  min-height: 280px;
+}
+
+.metricBoardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.metricBoardAxis {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--clr-muted);
+}
+
+.metricChart {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.metricChartHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+}
+
+.metricChartTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.metricChartNote {
+  font-size: 0.72rem;
+  color: var(--clr-muted);
+}
+
+.lineChartWrap {
+  position: relative;
+  min-height: 160px;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, white 55%, transparent);
+  padding: 0.75rem 0.5rem 0.35rem;
+}
+
+.lineSvg {
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+
+.linePath {
+  fill: none;
+  stroke: var(--clr-primary);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartAnimate .linePath {
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
+  animation: lineDraw 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lineDot {
+  fill: var(--clr-primary);
+  stroke: white;
+  stroke-width: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.lineValueRow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+
+.lineValue {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--clr-dark);
+}
+
+.visitAxis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+.visitAxis span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--clr-muted);
+}
+
 .subPanel {
   border-radius: 1rem;
   border: 1px solid var(--clr-border);
@@ -248,52 +440,9 @@
 }
 
 .subTitle {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
   font-size: 0.88rem;
   font-weight: 700;
-}
-
-.genderSplit {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.genderCard {
-  border-radius: 0.75rem;
-  background: color-mix(in srgb, white 70%, transparent);
-  padding: 0.7rem 0.75rem;
-}
-
-.genderTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.85rem;
-}
-
-.genderTop strong {
-  font-size: 1.05rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.genderTrack {
-  margin-top: 0.45rem;
-  height: 0.45rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--clr-text) 8%, transparent);
-  overflow: hidden;
-}
-
-.genderFill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary));
-}
-
-.genderCount {
-  margin-top: 0.35rem;
-  font-size: 0.75rem;
-  color: var(--clr-muted);
 }
 
 .vBarChart {
@@ -417,17 +566,17 @@
   }
 }
 
-.riskStatusGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
-  margin-bottom: 1rem;
+@keyframes lineDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
-@media (min-width: 720px) {
-  .riskStatusGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+.riskStatusGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1rem;
 }
 
 .riskStatusCard {
@@ -576,8 +725,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .chartAnimate .vBarFill,
-  .chartAnimate .hBarFill {
+  .chartAnimate .hBarFill,
+  .chartAnimate .linePath {
     animation: none !important;
+  }
+
+  .metricTab,
+  .metricTab:hover {
+    transition: none;
+    transform: none;
   }
 
   .vBarFill {
@@ -586,5 +742,10 @@
 
   .hBarFill {
     width: var(--bar-width);
+  }
+
+  .linePath {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
 }
