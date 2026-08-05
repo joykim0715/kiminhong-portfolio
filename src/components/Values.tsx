@@ -15,7 +15,7 @@ export default function Values() {
 
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".values-heading", section);
-      fadeRevealOnScroll(".value-item", section, { stagger: 0.14, start: "top 78%" });
+      fadeRevealOnScroll(".value-item", section, { stagger: 0.1, start: "top 80%" });
     }, section);
 
     return () => ctx.revert();

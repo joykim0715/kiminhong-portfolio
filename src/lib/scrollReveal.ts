@@ -1,5 +1,5 @@
 import { gsap } from "@/lib/gsap";
-import { prefersReducedMotion } from "@/lib/animations";
+import { DURATION, EASE_OUT, MOTION, prefersReducedMotion } from "@/lib/animations";
 
 type RevealOptions = {
   y?: number;
@@ -18,12 +18,12 @@ export function revealOnScroll(
 ) {
   const reduced = prefersReducedMotion();
   const {
-    y = 60,
+    y = MOTION.revealY,
     x = 0,
     opacity = 0,
-    duration = 0.55,
+    duration = DURATION.reveal,
     stagger = 0,
-    start = "top 85%",
+    start = MOTION.revealStart,
   } = options;
 
   if (reduced) {
@@ -36,13 +36,13 @@ export function revealOnScroll(
     x,
     opacity,
     duration,
-    ease: "power2.out",
+    ease: EASE_OUT,
     stagger,
     immediateRender: false,
     scrollTrigger: {
       trigger,
       start,
-      toggleActions: "play none none reverse",
+      toggleActions: "play none none none",
     },
   });
 }

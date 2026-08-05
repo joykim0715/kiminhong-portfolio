@@ -27,13 +27,13 @@ export default function ContactCTA() {
 
       if (!reduced) {
         gsap.to(".cta-button", {
-          y: -8,
+          y: -5,
           ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            scrub: 0.6,
           },
         });
       }

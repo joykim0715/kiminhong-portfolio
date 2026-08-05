@@ -1,6 +1,6 @@
 import { gsap } from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { prefersReducedMotion } from "@/lib/animations";
+import { DURATION, EASE_OUT, MOTION, prefersReducedMotion } from "@/lib/animations";
 
 const NAV_OFFSET = 64; // matches h-16 navbar
 
@@ -27,7 +27,7 @@ type PinStackOptions = {
 export function scrollPinStack(options: PinStackOptions) {
   if (prefersReducedMotion()) return null;
 
-  const { zone, stepVh = 0.9, scrub = 1.2, holdDuration = 0.5 } = options;
+  const { zone, stepVh = 0.85, scrub = 1.05, holdDuration = 0.65 } = options;
   const pinEl = resolveEl(zone, options.pinSelector);
   const cards = gsap.utils.toArray<Element>(options.cardSelector, zone);
   if (!pinEl || cards.length < 2) return null;
@@ -39,8 +39,8 @@ export function scrollPinStack(options: PinStackOptions) {
   cards.forEach((card, i) => {
     gsap.set(card, {
       zIndex: i + 1,
-      y: i === 0 ? 0 : 40,
-      scale: i === 0 ? 1 : 0.95,
+      y: i === 0 ? 0 : 28,
+      scale: i === 0 ? 1 : 0.97,
       opacity: i === 0 ? 1 : 0,
       transformOrigin: "center top",
     });
@@ -58,7 +58,7 @@ export function scrollPinStack(options: PinStackOptions) {
       invalidateOnRefresh: true,
       onUpdate(self) {
         // segmentDuration = 전환(1) + 홀드. floor만 쓰면 홀드 구간 내내 이전 인덱스가 유지되어
-        // 화면에 보이는 카드와 클릭 대상이 어긋남 (예: 라이프놀로지 카드인데 01 패널 오픈).
+        // 화면에 보이는 카드와 클릭 대상이 어긋남.
         // 전환 중반(0.5)을 넘기면 다음 카드로 인덱스를 올려 표시·클릭을 맞춘다.
         const timelinePos = self.progress * steps * segmentDuration;
         const visualIndex = Math.min(
@@ -74,7 +74,7 @@ export function scrollPinStack(options: PinStackOptions) {
     const at = (i - 1) * segmentDuration;
     tl.to(
       cards[i - 1],
-      { y: -28, scale: 0.91, opacity: 0.2, zIndex: i, duration: transitionDuration, ease: "none" },
+      { y: -20, scale: 0.94, opacity: 0.28, zIndex: i, duration: transitionDuration, ease: "none" },
       at,
     ).to(
       cards[i],
@@ -127,6 +127,7 @@ type RevealOptions = {
   stagger?: number;
   start?: string;
   y?: number;
+  duration?: number;
 };
 
 export function fadeRevealOnScroll(
@@ -141,15 +142,15 @@ export function fadeRevealOnScroll(
 
   return gsap.from(targets, {
     opacity: 0,
-    y: options.y ?? 40,
-    duration: 0.55,
-    ease: "power2.out",
-    stagger: options.stagger ?? 0.1,
+    y: options.y ?? MOTION.revealY,
+    duration: options.duration ?? DURATION.reveal,
+    ease: EASE_OUT,
+    stagger: options.stagger ?? MOTION.stagger,
     immediateRender: false,
     scrollTrigger: {
       trigger,
-      start: options.start ?? "top 85%",
-      toggleActions: "play none none reverse",
+      start: options.start ?? MOTION.revealStart,
+      toggleActions: "play none none none",
     },
   });
 }
@@ -168,9 +169,9 @@ export function parallaxFadeOnScroll(
 ) {
   if (prefersReducedMotion()) return null;
 
-  const { y = 40, opacity = 0.85, start = "top bottom", end = "bottom top" } = options;
+  const { y = 28, opacity = 0.9, start = "top bottom", end = "bottom top" } = options;
   const from: gsap.TweenVars = { y };
-  const to: gsap.TweenVars = { y: -y * 0.5, ease: "none" };
+  const to: gsap.TweenVars = { y: -y * 0.35, ease: "none" };
 
   if (opacity < 1) {
     from.opacity = opacity;
@@ -179,6 +180,6 @@ export function parallaxFadeOnScroll(
 
   return gsap.fromTo(target, from, {
     ...to,
-    scrollTrigger: { trigger, start, end, scrub: 0.4 },
+    scrollTrigger: { trigger, start, end, scrub: 0.55 },
   });
 }

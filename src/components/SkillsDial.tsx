@@ -115,15 +115,15 @@ export default function SkillsDial() {
         return;
       }
 
-      gsap.set(circles, { opacity: 0, scale: 0.9 });
+      gsap.set(circles, { opacity: 0, scale: 0.96 });
       rings.forEach((ring) => gsap.set(ring, { strokeDashoffset: RING_CIRCUMFERENCE }));
       ringGlows.forEach((ring) => gsap.set(ring, { strokeDashoffset: RING_CIRCUMFERENCE }));
 
-      const fadeStagger = 0.2;
-      const ringStagger = 0.18;
-      const fadeDuration = 0.3;
-      const ringDuration = 0.38;
-      const ringPhaseStart = circles.length * fadeStagger + 0.15;
+      const fadeStagger = 0.16;
+      const ringStagger = 0.16;
+      const fadeDuration = 0.35;
+      const ringDuration = 0.42;
+      const ringPhaseStart = circles.length * fadeStagger + 0.12;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -133,7 +133,7 @@ export default function SkillsDial() {
           pin: pinPanel,
           pinSpacing: true,
           anticipatePin: 1,
-          scrub: 0.85,
+          scrub: 0.95,
           invalidateOnRefresh: true,
         },
       });

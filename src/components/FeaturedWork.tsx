@@ -30,11 +30,11 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
             images={images}
             alt={work.title}
             sizes="(max-width: 768px) 100vw, 1200px"
-            imageClassName="object-cover sharp-image transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+            imageClassName="object-cover sharp-image transition-transform duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015]"
             quality={95}
           />
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/55 via-dark/10 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/55 via-dark/10 to-transparent transition-opacity duration-500 group-hover:opacity-90"
             aria-hidden
           />
         </div>
@@ -46,9 +46,16 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
               {work.title}
             </h3>
             <p className="section-body text-preline mt-4 max-w-2xl break-keep text-muted">{summary}</p>
-            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-text transition-colors group-hover:text-primary">
+            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-text transition-colors duration-300 group-hover:text-primary">
               {ctaLabel}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                className="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
                 <path
                   d="M7 17L17 7M17 7H9M17 7V15"
                   stroke="currentColor"

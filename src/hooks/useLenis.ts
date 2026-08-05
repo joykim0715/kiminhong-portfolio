@@ -11,7 +11,7 @@ export function useLenis() {
 
     if (!prefersReduced) {
       const lenis = new Lenis({
-        lerp: 0.12,
+        lerp: 0.095,
         smoothWheel: true,
         autoRaf: false,
         // touchMultiplier: 1 — 기본값 유지. 2 이상이면 iOS Safari에서 네이티브 관성 스크롤과

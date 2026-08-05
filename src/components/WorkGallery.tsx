@@ -110,8 +110,8 @@ export default function WorkGallery() {
           pinSelector: ".works-pin-panel--projects",
           cardSelector: ".stack-card",
           stepVh: STACK_STEP_VH,
-          scrub: 1.2,
-          holdDuration: 0.5,
+        scrub: 1.05,
+          holdDuration: 0.65,
           onIndex: setActiveStackIndex,
         });
       } else if (!isDesktop) {
