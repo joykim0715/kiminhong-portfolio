@@ -7,8 +7,7 @@ import { dashboardDemoEn } from "@/data/dashboardDemo.en";
 import styles from "./DashboardDemo.module.css";
 
 type DashboardData = typeof dashboardDemoKo | typeof dashboardDemoEn;
-type MonitorCategory = DashboardData["monitoring"]["categories"][number];
-type HouseholdTone = MonitorCategory["households"][number]["tone"];
+type MetricTab = DashboardData["demographics"]["metricTabs"][number];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -49,233 +48,175 @@ function useInViewOnce<T extends Element>() {
   return { ref, inView };
 }
 
-function UtilizationChart({
-  months,
-  series,
-  unit,
-  title,
+function formatMetricValue(value: number, unit: string) {
+  const rounded = Number.isInteger(value) ? String(value) : value.toFixed(1);
+  return unit ? `${rounded}${unit}` : rounded;
+}
+
+function VisitMetricChart({
+  tab,
+  visitLabels,
+  animateKey,
 }: {
-  months: readonly string[];
-  series: readonly number[];
-  unit: string;
-  title: string;
+  tab: MetricTab;
+  visitLabels: readonly string[];
+  animateKey: string;
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
   const animate = inView || reducedMotion;
-  const max = Math.max(...series, 1);
+  const values = tab.series;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const pad = max === min ? Math.abs(max) * 0.08 || 1 : (max - min) * 0.18;
+  const domainMin = min - pad;
+  const domainMax = max + pad;
+  const range = domainMax - domainMin || 1;
+
+  const points = values.map((value, index) => {
+    const x = (index / Math.max(values.length - 1, 1)) * 100;
+    const y = 100 - ((value - domainMin) / range) * 100;
+    return { x, y, value };
+  });
+
+  const linePath = points
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+    .join(" ");
+
+  const seriesNote = "seriesLabel" in tab && tab.seriesLabel ? tab.seriesLabel : tab.hint;
 
   return (
     <div
+      key={animateKey}
       ref={ref}
-      className={`${styles.subPanel} ${animate ? styles.chartAnimate : ""}`}
+      className={`${styles.metricChart} ${animate ? styles.chartAnimate : ""}`}
       role="img"
-      aria-label={`${title}: ${series.join(", ")}${unit}`}
+      aria-label={`${tab.label}: ${seriesNote}`}
     >
-      <p className={styles.subTitle}>{title}</p>
-      <div className={styles.utilChart}>
-        {series.map((value, index) => {
-          const height = (value / max) * 100;
-          return (
-            <div key={months[index]} className={styles.utilCol}>
-              <span className={styles.utilValue}>
-                {value}
-                {unit}
+      <div className={styles.metricChartHead}>
+        <p className={styles.metricChartTitle}>{tab.hint}</p>
+        <p className={styles.metricChartNote}>{seriesNote}</p>
+      </div>
+
+      {tab.chart === "line" ? (
+        <div className={styles.lineChartWrap}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className={styles.lineSvg} aria-hidden>
+            <path className={styles.linePath} d={linePath} />
+            {points.map((point) => (
+              <circle key={`${point.x}-${point.value}`} className={styles.lineDot} cx={point.x} cy={point.y} r="1.6" />
+            ))}
+          </svg>
+          <div className={styles.lineValueRow}>
+            {points.map((point, index) => (
+              <span key={visitLabels[index]} className={styles.lineValue}>
+                {formatMetricValue(point.value, tab.unit)}
               </span>
-              <div className={styles.utilTrack}>
-                <div
-                  className={styles.utilFill}
-                  style={
-                    {
-                      ["--bar-height" as string]: `${height}%`,
-                      ["--bar-delay" as string]: `${index * 40}ms`,
-                      height: reducedMotion ? `${height}%` : undefined,
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.vBarChart}>
+          {values.map((value, index) => {
+            const height = ((value - domainMin) / range) * 100;
+            return (
+              <div key={visitLabels[index]} className={styles.vBarCol}>
+                <span className={styles.vBarValue}>{formatMetricValue(value, tab.unit)}</span>
+                <div className={styles.vBarTrack}>
+                  <div
+                    className={styles.vBarFill}
+                    style={
+                      {
+                        ["--bar-height" as string]: `${height}%`,
+                        ["--bar-delay" as string]: `${index * 70}ms`,
+                        height: reducedMotion ? `${height}%` : undefined,
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
-              <span className={styles.utilLabel}>{months[index]}</span>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      )}
+
+      <div className={styles.visitAxis}>
+        {visitLabels.map((label) => (
+          <span key={label}>{label}</span>
+        ))}
       </div>
     </div>
   );
 }
 
-function RegionBuildPanel({
-  data,
-}: {
-  data: DashboardData["overview"];
-}) {
-  const [activeId, setActiveId] = useState<string>(
-    () => data.regions.find((r) => r.active)?.id ?? data.regions[0]?.id ?? "",
+function DemographicsExplorer({ data }: { data: DashboardData }) {
+  const { demographics } = data;
+  const tabs = demographics.metricTabs;
+  const [activeId, setActiveId] = useState<string>(tabs[0]?.id ?? "age");
+  const boardId = useId();
+  const activeTab = useMemo(
+    () => tabs.find((tab) => tab.id === activeId) ?? tabs[0],
+    [tabs, activeId],
   );
-  const active = data.regions.find((r) => r.id === activeId) ?? data.regions[0];
 
   return (
-    <div className={styles.subPanel}>
-      <p className={styles.subTitle}>{data.buildTitle}</p>
-      <p className={styles.buildSubtitle}>{data.buildSubtitle}</p>
-      <p className={styles.buildRate}>{data.buildRate}</p>
-
-      <div className={styles.regionFocus} aria-live="polite">
-        <p className={styles.regionFocusName}>{active?.name}</p>
-        <p className={styles.regionFocusValue}>
-          {active?.households}
-          <span>{data.regionUnit}</span>
-        </p>
-      </div>
-
-      <div className={styles.regionChips} role="list" aria-label={data.buildTitle}>
-        {data.regions.map((region) => {
-          const selected = region.id === activeId;
+    <div className={styles.metricExplorer}>
+      <div className={styles.metricTabs} role="tablist" aria-label={demographics.title}>
+        {tabs.map((tab) => {
+          const selected = tab.id === activeTab.id;
           return (
             <button
-              key={region.id}
+              key={tab.id}
               type="button"
-              role="listitem"
-              className={`${styles.regionChip} ${selected ? styles.regionChipActive : ""}`}
-              onClick={() => setActiveId(region.id)}
-              aria-pressed={selected}
+              role="tab"
+              id={`${boardId}-tab-${tab.id}`}
+              aria-selected={selected}
+              aria-controls={`${boardId}-panel`}
+              tabIndex={selected ? 0 : -1}
+              className={`${styles.metricTab} ${selected ? styles.metricTabActive : ""}`}
+              onClick={() => setActiveId(tab.id)}
+              onKeyDown={(event) => {
+                const index = tabs.findIndex((item) => item.id === tab.id);
+                if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+                  event.preventDefault();
+                  const next = tabs[(index + 1) % tabs.length];
+                  setActiveId(next.id);
+                }
+                if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  const prev = tabs[(index - 1 + tabs.length) % tabs.length];
+                  setActiveId(prev.id);
+                }
+              }}
             >
-              <span>{region.name}</span>
-              <span className={styles.regionChipCount}>{region.households}</span>
+              <span className={styles.metricTabLabel}>{tab.label}</span>
+              <span className={styles.metricTabHint}>{tab.hint}</span>
             </button>
           );
         })}
       </div>
-    </div>
-  );
-}
 
-function AgeDonut({
-  title,
-  slices,
-}: {
-  title: string;
-  slices: DashboardData["visits"]["ageSlices"];
-}) {
-  const total = slices.reduce((sum, slice) => sum + slice.value, 0) || 1;
-  let cumulative = 0;
-  const gradientStops = slices
-    .map((slice) => {
-      const start = (cumulative / total) * 100;
-      cumulative += slice.value;
-      const end = (cumulative / total) * 100;
-      return `${slice.color} ${start}% ${end}%`;
-    })
-    .join(", ");
-
-  return (
-    <div className={styles.subPanel}>
-      <p className={styles.subTitle}>{title}</p>
-      <div className={styles.donutWrap}>
-        <div
-          className={styles.donut}
-          style={{ background: `conic-gradient(${gradientStops})` }}
-          role="img"
-          aria-label={slices.map((s) => `${s.label} ${s.value}%`).join(", ")}
-        >
-          <div className={styles.donutHole}>
-            <span className={styles.donutTotal}>{total}</span>
-            <span className={styles.donutTotalLabel}>%</span>
-          </div>
+      <div
+        id={`${boardId}-panel`}
+        role="tabpanel"
+        aria-labelledby={`${boardId}-tab-${activeTab.id}`}
+        className={styles.metricBoard}
+      >
+        <div className={styles.metricBoardHead}>
+          <p className={styles.subTitle}>{demographics.boardTitle}</p>
+          <p className={styles.metricBoardAxis}>{demographics.visitAxisLabel}</p>
         </div>
-        <ul className={styles.donutLegend}>
-          {slices.map((slice) => (
-            <li key={slice.id}>
-              <span className={styles.legendSwatch} style={{ background: slice.color }} />
-              <span className={styles.legendLabel}>{slice.label}</span>
-              <span className={styles.legendValue}>{slice.value}%</span>
-            </li>
-          ))}
-        </ul>
+        <VisitMetricChart
+          tab={activeTab}
+          visitLabels={demographics.visitLabels}
+          animateKey={activeTab.id}
+        />
       </div>
     </div>
   );
 }
 
-function DualTrendChart({
-  title,
-  labels,
-  visitSeries,
-  measureSeries,
-  visitLabel,
-  measureLabel,
-}: {
-  title: string;
-  labels: readonly string[];
-  visitSeries: readonly number[];
-  measureSeries: readonly number[];
-  visitLabel: string;
-  measureLabel: string;
-}) {
-  const reducedMotion = usePrefersReducedMotion();
-  const { ref, inView } = useInViewOnce<HTMLDivElement>();
-  const animate = inView || reducedMotion;
-  const max = Math.max(...visitSeries, ...measureSeries, 1);
-
-  return (
-    <div
-      ref={ref}
-      className={`${styles.subPanel} ${animate ? styles.chartAnimate : ""}`}
-    >
-      <div className={styles.trendHead}>
-        <p className={styles.subTitle}>{title}</p>
-        <div className={styles.trendLegend}>
-          <span className={styles.trendLegendVisit}>{visitLabel}</span>
-          <span className={styles.trendLegendMeasure}>{measureLabel}</span>
-        </div>
-      </div>
-      <div className={styles.dualTrend} role="img" aria-label={title}>
-        {labels.map((label, index) => {
-          const visitH = (visitSeries[index] / max) * 100;
-          const measureH = (measureSeries[index] / max) * 100;
-          return (
-            <div key={label} className={styles.dualCol}>
-              <div className={styles.dualPair}>
-                <div className={styles.dualTrack}>
-                  <div
-                    className={`${styles.dualFill} ${styles.dualVisit}`}
-                    style={
-                      {
-                        ["--bar-height" as string]: `${visitH}%`,
-                        ["--bar-delay" as string]: `${index * 50}ms`,
-                        height: reducedMotion ? `${visitH}%` : undefined,
-                      }
-                    }
-                  />
-                </div>
-                <div className={styles.dualTrack}>
-                  <div
-                    className={`${styles.dualFill} ${styles.dualMeasure}`}
-                    style={
-                      {
-                        ["--bar-height" as string]: `${measureH}%`,
-                        ["--bar-delay" as string]: `${index * 50 + 30}ms`,
-                        height: reducedMotion ? `${measureH}%` : undefined,
-                      }
-                    }
-                  />
-                </div>
-              </div>
-              <span className={styles.utilLabel}>{label}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function LabBars({
-  labs,
-  ariaLabel,
-}: {
-  labs: DashboardData["visits"]["labs"];
-  ariaLabel: string;
-}) {
+function CenterCollectionBars({ data }: { data: DashboardData }) {
+  const centers = data.collection.centers;
   const reducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
   const animate = inView || reducedMotion;
@@ -285,14 +226,14 @@ function LabBars({
       ref={ref}
       className={`${styles.hBarList} ${animate ? styles.chartAnimate : ""}`}
       role="list"
-      aria-label={ariaLabel}
+      aria-label={data.collection.labsAriaLabel}
     >
-      {labs.map((lab, index) => (
-        <div key={lab.id} className={styles.hBarRow} role="listitem">
+      {centers.map((center, index) => (
+        <div key={center.id} className={styles.hBarRow} role="listitem">
           <div className={styles.hBarMeta}>
-            <span className={styles.hBarName}>{lab.name}</span>
+            <span className={styles.hBarName}>{center.name}</span>
             <span className={styles.hBarStat}>
-              {lab.collected}/{lab.planned} · {lab.rate}%
+              {center.collected}/{center.planned} · {center.rate}%
             </span>
           </div>
           <div className={styles.hBarTrack}>
@@ -300,9 +241,9 @@ function LabBars({
               className={styles.hBarFill}
               style={
                 {
-                  ["--bar-width" as string]: `${lab.rate}%`,
+                  ["--bar-width" as string]: `${center.rate}%`,
                   ["--bar-delay" as string]: `${index * 90}ms`,
-                  width: reducedMotion ? `${lab.rate}%` : undefined,
+                  width: reducedMotion ? `${center.rate}%` : undefined,
                 }
               }
             />
@@ -313,112 +254,12 @@ function LabBars({
   );
 }
 
-function statusToneClass(tone: HouseholdTone) {
-  if (tone === "alert") return styles.statusAlert;
-  if (tone === "warn") return styles.statusWarn;
-  return styles.statusOk;
-}
-
-function MonitoringBoard({ data }: { data: DashboardData["monitoring"] }) {
-  const categories = data.categories;
-  const [categoryId, setCategoryId] = useState<string>(categories[0]?.id ?? "cardio");
-  const [regionId, setRegionId] = useState<string>(data.regions[0]?.id ?? "");
-  const boardId = useId();
-
-  const activeCategory = useMemo(
-    () => categories.find((c) => c.id === categoryId) ?? categories[0],
-    [categories, categoryId],
-  );
-
-  const regionName = data.regions.find((r) => r.id === regionId)?.name ?? "";
-
-  return (
-    <div className={styles.monitorLayout}>
-      <div className={styles.monitorSide}>
-        <p className={styles.subTitle}>{data.regionLabel}</p>
-        <div className={styles.regionChips} role="list">
-          {data.regions.map((region) => {
-            const selected = region.id === regionId;
-            return (
-              <button
-                key={region.id}
-                type="button"
-                className={`${styles.regionChip} ${selected ? styles.regionChipActive : ""}`}
-                onClick={() => setRegionId(region.id)}
-                aria-pressed={selected}
-              >
-                {region.name}
-              </button>
-            );
-          })}
-        </div>
-        <p className={styles.regionHint}>{regionName}</p>
-      </div>
-
-      <div className={styles.monitorMain}>
-        <div className={styles.categoryTabs} role="tablist" aria-label={data.title}>
-          {categories.map((cat) => {
-            const selected = cat.id === activeCategory.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                role="tab"
-                id={`${boardId}-tab-${cat.id}`}
-                aria-selected={selected}
-                aria-controls={`${boardId}-panel`}
-                tabIndex={selected ? 0 : -1}
-                className={`${styles.categoryTab} ${selected ? styles.categoryTabActive : ""}`}
-                onClick={() => setCategoryId(cat.id)}
-                onKeyDown={(event) => {
-                  const index = categories.findIndex((item) => item.id === cat.id);
-                  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-                    event.preventDefault();
-                    setCategoryId(categories[(index + 1) % categories.length].id);
-                  }
-                  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-                    event.preventDefault();
-                    setCategoryId(categories[(index - 1 + categories.length) % categories.length].id);
-                  }
-                }}
-              >
-                <span className={styles.metricTabLabel}>{cat.label}</span>
-                <span className={styles.metricTabHint}>{cat.hint}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        <div
-          id={`${boardId}-panel`}
-          role="tabpanel"
-          aria-labelledby={`${boardId}-tab-${activeCategory.id}`}
-          className={styles.householdGrid}
-        >
-          {activeCategory.households.map((home) => (
-            <article key={`${activeCategory.id}-${home.id}`} className={styles.householdCard}>
-              <div className={styles.householdTop}>
-                <span className={styles.mono}>{home.code}</span>
-                <span className={`${styles.statusBadge} ${statusToneClass(home.tone)}`}>
-                  {home.status}
-                </span>
-              </div>
-              <p className={styles.householdPeople}>{home.people}</p>
-              <p className={styles.householdNote}>{home.note}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function DashboardDemo({
   data = dashboardDemoKo,
 }: {
   data?: DashboardData;
 }) {
-  const { header, kpis, overview, visits, monitoring, insight, footerNote } = data;
+  const { header, kpis, demographics, collection, risks, insight, footerNote } = data;
 
   return (
     <div className={styles.page}>
@@ -441,115 +282,109 @@ export default function DashboardDemo({
           </p>
         </section>
 
-        <section className={styles.kpiGrid} aria-label="Key metrics">
+        <section className={styles.kpiGrid} aria-label="핵심 현황">
           {kpis.map((kpi) => (
             <article key={kpi.id} className={`${styles.kpiCard} ${styles[`tone_${kpi.tone}`]}`}>
               <p className={styles.kpiLabel}>{kpi.label}</p>
               <p className={styles.kpiValue}>
                 {kpi.value}
-                {kpi.unit ? <span className={styles.kpiUnit}>{kpi.unit}</span> : null}
+                <span className={styles.kpiUnit}>{kpi.unit}</span>
               </p>
               <p className={styles.kpiNote}>{kpi.note}</p>
             </article>
           ))}
         </section>
 
-        {/* 01 운영현황 */}
+        {/* 01 사용자 일반 정보 */}
         <section className={styles.panel}>
           <div className={styles.panelHead}>
-            <p className={styles.sectionLabel}>{overview.sectionLabel}</p>
-            <h2 className={styles.sectionTitle}>{overview.title}</h2>
-            <p className={styles.sectionDesc}>{overview.description}</p>
-          </div>
-
-          <div className={styles.overviewGrid}>
-            <UtilizationChart
-              title={overview.utilizationTitle}
-              months={overview.months}
-              series={overview.utilizationSeries}
-              unit={overview.utilizationUnit}
-            />
-            <RegionBuildPanel data={overview} />
-          </div>
-
-          <div className={styles.liveStrip}>
-            <p className={styles.liveTitle}>{overview.liveTitle}</p>
-            <div className={styles.liveItems}>
-              {overview.liveItems.map((item) => (
-                <div key={item.id} className={styles.liveCard}>
-                  <span className={styles.mono}>{item.code}</span>
-                  <span className={styles.livePeople}>{item.people}</span>
-                  <span className={`${styles.statusBadge} ${statusToneClass(item.tone)}`}>
-                    {item.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 02 방문·측정 */}
-        <section className={styles.panel}>
-          <div className={styles.panelHead}>
-            <p className={styles.sectionLabel}>{visits.sectionLabel}</p>
-            <h2 className={styles.sectionTitle}>{visits.title}</h2>
-            <p className={styles.sectionDesc}>{visits.description}</p>
+            <p className={styles.sectionLabel}>{demographics.sectionLabel}</p>
+            <h2 className={styles.sectionTitle}>{demographics.title}</h2>
+            <p className={styles.sectionDesc}>{demographics.description}</p>
           </div>
 
           <div className={styles.summaryGrid}>
-            {visits.metrics.map((item) => (
+            {demographics.summary.map((item) => (
               <div key={item.label} className={styles.summaryCard}>
                 <p className={styles.summaryLabel}>{item.label}</p>
+                <p className={styles.summaryValue}>{item.value}</p>
+              </div>
+            ))}
+          </div>
+
+          <DemographicsExplorer data={data} />
+        </section>
+
+        {/* 02 건강 센터 수집 */}
+        <section className={styles.panel}>
+          <div className={styles.panelHead}>
+            <p className={styles.sectionLabel}>{collection.sectionLabel}</p>
+            <h2 className={styles.sectionTitle}>{collection.title}</h2>
+            <p className={styles.sectionDesc}>{collection.description}</p>
+          </div>
+
+          <div className={styles.collectionMetrics}>
+            {collection.metrics.map((m) => (
+              <div key={m.label} className={styles.collectionMetric}>
+                <p className={styles.summaryLabel}>{m.label}</p>
                 <p className={styles.summaryValue}>
-                  {item.value}
-                  {item.unit ? <span className={styles.kpiUnit}>{item.unit}</span> : null}
+                  {m.value}
+                  <span className={styles.kpiUnit}>{m.unit}</span>
                 </p>
               </div>
             ))}
           </div>
 
-          <div className={styles.visitsGrid}>
-            <AgeDonut title={visits.ageTitle} slices={visits.ageSlices} />
-            <DualTrendChart
-              title={visits.trendTitle}
-              labels={visits.trendLabels}
-              visitSeries={visits.visitSeries}
-              measureSeries={visits.measureSeries}
-              visitLabel={visits.visitSeriesLabel}
-              measureLabel={visits.measureSeriesLabel}
-            />
-          </div>
-
-          <div className={styles.labsBlock}>
-            <p className={styles.subTitle}>{visits.labsTitle}</p>
-            <LabBars labs={visits.labs} ariaLabel={visits.labsAriaLabel} />
-          </div>
+          <CenterCollectionBars data={data} />
         </section>
 
-        {/* 03 스마트홈 원격모니터링 */}
+        {/* 03 스마트홈 위험 */}
         <section className={styles.panel}>
           <div className={styles.panelHead}>
-            <p className={styles.sectionLabel}>{monitoring.sectionLabel}</p>
-            <h2 className={styles.sectionTitle}>{monitoring.title}</h2>
-            <p className={styles.sectionDesc}>{monitoring.description}</p>
+            <p className={styles.sectionLabel}>{risks.sectionLabel}</p>
+            <h2 className={styles.sectionTitle}>{risks.title}</h2>
+            <p className={styles.sectionDesc}>{risks.description}</p>
           </div>
 
           <div className={styles.riskStatusGrid}>
-            {monitoring.statusSummary.map((item) => (
-              <div
-                key={item.id}
-                className={`${styles.riskStatusCard} ${styles[`risk_${item.tone}`]}`}
-              >
+            {risks.status.map((item) => (
+              <div key={item.id} className={`${styles.riskStatusCard} ${styles[`risk_${item.tone}`]}`}>
                 <p className={styles.summaryLabel}>{item.label}</p>
                 <p className={styles.riskCount}>
                   {item.count}
-                  {monitoring.countSuffix ? <span>{monitoring.countSuffix}</span> : null}
+                  <span>건</span>
                 </p>
               </div>
             ))}
           </div>
 
-          <MonitoringBoard data={monitoring} />
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  {risks.columns.map((col) => (
+                    <th key={col}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {risks.rows.map((row) => (
+                  <tr key={row.id}>
+                    <td className={styles.mono}>{row.time}</td>
+                    <td className={styles.mono}>{row.code}</td>
+                    <td>{row.type}</td>
+                    <td>{row.source}</td>
+                    <td>{row.status}</td>
+                    <td>
+                      <span className={`${styles.priority} ${styles[`prio_${row.priority}`]}`}>
+                        {row.priority}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section className={styles.insight}>
