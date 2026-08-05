@@ -185,6 +185,10 @@ export const siteContentEn: SiteContent = {
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects\n& certifications",
+    featuredIds: ["01"],
+    featuredLabel: "Featured",
+    featuredCta: "View case study",
+    moreLabel: "More projects",
     tabs: {
       projects: "Projects",
       certifications: "Certifications",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib/scrollInteractions";
@@ -8,6 +8,7 @@ import { getLenisInstance } from "@/lib/lenisInstance";
 import type { Work } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
 import CertificationBadge from "./CertificationBadge";
+import FeaturedWork from "./FeaturedWork";
 import ProjectCard from "./ProjectCard";
 
 const ProjectPanel = dynamic(() => import("./ProjectPanel"), { ssr: false });
@@ -64,6 +65,16 @@ function scrollToPinZone(pinZone: HTMLElement) {
 export default function WorkGallery() {
   const { works, certifications } = useSiteContent();
   const projects = works.projects;
+  const featuredIdSet = useMemo(() => new Set(works.featuredIds), [works.featuredIds]);
+  const featuredProjects = useMemo(
+    () => works.featuredIds.map((id) => projects.find((p) => p.id === id)).filter(Boolean) as Work[],
+    [works.featuredIds, projects],
+  );
+  const galleryProjects = useMemo(
+    () => projects.filter((p) => !featuredIdSet.has(p.id)),
+    [projects, featuredIdSet],
+  );
+
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [panelWork, setPanelWork] = useState<Work | null>(null);
   const [activeStackIndex, setActiveStackIndex] = useState(0);
@@ -91,8 +102,9 @@ export default function WorkGallery() {
 
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".works-heading", section);
+      fadeRevealOnScroll(".featured-work", section, { start: "top 82%" });
 
-      if (isDesktop && pinZone && activeTab === "projects" && projects.length > 1) {
+      if (isDesktop && pinZone && activeTab === "projects" && galleryProjects.length > 1) {
         scrollPinStack({
           zone: pinZone,
           pinSelector: ".works-pin-panel--projects",
@@ -113,7 +125,7 @@ export default function WorkGallery() {
 
     refreshScrollTriggers();
     return () => ctx.revert();
-  }, [activeTab]);
+  }, [activeTab, galleryProjects.length]);
 
   useEffect(() => {
     const prevTab = prevTabRef.current;
@@ -156,19 +168,38 @@ export default function WorkGallery() {
           <h2 className="section-title mt-3 tracking-tight text-text">{works.title}</h2>
         </div>
 
-        <div className="mt-10 lg:hidden">
+        {featuredProjects.length > 0 ? (
+          <div className="mt-12 space-y-16 sm:mt-14">
+            {featuredProjects.map((work) => (
+              <FeaturedWork
+                key={work.id}
+                work={work}
+                label={works.featuredLabel}
+                ctaLabel={works.featuredCta}
+                onOpen={() => handleProjectClick(work)}
+              />
+            ))}
+          </div>
+        ) : null}
+
+        <div className="mt-14 border-t border-border/70 pt-10 lg:hidden">
           <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
           {activeTab === "projects" ? (
-            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {projects.map((work) => (
-                <ProjectCard
-                  key={work.id}
-                  work={work}
-                  onClick={() => handleProjectClick(work)}
-                  className="gallery-card"
-                />
-              ))}
-            </div>
+            <>
+              {galleryProjects.length > 0 ? (
+                <p className="section-meta mt-8 text-muted">{works.moreLabel}</p>
+              ) : null}
+              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {galleryProjects.map((work) => (
+                  <ProjectCard
+                    key={work.id}
+                    work={work}
+                    onClick={() => handleProjectClick(work)}
+                    className="gallery-card"
+                  />
+                ))}
+              </div>
+            </>
           ) : (
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {certifications.map((cert) => (
@@ -178,18 +209,20 @@ export default function WorkGallery() {
           )}
         </div>
 
-        <div ref={pinZoneRef} className="mt-10 hidden lg:block">
+        <div ref={pinZoneRef} className="mt-14 hidden border-t border-border/70 pt-10 lg:block">
           <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
           <div className={activeTab === "projects" ? "" : "hidden"} aria-hidden={activeTab !== "projects"}>
             <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-start bg-bg pb-6 pt-4 sm:pt-6">
+              {galleryProjects.length > 0 ? (
+                <p className="section-meta mb-4 text-center text-muted">{works.moreLabel}</p>
+              ) : null}
               <div className="relative mx-auto mt-2 h-[min(42vh,320px)] w-full max-w-xl">
-                {projects.map((work, i) => (
+                {galleryProjects.map((work, i) => (
                   <div
                     key={work.id}
                     className="stack-card absolute inset-x-0 top-0"
                     style={{
-                      // 활성(맨 앞) 카드만 클릭 가능 — 인덱스는 전환 중반부터 갱신됨
                       pointerEvents: i === activeStackIndex ? "auto" : "none",
                     }}
                   >
@@ -198,12 +231,14 @@ export default function WorkGallery() {
                 ))}
               </div>
 
-              <p className="mx-auto mt-4 max-w-xl text-center text-xs text-muted">
-                {works.scrollHint.replace("{label}", stackLabel)}{" "}
-                <span className="font-medium text-primary">
-                  {activeStackIndex + 1} / {projects.length}
-                </span>
-              </p>
+              {galleryProjects.length > 0 ? (
+                <p className="mx-auto mt-4 max-w-xl text-center text-xs text-muted">
+                  {works.scrollHint.replace("{label}", stackLabel)}{" "}
+                  <span className="font-medium text-primary">
+                    {activeStackIndex + 1} / {galleryProjects.length}
+                  </span>
+                </p>
+              ) : null}
             </div>
           </div>
 

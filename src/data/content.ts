@@ -266,6 +266,10 @@ export const siteContent = {
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects & Certificates",
+    featuredIds: ["01"],
+    featuredLabel: "Featured",
+    featuredCta: "케이스 스터디 보기",
+    moreLabel: "More projects",
     tabs: {
       projects: "Projects",
       certifications: "Certifications",
