@@ -42,7 +42,7 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
         <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-end lg:gap-12">
           <div>
             <p className="section-meta text-primary">{work.category}</p>
-            <h3 className="text-preline mt-2 text-[clamp(1.5rem,3.2vw,2.35rem)] font-bold tracking-tight text-text">
+            <h3 className="font-display text-preline mt-2 text-[clamp(1.5rem,3.2vw,2.35rem)] font-bold tracking-tight text-text">
               {work.title}
             </h3>
             <p className="section-body text-preline mt-4 max-w-2xl break-keep text-muted">{summary}</p>

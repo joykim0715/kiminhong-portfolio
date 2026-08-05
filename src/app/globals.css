@@ -15,7 +15,8 @@
   --clr-dark-surf: #243238;
   --clr-border: color-mix(in srgb, var(--clr-text) 12%, transparent);
 
-  /* Type roles — same Geist face, clearer hierarchy */
+  /* Type roles — Geist for UI/body, Pretendard for display titles */
+  --font-display-stack: "Pretendard Variable", Pretendard, var(--font-geist-sans), system-ui, sans-serif;
   --type-eyebrow-size: 0.75rem;
   --type-eyebrow-weight: 600;
   --type-eyebrow-tracking: 0.28em;
@@ -113,6 +114,7 @@
   --color-dark-surf: var(--clr-dark-surf);
   --color-border: var(--clr-border);
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-display-stack);
 }
 
 html {
@@ -174,6 +176,7 @@ img {
 }
 
 .section-title {
+  font-family: var(--font-display-stack);
   font-size: clamp(34px, 4.8vw, 52px);
   font-weight: 700;
   line-height: 1.12;
@@ -214,10 +217,15 @@ img {
 }
 
 .hero-title {
+  font-family: var(--font-display-stack);
   font-size: clamp(56px, 8vw, 96px);
   font-weight: 900;
   line-height: 0.95;
   letter-spacing: -0.03em;
+}
+
+.font-display {
+  font-family: var(--font-display-stack);
 }
 
 .text-gradient {

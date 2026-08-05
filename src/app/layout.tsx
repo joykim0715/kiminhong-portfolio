@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { siteContent } from "@/data/content";
 import { siteUrl } from "@/lib/site";
 import LenisProvider from "@/components/LenisProvider";
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 
 const geistSans = Geist({

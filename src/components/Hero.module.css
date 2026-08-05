@@ -61,6 +61,7 @@
 }
 
 .heroName {
+  font-family: var(--font-display-stack);
   font-size: clamp(3.25rem, 8vw, 6rem);
   font-weight: 900;
   line-height: 0.95;
@@ -71,6 +72,7 @@
 .heroHeadline {
   margin-top: 1.75rem;
   max-width: 22ch;
+  font-family: var(--font-display-stack);
   font-size: clamp(1.35rem, 2.8vw, 1.85rem);
   font-weight: 600;
   letter-spacing: -0.025em;
