@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import { dashboardDemo as dashboardDemoKo } from "@/data/dashboardDemo";
 import { dashboardDemoEn } from "@/data/dashboardDemo.en";
 import styles from "./DashboardDemo.module.css";
@@ -265,9 +264,9 @@ export default function DashboardDemo({
     <div className={styles.page}>
       <header className={styles.topbar}>
         <div className={styles.topbarInner}>
-          <Link href={header.backHref} className={styles.backLink}>
+          <a href={header.backHref} className={styles.backLink}>
             {header.backLabel}
-          </Link>
+          </a>
           <span className={styles.projectTag}>{header.projectLabel}</span>
         </div>
       </header>
