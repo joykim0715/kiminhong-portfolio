@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { shouldOpenInNewTab } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
-import { useRecruitSafe, useRecruitSafeConfig } from "./RecruitSafeProvider";
+import { useRecruitSafe } from "./RecruitSafeProvider";
 import styles from "./Hero.module.css";
 
 function ArrowIcon() {
@@ -23,7 +23,6 @@ function ArrowIcon() {
 export default function Hero() {
   const { hero, nav, socialLinks } = useSiteContent();
   const recruitSafe = useRecruitSafe();
-  const recruit = useRecruitSafeConfig();
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
   const publicSocialLinks = recruitSafe ? [] : socialLinks;
 
@@ -40,12 +39,12 @@ export default function Hero() {
             {recruitSafe ? (
               <>
                 <a
-                  href={recruit.resumeUrl}
+                  href={hero.naverResumeUrl}
                   className={styles.heroBtnPrimary}
-                  target={shouldOpenInNewTab(recruit.resumeUrl) ? "_blank" : undefined}
-                  rel={shouldOpenInNewTab(recruit.resumeUrl) ? "noopener noreferrer" : undefined}
+                  target={shouldOpenInNewTab(hero.naverResumeUrl) ? "_blank" : undefined}
+                  rel={shouldOpenInNewTab(hero.naverResumeUrl) ? "noopener noreferrer" : undefined}
                 >
-                  {recruit.resumeCtaLabel}
+                  {hero.naverResumeCtaLabel}
                   <ArrowIcon />
                 </a>
                 <a href="#works" className={styles.heroBtnGhost}>

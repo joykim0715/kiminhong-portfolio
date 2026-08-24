@@ -13,68 +13,23 @@ import PageLoadEntrance from "@/components/PageLoadEntrance";
 import HashScroll from "@/components/HashScroll";
 import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
 import { ContentProvider, type Locale } from "@/components/ContentProvider";
-import {
-  naverResumePagePath,
-  siteContent,
-  type SiteContent,
-} from "@/data/content";
-
-export type RecruitSafeOptions = {
-  resumeUrl: string;
-  resumeCtaLabel: string;
-  homeHref?: string;
-};
+import { siteContent, type SiteContent } from "@/data/content";
 
 type HomePageProps = {
-  /**
-   * true → 네이버용 기본값
-   * 객체 → 기업별 이력서 CTA 지정 (예: 와이즐리)
-   */
-  recruitSafe?: boolean | RecruitSafeOptions;
+  /** true면 사진·연락처를 숨긴 채용 제출용 뷰 */
+  recruitSafe?: boolean;
   locale?: Locale;
   content?: SiteContent;
 };
-
-function resolveRecruitSafe(recruitSafe: boolean | RecruitSafeOptions | undefined) {
-  if (!recruitSafe) {
-    return {
-      enabled: false,
-      resumeUrl: "",
-      resumeCtaLabel: "",
-      homeHref: "/",
-    };
-  }
-  if (recruitSafe === true) {
-    return {
-      enabled: true,
-      resumeUrl: naverResumePagePath,
-      resumeCtaLabel: siteContent.hero.naverResumeCtaLabel,
-      homeHref: "/naver",
-    };
-  }
-  return {
-    enabled: true,
-    resumeUrl: recruitSafe.resumeUrl,
-    resumeCtaLabel: recruitSafe.resumeCtaLabel,
-    homeHref: recruitSafe.homeHref ?? "/",
-  };
-}
 
 export default function HomePage({
   recruitSafe = false,
   locale = "ko",
   content = siteContent,
 }: HomePageProps) {
-  const recruit = resolveRecruitSafe(recruitSafe);
-
   return (
     <ContentProvider locale={locale} content={content}>
-      <RecruitSafeProvider
-        enabled={recruit.enabled}
-        resumeUrl={recruit.resumeUrl}
-        resumeCtaLabel={recruit.resumeCtaLabel}
-        homeHref={recruit.homeHref}
-      >
+      <RecruitSafeProvider enabled={recruitSafe}>
         <HashScroll />
         <Navbar />
         <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
