@@ -91,6 +91,11 @@ export const resumeFilePath = "/resume/kiminhong-resume.pdf" as const;
 export const resumePagePath = "/resume" as const;
 const resumeCtaLabel: string = "영문 이력서 확인하기";
 
+/** 메인 포트폴리오용 국문 이력서 */
+export const koResumeFilePath = "/resume/kiminhong-resume-ko.pdf" as const;
+export const koResumePagePath = "/resume/ko" as const;
+const koResumeCtaLabel: string = "국문 이력서 확인하기";
+
 /** 네이버 채용 제출용 국문 CV (`/naver` 전용) */
 export const naverResumeFilePath = "/resume/kiminhong-resume-naver.pdf" as const;
 export const naverResumePagePath = "/resume/naver" as const;
@@ -136,6 +141,8 @@ export const siteContent = {
     },
     resumeCtaLabel,
     resumeUrl: resumePagePath,
+    koResumeCtaLabel,
+    koResumeUrl: koResumePagePath,
     /** `/naver` 채용 제출용 */
     naverResumeCtaLabel,
     naverResumeUrl: naverResumePagePath,
@@ -754,6 +761,7 @@ export const siteContent = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/inhongkim0715profile" },
     { label: "Email", href: `mailto:${contact.email}` },
     { label: "Phone", href: `tel:${contact.phone.replace(/[^\d]/g, "")}` },
+    { label: "Resume (KO)", href: koResumePagePath },
     { label: "Resume (EN)", href: resumePagePath },
   ],
 };

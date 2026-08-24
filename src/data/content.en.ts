@@ -1,5 +1,5 @@
 import type { Certification, ExperienceItem, SiteContent, SkillItem, Work } from "./content";
-import { resumePagePath } from "./content";
+import { koResumePagePath, resumePagePath } from "./content";
 
 const contact = {
   email: "recead0715@naver.com",
@@ -51,8 +51,10 @@ export const siteContentEn: SiteContent = {
       desktop: "Hover to browse photos",
       mobile: "Tap to browse photos",
     },
-    resumeCtaLabel: "View Resume",
+    resumeCtaLabel: "View Resume (EN)",
     resumeUrl: resumePagePath,
+    koResumeCtaLabel: "View Resume (KO)",
+    koResumeUrl: koResumePagePath,
     naverResumeCtaLabel: "View Korean CV",
     naverResumeUrl: "/resume/naver",
     noProfileImage: "No profile image",
@@ -674,6 +676,7 @@ export const siteContentEn: SiteContent = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/inhongkim0715profile" },
     { label: "Email", href: `mailto:${contact.email}` },
     { label: "Phone", href: `tel:${contact.phone.replace(/[^\d]/g, "")}` },
+    { label: "Resume (KO)", href: koResumePagePath },
     { label: "Resume (EN)", href: resumePagePath },
   ],
 };

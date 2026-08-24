@@ -103,6 +103,14 @@ export default function ContactCTA() {
             {about.ctaButton}
           </Button>
           <Button
+            href={hero.koResumeUrl}
+            target={shouldOpenInNewTab(hero.koResumeUrl) ? "_blank" : undefined}
+            rel={shouldOpenInNewTab(hero.koResumeUrl) ? "noopener noreferrer" : undefined}
+            variant="onDarkGhost"
+          >
+            {hero.koResumeCtaLabel}
+          </Button>
+          <Button
             href={hero.resumeUrl}
             target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
             rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}

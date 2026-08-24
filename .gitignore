@@ -23,7 +23,6 @@
 # misc
 .DS_Store
 *.pem
-public/resume/kiminhong-resume-ko.pdf
 
 # debug
 npm-debug.log*

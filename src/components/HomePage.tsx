@@ -13,23 +13,68 @@ import PageLoadEntrance from "@/components/PageLoadEntrance";
 import HashScroll from "@/components/HashScroll";
 import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
 import { ContentProvider, type Locale } from "@/components/ContentProvider";
-import { siteContent, type SiteContent } from "@/data/content";
+import {
+  naverResumePagePath,
+  siteContent,
+  type SiteContent,
+} from "@/data/content";
+
+export type RecruitSafeOptions = {
+  resumeUrl: string;
+  resumeCtaLabel: string;
+  homeHref?: string;
+};
 
 type HomePageProps = {
-  /** true면 사진·연락처·이력서 링크를 숨긴 채용 제출용 뷰 */
-  recruitSafe?: boolean;
+  /**
+   * true → 네이버용 기본값
+   * 객체 → 기업별 이력서 CTA 지정 (예: 와이즐리)
+   */
+  recruitSafe?: boolean | RecruitSafeOptions;
   locale?: Locale;
   content?: SiteContent;
 };
+
+function resolveRecruitSafe(recruitSafe: boolean | RecruitSafeOptions | undefined) {
+  if (!recruitSafe) {
+    return {
+      enabled: false,
+      resumeUrl: "",
+      resumeCtaLabel: "",
+      homeHref: "/",
+    };
+  }
+  if (recruitSafe === true) {
+    return {
+      enabled: true,
+      resumeUrl: naverResumePagePath,
+      resumeCtaLabel: siteContent.hero.naverResumeCtaLabel,
+      homeHref: "/naver",
+    };
+  }
+  return {
+    enabled: true,
+    resumeUrl: recruitSafe.resumeUrl,
+    resumeCtaLabel: recruitSafe.resumeCtaLabel,
+    homeHref: recruitSafe.homeHref ?? "/",
+  };
+}
 
 export default function HomePage({
   recruitSafe = false,
   locale = "ko",
   content = siteContent,
 }: HomePageProps) {
+  const recruit = resolveRecruitSafe(recruitSafe);
+
   return (
     <ContentProvider locale={locale} content={content}>
-      <RecruitSafeProvider enabled={recruitSafe}>
+      <RecruitSafeProvider
+        enabled={recruit.enabled}
+        resumeUrl={recruit.resumeUrl}
+        resumeCtaLabel={recruit.resumeCtaLabel}
+        homeHref={recruit.homeHref}
+      >
         <HashScroll />
         <Navbar />
         <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">

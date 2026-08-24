@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { shouldOpenInNewTab } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
-import { useRecruitSafe } from "./RecruitSafeProvider";
+import { useRecruitSafe, useRecruitSafeConfig } from "./RecruitSafeProvider";
 import styles from "./Hero.module.css";
 
 function ArrowIcon() {
@@ -23,6 +23,7 @@ function ArrowIcon() {
 export default function Hero() {
   const { hero, nav, socialLinks } = useSiteContent();
   const recruitSafe = useRecruitSafe();
+  const recruit = useRecruitSafeConfig();
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
   const publicSocialLinks = recruitSafe ? [] : socialLinks;
 
@@ -39,12 +40,12 @@ export default function Hero() {
             {recruitSafe ? (
               <>
                 <a
-                  href={hero.naverResumeUrl}
+                  href={recruit.resumeUrl}
                   className={styles.heroBtnPrimary}
-                  target={shouldOpenInNewTab(hero.naverResumeUrl) ? "_blank" : undefined}
-                  rel={shouldOpenInNewTab(hero.naverResumeUrl) ? "noopener noreferrer" : undefined}
+                  target={shouldOpenInNewTab(recruit.resumeUrl) ? "_blank" : undefined}
+                  rel={shouldOpenInNewTab(recruit.resumeUrl) ? "noopener noreferrer" : undefined}
                 >
-                  {hero.naverResumeCtaLabel}
+                  {recruit.resumeCtaLabel}
                   <ArrowIcon />
                 </a>
                 <a href="#works" className={styles.heroBtnGhost}>
@@ -55,8 +56,17 @@ export default function Hero() {
             ) : (
               <>
                 <a
-                  href={hero.resumeUrl}
+                  href={hero.koResumeUrl}
                   className={styles.heroBtnPrimary}
+                  target={shouldOpenInNewTab(hero.koResumeUrl) ? "_blank" : undefined}
+                  rel={shouldOpenInNewTab(hero.koResumeUrl) ? "noopener noreferrer" : undefined}
+                >
+                  {hero.koResumeCtaLabel}
+                  <ArrowIcon />
+                </a>
+                <a
+                  href={hero.resumeUrl}
+                  className={styles.heroBtnGhost}
                   target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
                   rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}
                 >
