@@ -1,151 +1,13 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useId, useMemo, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { dashboardDemo as dashboardDemoKo } from "@/data/dashboardDemo";
 import { dashboardDemoEn } from "@/data/dashboardDemo.en";
+import { CenterCollectionBars, VisitMetricChart } from "@/components/DashboardCharts";
 import styles from "./DashboardDemo.module.css";
 
 type DashboardData = typeof dashboardDemoKo | typeof dashboardDemoEn;
-type MetricTab = DashboardData["demographics"]["metricTabs"][number];
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  return reduced;
-}
-
-function useInViewOnce<T extends Element>() {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || inView) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3, rootMargin: "0px 0px -8% 0px" },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [inView]);
-
-  return { ref, inView };
-}
-
-function formatMetricValue(value: number, unit: string) {
-  const rounded = Number.isInteger(value) ? String(value) : value.toFixed(1);
-  return unit ? `${rounded}${unit}` : rounded;
-}
-
-function VisitMetricChart({
-  tab,
-  visitLabels,
-  animateKey,
-}: {
-  tab: MetricTab;
-  visitLabels: readonly string[];
-  animateKey: string;
-}) {
-  const reducedMotion = usePrefersReducedMotion();
-  const { ref, inView } = useInViewOnce<HTMLDivElement>();
-  const animate = inView || reducedMotion;
-  const values = tab.series;
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const pad = max === min ? Math.abs(max) * 0.08 || 1 : (max - min) * 0.18;
-  const domainMin = min - pad;
-  const domainMax = max + pad;
-  const range = domainMax - domainMin || 1;
-
-  const points = values.map((value, index) => {
-    const x = (index / Math.max(values.length - 1, 1)) * 100;
-    const y = 100 - ((value - domainMin) / range) * 100;
-    return { x, y, value };
-  });
-
-  const linePath = points
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
-    .join(" ");
-
-  const seriesNote = "seriesLabel" in tab && tab.seriesLabel ? tab.seriesLabel : tab.hint;
-
-  return (
-    <div
-      key={animateKey}
-      ref={ref}
-      className={`${styles.metricChart} ${animate ? styles.chartAnimate : ""}`}
-      role="img"
-      aria-label={`${tab.label}: ${seriesNote}`}
-    >
-      <div className={styles.metricChartHead}>
-        <p className={styles.metricChartTitle}>{tab.hint}</p>
-        <p className={styles.metricChartNote}>{seriesNote}</p>
-      </div>
-
-      {tab.chart === "line" ? (
-        <div className={styles.lineChartWrap}>
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className={styles.lineSvg} aria-hidden>
-            <path className={styles.linePath} d={linePath} />
-            {points.map((point) => (
-              <circle key={`${point.x}-${point.value}`} className={styles.lineDot} cx={point.x} cy={point.y} r="1.6" />
-            ))}
-          </svg>
-          <div className={styles.lineValueRow}>
-            {points.map((point, index) => (
-              <span key={visitLabels[index]} className={styles.lineValue}>
-                {formatMetricValue(point.value, tab.unit)}
-              </span>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className={styles.vBarChart}>
-          {values.map((value, index) => {
-            const height = ((value - domainMin) / range) * 100;
-            return (
-              <div key={visitLabels[index]} className={styles.vBarCol}>
-                <span className={styles.vBarValue}>{formatMetricValue(value, tab.unit)}</span>
-                <div className={styles.vBarTrack}>
-                  <div
-                    className={styles.vBarFill}
-                    style={
-                      {
-                        ["--bar-height" as string]: `${height}%`,
-                        ["--bar-delay" as string]: `${index * 70}ms`,
-                        height: reducedMotion ? `${height}%` : undefined,
-                      }
-                    }
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      <div className={styles.visitAxis}>
-        {visitLabels.map((label) => (
-          <span key={label}>{label}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function DemographicsExplorer({ data }: { data: DashboardData }) {
   const { demographics } = data;
@@ -207,48 +69,8 @@ function DemographicsExplorer({ data }: { data: DashboardData }) {
         <VisitMetricChart
           tab={activeTab}
           visitLabels={demographics.visitLabels}
-          animateKey={activeTab.id}
         />
       </div>
-    </div>
-  );
-}
-
-function CenterCollectionBars({ data }: { data: DashboardData }) {
-  const centers = data.collection.centers;
-  const reducedMotion = usePrefersReducedMotion();
-  const { ref, inView } = useInViewOnce<HTMLDivElement>();
-  const animate = inView || reducedMotion;
-
-  return (
-    <div
-      ref={ref}
-      className={`${styles.hBarList} ${animate ? styles.chartAnimate : ""}`}
-      role="list"
-      aria-label={data.collection.labsAriaLabel}
-    >
-      {centers.map((center, index) => (
-        <div key={center.id} className={styles.hBarRow} role="listitem">
-          <div className={styles.hBarMeta}>
-            <span className={styles.hBarName}>{center.name}</span>
-            <span className={styles.hBarStat}>
-              {center.collected}/{center.planned} · {center.rate}%
-            </span>
-          </div>
-          <div className={styles.hBarTrack}>
-            <div
-              className={styles.hBarFill}
-              style={
-                {
-                  ["--bar-width" as string]: `${center.rate}%`,
-                  ["--bar-delay" as string]: `${index * 90}ms`,
-                  width: reducedMotion ? `${center.rate}%` : undefined,
-                }
-              }
-            />
-          </div>
-        </div>
-      ))}
     </div>
   );
 }
@@ -259,6 +81,7 @@ export default function DashboardDemo({
   data?: DashboardData;
 }) {
   const { header, kpis, demographics, collection, risks, insight, footerNote } = data;
+  const reduceMotion = useReducedMotion();
 
   return (
     <div className={styles.page}>
@@ -282,15 +105,21 @@ export default function DashboardDemo({
         </section>
 
         <section className={styles.kpiGrid} aria-label="핵심 현황">
-          {kpis.map((kpi) => (
-            <article key={kpi.id} className={`${styles.kpiCard} ${styles[`tone_${kpi.tone}`]}`}>
+          {kpis.map((kpi, index) => (
+            <motion.article
+              key={kpi.id}
+              className={`${styles.kpiCard} ${styles[`tone_${kpi.tone}`]}`}
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
               <p className={styles.kpiLabel}>{kpi.label}</p>
               <p className={styles.kpiValue}>
                 {kpi.value}
                 <span className={styles.kpiUnit}>{kpi.unit}</span>
               </p>
               <p className={styles.kpiNote}>{kpi.note}</p>
-            </article>
+            </motion.article>
           ))}
         </section>
 
@@ -334,7 +163,10 @@ export default function DashboardDemo({
             ))}
           </div>
 
-          <CenterCollectionBars data={data} />
+          <CenterCollectionBars
+            ariaLabel={collection.labsAriaLabel}
+            centers={collection.centers}
+          />
         </section>
 
         {/* 03 스마트홈 위험 */}

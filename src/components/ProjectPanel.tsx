@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
 import { getWorkImages } from "@/lib/workImages";

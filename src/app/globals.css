@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+@theme inline {
+  --color-chart-label: var(--chart-label);
+  --color-chart-tooltip-foreground: var(--chart-tooltip-foreground);
+  --color-chart-tooltip-muted: var(--chart-tooltip-muted);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-border: var(--border);
+  --color-muted-foreground: var(--muted-foreground);
+}
+
 :root {
   --clr-bg: #f7f8f6;
   --clr-surface: #e7ecef;
@@ -14,6 +24,27 @@
   --clr-dark: #1c2b30;
   --clr-dark-surf: #243238;
   --clr-border: color-mix(in srgb, var(--clr-text) 12%, transparent);
+
+  --foreground: var(--clr-text);
+  --popover: #ffffff;
+  --popover-foreground: var(--clr-text);
+  --border: var(--clr-border);
+  --chart-background: #ffffff;
+  --chart-foreground: var(--clr-text);
+  --chart-foreground-muted: var(--clr-muted);
+  --chart-label: var(--clr-muted);
+  --chart-line-primary: var(--clr-primary);
+  --chart-line-secondary: var(--clr-secondary);
+  --chart-crosshair: var(--clr-primary);
+  --chart-grid: color-mix(in srgb, var(--clr-text) 12%, transparent);
+  --chart-indicator-color: var(--clr-dark);
+  --chart-indicator-secondary-color: var(--clr-secondary);
+  --chart-1: var(--clr-primary);
+  --chart-2: var(--clr-secondary);
+  --chart-3: var(--clr-accent);
+  --chart-tooltip-foreground: var(--clr-text);
+  --chart-tooltip-muted: var(--clr-muted);
+  --muted-foreground: var(--clr-muted);
 
   /* Type roles — same Geist face, clearer hierarchy */
   --type-eyebrow-size: 0.75rem;
