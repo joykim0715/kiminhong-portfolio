@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
+import HoverLift from "./ui/HoverLift";
 
 export default function Education() {
   const { education: educationContent } = useSiteContent();
@@ -39,7 +40,8 @@ export default function Education() {
         <div className="relative mt-10 space-y-8 sm:space-y-10">
           <div className="absolute bottom-2 left-[5px] top-2 w-px bg-border sm:left-[6px]" aria-hidden />
           {educationContent.items.map((item) => (
-            <article key={item.school} className="education-item relative pl-7 sm:pl-9">
+            <HoverLift key={item.school} axis="x">
+            <article className="education-item relative pl-7 sm:pl-9">
               <span
                 className="absolute left-0 top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-bg sm:top-2"
                 aria-hidden
@@ -52,6 +54,7 @@ export default function Education() {
                 {item.major}
               </p>
             </article>
+            </HoverLift>
           ))}
         </div>
       </div>

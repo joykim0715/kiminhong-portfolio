@@ -1,4 +1,5 @@
 import type { Certification } from "@/data/content";
+import HoverLift from "./ui/HoverLift";
 
 type CertificationBadgeProps = {
   cert: Certification;
@@ -16,8 +17,9 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
       : "bg-accent/15 text-accent";
 
   return (
+    <HoverLift>
     <article
-      className={`cert-badge gallery-card rounded-xl p-5 transition-colors sm:p-6 ${
+      className={`cert-badge gallery-card rounded-xl p-5 transition-[border-color,box-shadow] duration-300 sm:p-6 hover:shadow-[0_14px_36px_-22px_rgba(95,168,163,0.45)] ${
         isAward
           ? "border border-dashed border-primary/40 bg-bg hover:border-primary"
           : isEnglish
@@ -41,5 +43,6 @@ export default function CertificationBadge({ cert, className = "" }: Certificati
       </p>
       <p className="text-preline mt-2 break-keep text-sm leading-relaxed text-text/80">{cert.description}</p>
     </article>
+    </HoverLift>
   );
 }

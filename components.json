@@ -19,6 +19,8 @@
   },
   "iconLibrary": "lucide",
   "registries": {
-    "@bklit": "https://ui.bklit.com/r/{name}.json"
+    "@bklit": "https://ui.bklit.com/r/{name}.json",
+    "@skiper-ui": "https://skiper-ui.com/r/{name}.json",
+    "@vengeanceui": "https://raw.githubusercontent.com/Ashutoshx7/VengeanceUI/main/public/r/{name}.json"
   }
 }

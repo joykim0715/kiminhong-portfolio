@@ -1,6 +1,8 @@
 "use client";
 
 import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { hoverSpring } from "@/lib/hoverMotion";
 
 type ButtonVariant = "primary" | "ghost" | "onDark" | "onDarkGhost";
 
@@ -10,11 +12,13 @@ type ButtonBaseProps = {
   className?: string;
 };
 
+type MotionSafe = "onAnimationStart" | "onDrag" | "onDragStart" | "onDragEnd" | "onDragOver";
+
 type ButtonAsButton = ButtonBaseProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, MotionSafe> & { href?: undefined };
 
 type ButtonAsLink = ButtonBaseProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, MotionSafe> & { href: string };
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
@@ -37,20 +41,37 @@ export default function Button({
   className = "",
   ...props
 }: ButtonProps) {
+  const reduceMotion = useReducedMotion();
   const cls = `${baseClass} ${variants[variant]} ${className}`;
+  const hover = reduceMotion ? undefined : { y: -3 };
+  const tap = reduceMotion ? undefined : { scale: 0.98 };
 
   if ("href" in props && props.href) {
     const { href, ...rest } = props;
     return (
-      <a href={href} className={cls} {...rest}>
+      <motion.a
+        href={href}
+        className={cls}
+        whileHover={hover}
+        whileTap={tap}
+        transition={hoverSpring}
+        {...rest}
+      >
         {children}
-      </a>
+      </motion.a>
     );
   }
 
   return (
-    <button type="button" className={cls} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <motion.button
+      type="button"
+      className={cls}
+      whileHover={hover}
+      whileTap={tap}
+      transition={hoverSpring}
+      {...(props as Omit<ButtonHTMLAttributes<HTMLButtonElement>, MotionSafe>)}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }

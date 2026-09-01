@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
+import HoverLift from "./ui/HoverLift";
 
 export default function Values() {
   const { values: valuesContent } = useSiteContent();
@@ -32,16 +33,20 @@ export default function Values() {
 
         <ul className="divide-y divide-border/80 border-y border-border/80">
           {valuesContent.items.map((item, index) => (
-            <li key={item} className="value-item flex items-start gap-4 py-5 sm:gap-5 sm:py-6">
-              <span
-                className="mt-0.5 w-7 shrink-0 font-mono text-xs font-semibold tabular-nums text-accent/80"
-                aria-hidden
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="border-l-2 border-accent/45 pl-4 text-preline break-keep text-base font-medium leading-relaxed text-text sm:pl-5 sm:text-lg">
-                {item}
-              </span>
+            <li key={item} className="value-item">
+              <HoverLift axis="x">
+                <div className="flex items-start gap-4 py-5 sm:gap-5 sm:py-6">
+                  <span
+                    className="mt-0.5 w-7 shrink-0 font-mono text-xs font-semibold tabular-nums text-accent/80"
+                    aria-hidden
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="border-l-2 border-accent/45 pl-4 text-preline break-keep text-base font-medium leading-relaxed text-text sm:pl-5 sm:text-lg">
+                    {item}
+                  </span>
+                </div>
+              </HoverLift>
             </li>
           ))}
         </ul>

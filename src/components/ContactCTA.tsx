@@ -8,6 +8,8 @@ import { mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import Button from "./ui/Button";
+import HoverLink from "./ui/HoverLink";
+import ShapeDecor from "./ui/ShapeDecor";
 
 export default function ContactCTA() {
   const recruitSafe = useRecruitSafe();
@@ -56,6 +58,7 @@ export default function ContactCTA() {
           aria-hidden
           style={{ background: "var(--gradient-contact)" }}
         />
+        <ShapeDecor />
         <div className="section-container relative z-10 flex flex-col items-center text-center">
           <h2
             id="closing-heading"
@@ -86,6 +89,7 @@ export default function ContactCTA() {
         aria-hidden
         style={{ background: "var(--gradient-contact)" }}
       />
+      <ShapeDecor />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
         <h2
@@ -128,15 +132,16 @@ export default function ContactCTA() {
           aria-label="Social links"
         >
           {socialLinks.map((link) => (
-            <a
+            <HoverLink
               key={link.label}
               href={link.href}
               target={shouldOpenInNewTab(link.href) ? "_blank" : undefined}
               rel={shouldOpenInNewTab(link.href) ? "noopener noreferrer" : undefined}
-              className="cta-logo section-meta text-white/45 transition hover:text-accent"
+              className="cta-logo section-meta pb-0.5 text-white/45 hover:text-accent"
+              showArrow
             >
               {link.label}
-            </a>
+            </HoverLink>
           ))}
         </nav>
 

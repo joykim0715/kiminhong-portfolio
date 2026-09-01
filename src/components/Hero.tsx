@@ -4,6 +4,8 @@ import Image from "next/image";
 import { shouldOpenInNewTab } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
+import HoverLink from "./ui/HoverLink";
+import ShapeDecor from "./ui/ShapeDecor";
 import styles from "./Hero.module.css";
 
 function ArrowIcon() {
@@ -28,6 +30,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className={`${styles.hero} relative flex min-h-screen flex-col pt-16`}>
+      {recruitSafe ? <ShapeDecor /> : null}
       <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
@@ -83,15 +86,16 @@ export default function Hero() {
           {publicSocialLinks.length > 0 ? (
             <nav className={`${styles.heroSocial} hero-desc-line`} aria-label="Social links">
               {publicSocialLinks.map((link) => (
-                <a
+                <HoverLink
                   key={link.label}
                   href={link.href}
                   className={styles.heroSocialLink}
+                  showArrow
                   target={shouldOpenInNewTab(link.href) ? "_blank" : undefined}
                   rel={shouldOpenInNewTab(link.href) ? "noopener noreferrer" : undefined}
                 >
                   {link.label}
-                </a>
+                </HoverLink>
               ))}
             </nav>
           ) : null}
@@ -99,6 +103,7 @@ export default function Hero() {
 
         {!recruitSafe ? (
           <div className={`${styles.heroVisual} hero-visual`}>
+            <ShapeDecor className="z-[2]" />
             <div className={styles.heroCutoutWrap}>
               <Image
                 src={cutoutSrc}

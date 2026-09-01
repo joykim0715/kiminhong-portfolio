@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import VisitorCounter from "./VisitorCounter";
 import { useLocale, useSiteContent } from "./ContentProvider";
+import HoverLink from "./ui/HoverLink";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -97,9 +98,9 @@ export default function Navbar() {
         <ul className="hidden items-center gap-6 lg:flex">
           {sections.map(({ id, label }) => (
             <li key={id}>
-              <a href={`#${id}`} className={sectionLinkClass(id)}>
+              <HoverLink href={`#${id}`} className={sectionLinkClass(id)}>
                 {label}
-              </a>
+              </HoverLink>
             </li>
           ))}
         </ul>

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
+import HoverLift from "./ui/HoverLift";
 
 const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+k$|^\d+%$|^\d+건$|^\d+명$/;
 
@@ -56,10 +57,8 @@ export default function Experience() {
 
         <div className="mt-10 divide-y divide-border/70 border-y border-border/70">
           {experienceContent.items.map((item) => (
-            <article
-              key={`${item.organization}-${item.period}`}
-              className="experience-item py-7 transition-colors sm:py-8"
-            >
+            <HoverLift key={`${item.organization}-${item.period}`}>
+              <article className="experience-item rounded-lg py-7 transition-colors hover:bg-surface/60 sm:py-8">
               <header className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-6">
                 <div>
                   <h3 className="text-preline text-lg font-bold tracking-tight text-text sm:text-xl">
@@ -101,6 +100,7 @@ export default function Experience() {
                 </div>
               )}
             </article>
+            </HoverLift>
           ))}
         </div>
       </div>

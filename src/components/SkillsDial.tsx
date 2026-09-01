@@ -20,7 +20,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
   return (
     <div
       ref={circleRef}
-      className="skill-ring relative mx-auto w-[220px] sm:w-[250px] lg:w-[270px]"
+      className="skill-ring relative mx-auto w-[220px] transition-[filter] duration-300 sm:w-[250px] lg:w-[270px] hover:drop-shadow-[0_8px_18px_rgba(95,168,163,0.28)]"
       style={{ aspectRatio: "1" }}
     >
       <svg

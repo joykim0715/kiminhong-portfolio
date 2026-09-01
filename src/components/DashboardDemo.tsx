@@ -111,6 +111,7 @@ export default function DashboardDemo({
               className={`${styles.kpiCard} ${styles[`tone_${kpi.tone}`]}`}
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
+              whileHover={reduceMotion ? undefined : { y: -4 }}
               transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className={styles.kpiLabel}>{kpi.label}</p>

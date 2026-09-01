@@ -160,8 +160,9 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
   return (
     <AnimatePresence>
-      {work && panel ? (
+          {work && panel ? (
         <motion.div
+          key={work.id}
           className={styles.panel}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -3,6 +3,7 @@
 import type { Work } from "@/data/content";
 import { getWorkImages } from "@/lib/workImages";
 import ProjectImages from "./ProjectImages";
+import DeviceMockup from "./ui/DeviceMockup";
 
 type FeaturedWorkProps = {
   work: Work;
@@ -25,18 +26,22 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
         onClick={onOpen}
         className="group mt-5 w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-dark-surf sm:aspect-[2/1]">
-          <ProjectImages
-            images={images}
-            alt={work.title}
-            sizes="(max-width: 768px) 100vw, 1200px"
-            imageClassName="object-cover sharp-image transition-transform duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.015]"
-            quality={95}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/55 via-dark/10 to-transparent transition-opacity duration-500 group-hover:opacity-90"
-            aria-hidden
-          />
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-dark-surf p-3 sm:aspect-[2/1] sm:p-5">
+          <DeviceMockup variant="monitor">
+            <div className="relative h-full w-full overflow-hidden">
+              <ProjectImages
+                images={images}
+                alt={work.title}
+                sizes="(max-width: 768px) 100vw, 1200px"
+                imageClassName="object-cover sharp-image transition-transform duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                quality={95}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/45 via-dark/8 to-transparent transition-opacity duration-500 group-hover:opacity-90"
+                aria-hidden
+              />
+            </div>
+          </DeviceMockup>
         </div>
 
         <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-end lg:gap-12">
