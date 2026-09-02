@@ -24,16 +24,18 @@ const ContentContext = createContext<ContentContextValue>({
 export function ContentProvider({
   locale = "ko",
   content = koContent,
+  homeHref,
   children,
 }: {
   locale?: Locale;
   content?: SiteContent;
+  homeHref?: string;
   children: ReactNode;
 }) {
   const value: ContentContextValue = {
     locale,
     content,
-    homeHref: locale === "en" ? "/en" : "/",
+    homeHref: homeHref ?? (locale === "en" ? "/en" : "/"),
     otherLocaleHref: locale === "en" ? "/" : "/en",
     otherLocaleLabel: locale === "en" ? "KO" : "EN",
   };

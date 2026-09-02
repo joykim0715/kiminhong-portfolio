@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useTrack } from "@/components/TrackProvider";
 
 type DeviceMockupProps = {
   children: ReactNode;
@@ -11,12 +14,19 @@ type DeviceMockupProps = {
 /**
  * Craftwork-style device chrome around existing screenshots.
  * Frames only — does not replace project images.
+ * Research track only; other tracks show the screenshot flat.
  */
 export default function DeviceMockup({
   children,
   className,
   variant = "bezel",
 }: DeviceMockupProps) {
+  const { theme } = useTrack();
+
+  if (!theme.showShapeDecor) {
+    return <div className={cn("relative h-full w-full overflow-hidden", className)}>{children}</div>;
+  }
+
   if (variant === "monitor") {
     return (
       <div className={cn("flex h-full w-full flex-col", className)}>

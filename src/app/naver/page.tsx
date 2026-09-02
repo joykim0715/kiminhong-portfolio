@@ -20,5 +20,5 @@ export const metadata: Metadata = {
  * 원본(/)은 그대로 유지됩니다.
  */
 export default function NaverRecruitPage() {
-  return <HomePage recruitSafe />;
+  return <HomePage recruitSafe track="research" />;
 }
