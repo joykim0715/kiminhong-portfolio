@@ -7,8 +7,6 @@ import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib
 import { getLenisInstance } from "@/lib/lenisInstance";
 import type { Work } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
-import { useTrack } from "./TrackProvider";
-import { TRACK_LAYOUT } from "@/data/tracks";
 import CertificationBadge from "./CertificationBadge";
 import FeaturedWork from "./FeaturedWork";
 import ProjectCard from "./ProjectCard";
@@ -71,8 +69,6 @@ export default function WorkGallery({
   mode?: "full" | "featured" | "rest";
 }) {
   const { works, certifications } = useSiteContent();
-  const { track } = useTrack();
-  const casesHeading = TRACK_LAYOUT[track].casesHeading;
   const patternId = `dot-grid-${mode}`;
   const enablePin = mode === "full";
   const sectionId = mode === "featured" ? "cases" : "works";
@@ -163,10 +159,8 @@ export default function WorkGallery({
     }
   }, [activeTab, enablePin]);
 
-  const headingLabel =
-    mode === "featured" && casesHeading ? casesHeading.label : works.sectionLabel;
-  const headingTitle =
-    mode === "featured" && casesHeading ? casesHeading.title : mode === "rest" ? works.moreLabel : works.title;
+  const headingLabel = works.sectionLabel;
+  const headingTitle = mode === "rest" ? works.moreLabel : works.title;
   const showGallery = mode !== "featured";
 
   return (

@@ -129,6 +129,7 @@
     color-mix(in srgb, var(--clr-primary) 14%, var(--clr-dark)) 78%,
     var(--clr-dark-surf) 100%
   );
+  --bridge-min-height: 90vh;
 }
 
 @theme inline {
@@ -349,6 +350,25 @@ img {
   --color-accent: var(--clr-accent);
   --color-primary-light: var(--clr-primary-light);
   --color-secondary: var(--clr-secondary);
+  --bridge-min-height: 52vh;
+  --gradient-bridge: linear-gradient(
+    180deg,
+    #000000 0%,
+    #14110c 22%,
+    #2a2618 42%,
+    #6a5a32 62%,
+    #c4a35a 78%,
+    #e8dfc8 90%,
+    #f6f4ef 100%
+  );
+  --gradient-works-story: linear-gradient(
+    to bottom,
+    #f6f4ef 0%,
+    #e8dfc8 18%,
+    #c4a35a 42%,
+    #6a5a32 64%,
+    #1c2b30 100%
+  );
 }
 
 [data-track="marketing"] {
@@ -364,6 +384,24 @@ img {
   --color-accent: var(--clr-accent);
   --color-primary-light: var(--clr-primary-light);
   --color-secondary: var(--clr-secondary);
+  --bridge-min-height: 108vh;
+  --gradient-bridge: linear-gradient(
+    180deg,
+    #000000 0%,
+    #1a120c 18%,
+    #7a3d1e 40%,
+    #e07a3d 58%,
+    #2f9e8f 82%,
+    #f4f7f5 100%
+  );
+  --gradient-works-story: linear-gradient(
+    to bottom,
+    #f4f7f5 0%,
+    #2f9e8f 28%,
+    #e07a3d 55%,
+    #1a120c 82%,
+    #1c2b30 100%
+  );
 }
 
 [data-track="sales"] {
@@ -379,6 +417,20 @@ img {
   --color-accent: var(--clr-accent);
   --color-primary-light: var(--clr-primary-light);
   --color-secondary: var(--clr-secondary);
+  --bridge-min-height: 40vh;
+  --gradient-bridge: linear-gradient(
+    180deg,
+    #000000 0%,
+    #0d1c1a 28%,
+    #1c4f4a 62%,
+    #f3f5f4 100%
+  );
+  --gradient-works-story: linear-gradient(
+    to bottom,
+    #f3f5f4 0%,
+    #1c4f4a 55%,
+    #1c2b30 100%
+  );
 }
 
 [data-track="planning"] .heroHeadline {
