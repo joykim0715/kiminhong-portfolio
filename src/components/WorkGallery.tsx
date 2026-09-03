@@ -7,6 +7,8 @@ import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib
 import { getLenisInstance } from "@/lib/lenisInstance";
 import type { Work } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
+import { useTrack } from "./TrackProvider";
+import { TRACK_LAYOUT } from "@/data/tracks";
 import CertificationBadge from "./CertificationBadge";
 import FeaturedWork from "./FeaturedWork";
 import ProjectCard from "./ProjectCard";
@@ -62,18 +64,31 @@ function scrollToPinZone(pinZone: HTMLElement) {
   }
 }
 
-export default function WorkGallery() {
+export default function WorkGallery({
+  mode = "full",
+}: {
+  /** full = 연구원 현행. featured = 케이스만. rest = featured 제외 + pin 없음 */
+  mode?: "full" | "featured" | "rest";
+}) {
   const { works, certifications } = useSiteContent();
+  const { track } = useTrack();
+  const casesHeading = TRACK_LAYOUT[track].casesHeading;
+  const patternId = `dot-grid-${mode}`;
+  const enablePin = mode === "full";
+  const sectionId = mode === "featured" ? "cases" : "works";
   const projects = works.projects;
   const featuredIdSet = useMemo(() => new Set(works.featuredIds), [works.featuredIds]);
   const featuredProjects = useMemo(
-    () => works.featuredIds.map((id) => projects.find((p) => p.id === id)).filter(Boolean) as Work[],
-    [works.featuredIds, projects],
+    () =>
+      mode === "rest"
+        ? []
+        : (works.featuredIds.map((id) => projects.find((p) => p.id === id)).filter(Boolean) as Work[]),
+    [works.featuredIds, projects, mode],
   );
-  const galleryProjects = useMemo(
-    () => projects.filter((p) => !featuredIdSet.has(p.id)),
-    [projects, featuredIdSet],
-  );
+  const galleryProjects = useMemo(() => {
+    if (mode === "featured") return [];
+    return projects.filter((p) => !featuredIdSet.has(p.id));
+  }, [projects, featuredIdSet, mode]);
 
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [panelWork, setPanelWork] = useState<Work | null>(null);
@@ -104,7 +119,7 @@ export default function WorkGallery() {
       fadeRevealOnScroll(".works-heading", section);
       fadeRevealOnScroll(".featured-work", section, { start: "top 82%" });
 
-      if (isDesktop && pinZone && activeTab === "projects" && galleryProjects.length > 1) {
+      if (enablePin && isDesktop && pinZone && activeTab === "projects" && galleryProjects.length > 1) {
         scrollPinStack({
           zone: pinZone,
           pinSelector: ".works-pin-panel--projects",
@@ -125,7 +140,7 @@ export default function WorkGallery() {
 
     refreshScrollTriggers();
     return () => ctx.revert();
-  }, [activeTab, galleryProjects.length]);
+  }, [activeTab, galleryProjects.length, enablePin]);
 
   useEffect(() => {
     const prevTab = prevTabRef.current;
@@ -135,7 +150,7 @@ export default function WorkGallery() {
     const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
     const pinZone = pinZoneRef.current;
 
-    if (isDesktop && prevTab === "projects" && activeTab === "certifications" && pinZone) {
+    if (enablePin && isDesktop && prevTab === "projects" && activeTab === "certifications" && pinZone) {
       requestAnimationFrame(() => {
         refreshScrollTriggers();
         requestAnimationFrame(() => {
@@ -146,26 +161,32 @@ export default function WorkGallery() {
     } else {
       refreshScrollTriggers();
     }
-  }, [activeTab]);
+  }, [activeTab, enablePin]);
+
+  const headingLabel =
+    mode === "featured" && casesHeading ? casesHeading.label : works.sectionLabel;
+  const headingTitle =
+    mode === "featured" && casesHeading ? casesHeading.title : mode === "rest" ? works.moreLabel : works.title;
+  const showGallery = mode !== "featured";
 
   return (
-    <section id="works" ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
+    <section id={sectionId} ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
       <svg
         className="pointer-events-none absolute inset-0 z-0 h-full w-full text-text opacity-[0.035]"
         aria-hidden="true"
       >
         <defs>
-          <pattern id="dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+          <pattern id={patternId} x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
             <circle cx="1.5" cy="1.5" r="1" fill="currentColor" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#dot-grid)" />
+        <rect width="100%" height="100%" fill={`url(#${patternId})`} />
       </svg>
 
       <div className="section-container relative z-10">
         <div className="works-heading">
-          <p className="section-eyebrow text-secondary">{works.sectionLabel}</p>
-          <h2 className="section-title mt-3 tracking-tight text-text">{works.title}</h2>
+          <p className="section-eyebrow text-secondary">{headingLabel}</p>
+          <h2 className="section-title mt-3 tracking-tight text-text">{headingTitle}</h2>
         </div>
 
         {featuredProjects.length > 0 ? (
@@ -182,6 +203,32 @@ export default function WorkGallery() {
           </div>
         ) : null}
 
+        {showGallery && !enablePin ? (
+          <div className="mt-14 border-t border-border/70 pt-10">
+            <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
+            {activeTab === "projects" ? (
+              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {galleryProjects.map((work) => (
+                  <ProjectCard
+                    key={work.id}
+                    work={work}
+                    onClick={() => handleProjectClick(work)}
+                    className="gallery-card"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {certifications.map((cert) => (
+                  <CertificationBadge key={`${cert.name}-${cert.date}`} cert={cert} />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
+
+        {showGallery && enablePin ? (
+          <>
         <div className="mt-14 border-t border-border/70 pt-10 lg:hidden">
           <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
           {activeTab === "projects" ? (
@@ -255,6 +302,8 @@ export default function WorkGallery() {
             </div>
           </div>
         </div>
+          </>
+        ) : null}
       </div>
 
       {panelWork ? (
