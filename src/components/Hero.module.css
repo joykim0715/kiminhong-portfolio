@@ -50,11 +50,6 @@
     grid-template-columns: 1fr;
     max-width: 42rem;
   }
-
-  .heroGridPlanning {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.85fr);
-    gap: 2rem;
-  }
 }
 
 .heroContent {
@@ -208,23 +203,10 @@
   background-color: #000000;
 }
 
-.heroVisualProcess {
-  min-height: 0;
-  overflow: visible;
-  background: transparent;
-  display: flex;
-  align-items: stretch;
-}
-
 @media (max-width: 1023px) {
   .heroVisual {
     order: -1;
     min-height: clamp(440px, 78vw, 580px);
-  }
-
-  .heroGridPlanning .heroVisualProcess {
-    order: 1;
-    min-height: 0;
   }
 
   .heroCutoutWrap {

@@ -12,4 +12,3 @@ export {
 export { TRACK_THEMES, type TrackTheme } from "./themes";
 export { TRACK_COPY } from "./copy";
 export { applyTrackToContent } from "./apply";
-export { TRACK_LAYOUT, PLANNING_PROCESS, type TrackLayout, type TrackSectionId } from "./layouts";

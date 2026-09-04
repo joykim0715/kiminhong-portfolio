@@ -16,7 +16,7 @@ import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
 import { ContentProvider, type Locale } from "@/components/ContentProvider";
 import { TrackProvider } from "@/components/TrackProvider";
 import { siteContent, type SiteContent } from "@/data/content";
-import { TRACK_HREF, TRACK_LAYOUT, type TrackId, type TrackSectionId } from "@/data/tracks";
+import { TRACK_HREF, type TrackId } from "@/data/tracks";
 
 type HomePageProps = {
   /** true면 사진·연락처를 숨긴 채용 제출용 뷰 */
@@ -26,40 +26,6 @@ type HomePageProps = {
   track?: TrackId;
 };
 
-function TrackSection({ id, track }: { id: TrackSectionId; track: TrackId }) {
-  const layout = TRACK_LAYOUT[track];
-  const worksMode = layout.sections.includes("cases") ? "rest" : "full";
-
-  switch (id) {
-    case "hero":
-      return <Hero />;
-    case "proof":
-      return <TrackProofBar />;
-    case "gradient":
-      return <GradientTransition />;
-    case "cases":
-      return <WorkGallery mode="featured" />;
-    case "values":
-      return <Values />;
-    case "skills":
-      return <SkillsDial />;
-    case "education":
-      return <Education />;
-    case "experience":
-      return <Experience />;
-    case "works":
-      return <WorkGallery mode={worksMode} />;
-    case "blend":
-      return <SectionBlend variant="works-story" />;
-    case "story":
-      return <StorySection />;
-    case "contact":
-      return <ContactCTA />;
-    default:
-      return null;
-  }
-}
-
 export default function HomePage({
   recruitSafe = false,
   locale = "ko",
@@ -67,7 +33,6 @@ export default function HomePage({
   track = "research",
 }: HomePageProps) {
   const homeHref = locale === "en" ? "/en" : TRACK_HREF[track];
-  const layout = TRACK_LAYOUT[track];
 
   return (
     <>
@@ -82,9 +47,17 @@ export default function HomePage({
             <HashScroll />
             <Navbar />
             <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
-              {layout.sections.map((id) => (
-                <TrackSection key={id} id={id} track={track} />
-              ))}
+              <Hero />
+              <TrackProofBar />
+              <GradientTransition />
+              <Values />
+              <SkillsDial />
+              <Education />
+              <Experience />
+              <WorkGallery />
+              <SectionBlend variant="works-story" />
+              <StorySection />
+              <ContactCTA />
             </main>
             <PageLoadEntrance />
           </RecruitSafeProvider>
