@@ -22,5 +22,5 @@ export const metadata: Metadata = {
 
 /** English portfolio for UK Working Holiday / international applications */
 export default function EnglishHomePage() {
-  return <HomePage locale="en" content={siteContentEn} track="research" />;
+  return <HomePage locale="en" content={siteContentEn} />;
 }

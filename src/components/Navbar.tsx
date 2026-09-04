@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useRecruitSafe } from "./RecruitSafeProvider";
 import VisitorCounter from "./VisitorCounter";
 import { useLocale, useSiteContent } from "./ContentProvider";
-import { useTrack } from "./TrackProvider";
 import HoverLink from "./ui/HoverLink";
 
 function MenuIcon({ open }: { open: boolean }) {
@@ -32,8 +30,7 @@ function MenuIcon({ open }: { open: boolean }) {
 
 export default function Navbar() {
   const { nav } = useSiteContent();
-  const { otherLocaleHref, otherLocaleLabel, locale, homeHref } = useLocale();
-  const { track, nav: trackNav } = useTrack();
+  const { otherLocaleHref, otherLocaleLabel, locale } = useLocale();
   const recruitSafe = useRecruitSafe();
   const localeSwitchLabel = locale === "en" ? "한국어" : "EN";
   const sections = useMemo(
@@ -90,33 +87,10 @@ export default function Navbar() {
     <header className="nav-bar glass-nav-dark fixed inset-x-0 top-0 z-50 text-white">
       <nav className="section-container flex h-16 items-center justify-between gap-2 sm:gap-3">
         <div className="nav-brand flex min-w-0 items-center gap-2 sm:gap-3">
-          <a href={homeHref} className="shrink-0 text-sm font-bold tracking-tight text-white sm:text-base">
+          <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-white sm:text-base">
             {nav.siteName}
           </a>
-          {!recruitSafe ? (
-            <ul
-              className="hidden min-w-0 items-center gap-0.5 rounded-md border border-white/15 p-0.5 md:flex"
-              aria-label="지원 트랙"
-            >
-              {trackNav.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    className={[
-                      "block rounded px-2 py-1 text-[11px] font-semibold tracking-wide transition-colors sm:text-xs",
-                      track === item.id
-                        ? "bg-white/15 text-white"
-                        : "text-white/50 hover:bg-white/8 hover:text-white/85",
-                    ].join(" ")}
-                    aria-current={track === item.id ? "page" : undefined}
-                  >
-                    {item.shortLabel}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <div className="nav-visitor hidden min-w-0 xl:block [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/50 [&_span.text-primary]:text-sm [&_span.text-primary]:font-semibold [&_span.text-primary]:text-accent">
+          <div className="nav-visitor hidden min-w-0 sm:block [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/50 [&_span.text-primary]:text-sm [&_span.text-primary]:font-semibold [&_span.text-primary]:text-accent">
             <VisitorCounter />
           </div>
         </div>
@@ -182,25 +156,6 @@ export default function Navbar() {
           className="border-t border-white/10 bg-[#0a1211]/95 backdrop-blur-md lg:hidden"
         >
           <ul className="section-container grid grid-cols-2 gap-1 py-3">
-            {!recruitSafe
-              ? trackNav.map((item) => (
-                  <li key={item.id} className="md:hidden">
-                    <Link
-                      href={item.href}
-                      className={[
-                        "block rounded-lg px-3 py-2.5 text-sm font-medium",
-                        track === item.id
-                          ? "bg-accent/15 text-accent"
-                          : "text-white/75 hover:bg-white/8 hover:text-white",
-                      ].join(" ")}
-                      onClick={() => setMenuOpen(false)}
-                      aria-current={track === item.id ? "page" : undefined}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))
-              : null}
             {sections.map(({ id, label }) => (
               <li key={id}>
                 <a

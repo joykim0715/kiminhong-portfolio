@@ -7,7 +7,6 @@ import { revealOnScroll } from "@/lib/scrollReveal";
 import { mailtoHref, shouldOpenInNewTab, telHref } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
-import { useTrack } from "./TrackProvider";
 import Button from "./ui/Button";
 import HoverLink from "./ui/HoverLink";
 import ShapeDecor from "./ui/ShapeDecor";
@@ -15,7 +14,6 @@ import ShapeDecor from "./ui/ShapeDecor";
 export default function ContactCTA() {
   const recruitSafe = useRecruitSafe();
   const { about, hero, socialLinks } = useSiteContent();
-  const { theme } = useTrack();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -60,7 +58,7 @@ export default function ContactCTA() {
           aria-hidden
           style={{ background: "var(--gradient-contact)" }}
         />
-        {theme.showShapeDecor ? <ShapeDecor /> : null}
+        <ShapeDecor />
         <div className="section-container relative z-10 flex flex-col items-center text-center">
           <h2
             id="closing-heading"
@@ -91,7 +89,7 @@ export default function ContactCTA() {
         aria-hidden
         style={{ background: "var(--gradient-contact)" }}
       />
-      {theme.showShapeDecor ? <ShapeDecor /> : null}
+      <ShapeDecor />
 
       <div className="section-container relative z-10 flex flex-col items-center text-center">
         <h2

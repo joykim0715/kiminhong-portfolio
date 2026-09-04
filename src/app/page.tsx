@@ -1,6 +1,6 @@
 import HomePage from "@/components/HomePage";
 
-/** 기본 진입 = 연구원/디지털헬스 트랙 */
+/** 원본 포트폴리오 — 사진·연락처 포함 */
 export default function Home() {
-  return <HomePage track="research" />;
+  return <HomePage />;
 }

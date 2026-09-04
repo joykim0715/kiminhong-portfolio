@@ -335,66 +335,6 @@ img {
     0 8px 28px color-mix(in srgb, var(--clr-dark) 28%, transparent);
 }
 
-/* Track tones — research keeps :root. Wrapper + html[data-track] so Tailwind bg-bg follows. */
-[data-track="planning"] {
-  --clr-bg: #f6f4ef;
-  --clr-surface: #ece7dc;
-  --clr-primary: #4d7c78;
-  --clr-accent: #c4a35a;
-  --clr-primary-light: #6e9a96;
-  --clr-secondary: #5b7f9a;
-  --color-bg: var(--clr-bg);
-  --color-surface: var(--clr-surface);
-  --color-primary: var(--clr-primary);
-  --color-accent: var(--clr-accent);
-  --color-primary-light: var(--clr-primary-light);
-  --color-secondary: var(--clr-secondary);
-}
-
-[data-track="marketing"] {
-  --clr-bg: #f4f7f5;
-  --clr-surface: #e2ece6;
-  --clr-primary: #2f9e8f;
-  --clr-accent: #e07a3d;
-  --clr-primary-light: #5cbcaf;
-  --clr-secondary: #4a90c8;
-  --color-bg: var(--clr-bg);
-  --color-surface: var(--clr-surface);
-  --color-primary: var(--clr-primary);
-  --color-accent: var(--clr-accent);
-  --color-primary-light: var(--clr-primary-light);
-  --color-secondary: var(--clr-secondary);
-}
-
-[data-track="sales"] {
-  --clr-bg: #f3f5f4;
-  --clr-surface: #dde5e3;
-  --clr-primary: #1c4f4a;
-  --clr-accent: #2a7a72;
-  --clr-primary-light: #3d7a73;
-  --clr-secondary: #3d6a8a;
-  --color-bg: var(--clr-bg);
-  --color-surface: var(--clr-surface);
-  --color-primary: var(--clr-primary);
-  --color-accent: var(--clr-accent);
-  --color-primary-light: var(--clr-primary-light);
-  --color-secondary: var(--clr-secondary);
-}
-
-[data-track="planning"] .heroHeadline {
-  max-width: 28ch;
-}
-
-[data-track="sales"] .heroBtnPrimary {
-  font-weight: 700;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--clr-primary) 45%, white);
-}
-
-[data-track="sales"] .heroBtnPrimary:hover {
-  transform: translateY(-2px);
-  transition-duration: 0.18s;
-}
-
 html.scroll-locked,
 body.scroll-locked {
   overflow: hidden !important;

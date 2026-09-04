@@ -4,7 +4,6 @@ import Image from "next/image";
 import { shouldOpenInNewTab } from "@/lib/contact";
 import { useSiteContent } from "./ContentProvider";
 import { useRecruitSafe } from "./RecruitSafeProvider";
-import { useTrack } from "./TrackProvider";
 import HoverLink from "./ui/HoverLink";
 import ShapeDecor from "./ui/ShapeDecor";
 import styles from "./Hero.module.css";
@@ -26,14 +25,12 @@ function ArrowIcon() {
 export default function Hero() {
   const { hero, nav, socialLinks } = useSiteContent();
   const recruitSafe = useRecruitSafe();
-  const { track, theme } = useTrack();
   const cutoutSrc = hero.cutoutImage ?? hero.profileImage;
   const publicSocialLinks = recruitSafe ? [] : socialLinks;
-  const salesCta = track === "sales";
 
   return (
     <section id="hero" className={`${styles.hero} relative flex min-h-screen flex-col pt-16`}>
-      {recruitSafe && theme.showShapeDecor ? <ShapeDecor /> : null}
+      {recruitSafe ? <ShapeDecor /> : null}
       <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
@@ -55,31 +52,6 @@ export default function Hero() {
                 </a>
                 <a href="#works" className={styles.heroBtnGhost}>
                   View projects
-                  <ArrowIcon />
-                </a>
-              </>
-            ) : salesCta ? (
-              <>
-                <a href="#contact" className={styles.heroBtnPrimary}>
-                  {nav.contactCta}
-                  <ArrowIcon />
-                </a>
-                <a
-                  href={hero.koResumeUrl}
-                  className={styles.heroBtnGhost}
-                  target={shouldOpenInNewTab(hero.koResumeUrl) ? "_blank" : undefined}
-                  rel={shouldOpenInNewTab(hero.koResumeUrl) ? "noopener noreferrer" : undefined}
-                >
-                  {hero.koResumeCtaLabel}
-                  <ArrowIcon />
-                </a>
-                <a
-                  href={hero.resumeUrl}
-                  className={styles.heroBtnGhost}
-                  target={shouldOpenInNewTab(hero.resumeUrl) ? "_blank" : undefined}
-                  rel={shouldOpenInNewTab(hero.resumeUrl) ? "noopener noreferrer" : undefined}
-                >
-                  {hero.resumeCtaLabel}
                   <ArrowIcon />
                 </a>
               </>
@@ -131,7 +103,7 @@ export default function Hero() {
 
         {!recruitSafe ? (
           <div className={`${styles.heroVisual} hero-visual`}>
-            {theme.showShapeDecor ? <ShapeDecor className="z-[2]" /> : null}
+            <ShapeDecor className="z-[2]" />
             <div className={styles.heroCutoutWrap}>
               <Image
                 src={cutoutSrc}

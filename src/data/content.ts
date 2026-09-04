@@ -1,6 +1,5 @@
 /**
- * 사이트 전체 텍스트·콘텐츠 — 팩트 저장소.
- * 트랙별 강조·카피 override 는 `src/data/tracks/` (`applyTrackToContent`).
+ * 사이트 전체 텍스트·콘텐츠 — 이 파일만 수정하면 사이트에 반영됩니다.
  *
  * 섹션: meta, nav, hero, bridge, values, skills, education, experience,
  *       works, certifications, story, about, socialLinks

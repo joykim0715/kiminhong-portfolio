@@ -2,8 +2,7 @@
 
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { trackHoverSpring } from "@/lib/hoverMotion";
-import { useTrack } from "@/components/TrackProvider";
+import { hoverSpring } from "@/lib/hoverMotion";
 
 type HoverLiftProps = {
   children: ReactNode;
@@ -18,19 +17,13 @@ type HoverLiftProps = {
  */
 export default function HoverLift({ children, className, axis = "y" }: HoverLiftProps) {
   const reduceMotion = useReducedMotion();
-  const { theme } = useTrack();
-  const lift = theme.density === "proof" ? 2 : theme.density === "kpi" ? 3 : 4;
-  const hover = reduceMotion
-    ? undefined
-    : axis === "x"
-      ? { x: theme.density === "proof" ? 4 : 6 }
-      : { y: -lift };
+  const hover = reduceMotion ? undefined : axis === "x" ? { x: 6 } : { y: -4 };
 
   return (
     <motion.div
       className={className}
       whileHover={hover}
-      transition={trackHoverSpring(theme.hoverBounce, theme.hoverDuration)}
+      transition={hoverSpring}
     >
       {children}
     </motion.div>

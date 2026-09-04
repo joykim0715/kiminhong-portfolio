@@ -2,8 +2,7 @@
 
 import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { trackHoverSpring } from "@/lib/hoverMotion";
-import { useTrack } from "@/components/TrackProvider";
+import { hoverSpring } from "@/lib/hoverMotion";
 
 type ButtonVariant = "primary" | "ghost" | "onDark" | "onDarkGhost";
 
@@ -43,11 +42,9 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const reduceMotion = useReducedMotion();
-  const { theme } = useTrack();
   const cls = `${baseClass} ${variants[variant]} ${className}`;
-  const hover = reduceMotion ? undefined : { y: theme.density === "proof" ? -2 : -3 };
+  const hover = reduceMotion ? undefined : { y: -3 };
   const tap = reduceMotion ? undefined : { scale: 0.98 };
-  const spring = trackHoverSpring(theme.hoverBounce, theme.hoverDuration);
 
   if ("href" in props && props.href) {
     const { href, ...rest } = props;
@@ -57,7 +54,7 @@ export default function Button({
         className={cls}
         whileHover={hover}
         whileTap={tap}
-        transition={spring}
+        transition={hoverSpring}
         {...rest}
       >
         {children}
@@ -71,7 +68,7 @@ export default function Button({
       className={cls}
       whileHover={hover}
       whileTap={tap}
-      transition={spring}
+      transition={hoverSpring}
       {...(props as Omit<ButtonHTMLAttributes<HTMLButtonElement>, MotionSafe>)}
     >
       {children}
