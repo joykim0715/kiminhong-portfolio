@@ -38,6 +38,7 @@ export function applyTrackToContent(base: SiteContent, trackId: TrackId): SiteCo
     works: {
       ...base.works,
       featuredIds: FEATURED_WORK_IDS[trackId],
+      featuredLabel: trackId === "planning" ? "Case" : base.works.featuredLabel,
     },
     story: copy.story ? { ...base.story, ...copy.story } : base.story,
     about: copy.about ? { ...base.about, ...copy.about } : base.about,

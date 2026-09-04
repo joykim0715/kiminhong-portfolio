@@ -32,19 +32,11 @@ export default function Hero() {
   const publicSocialLinks = recruitSafe ? [] : socialLinks;
   const salesCta = track === "sales";
   const planningHero = track === "planning";
-  const marketingHero = track === "marketing";
-  const gridExtra = recruitSafe
-    ? ` ${styles.heroGridSafe}`
-    : planningHero
-      ? ` ${styles.heroGridPlanning}`
-      : marketingHero
-        ? ` ${styles.heroGridMarketing}`
-        : "";
 
   return (
     <section id="hero" className={`${styles.hero} relative flex min-h-screen flex-col pt-16`}>
       {recruitSafe && theme.showShapeDecor ? <ShapeDecor /> : null}
-      <div className={`section-container ${styles.heroGrid}${gridExtra}`}>
+      <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}${planningHero ? ` ${styles.heroGridPlanning}` : ""}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
 
@@ -65,6 +57,26 @@ export default function Hero() {
                 </a>
                 <a href="#works" className={styles.heroBtnGhost}>
                   View projects
+                  <ArrowIcon />
+                </a>
+              </>
+            ) : planningHero ? (
+              <>
+                <a href="#cases" className={styles.heroBtnPrimary}>
+                  케이스 보기
+                  <ArrowIcon />
+                </a>
+                <a
+                  href={hero.koResumeUrl}
+                  className={styles.heroBtnGhost}
+                  target={shouldOpenInNewTab(hero.koResumeUrl) ? "_blank" : undefined}
+                  rel={shouldOpenInNewTab(hero.koResumeUrl) ? "noopener noreferrer" : undefined}
+                >
+                  {hero.koResumeCtaLabel}
+                  <ArrowIcon />
+                </a>
+                <a href="#contact" className={styles.heroBtnGhost}>
+                  {nav.contactCta}
                   <ArrowIcon />
                 </a>
               </>
@@ -139,7 +151,11 @@ export default function Hero() {
           ) : null}
         </div>
 
-        {!recruitSafe ? (
+        {!recruitSafe && planningHero ? (
+          <div className={`${styles.heroVisual} ${styles.heroVisualProcess} hero-visual`}>
+            <HeroProcess />
+          </div>
+        ) : !recruitSafe ? (
           <div className={`${styles.heroVisual} hero-visual`}>
             {theme.showShapeDecor ? <ShapeDecor className="z-[2]" /> : null}
             <div className={styles.heroCutoutWrap}>
@@ -158,7 +174,6 @@ export default function Hero() {
       </div>
 
       <div className={styles.heroBottomFade} aria-hidden="true" />
-      {!recruitSafe && planningHero ? <HeroProcess /> : null}
     </section>
   );
 }

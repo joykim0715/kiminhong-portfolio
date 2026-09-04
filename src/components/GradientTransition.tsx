@@ -5,21 +5,11 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
 import { revealOnScroll } from "@/lib/scrollReveal";
 import { useSiteContent } from "./ContentProvider";
-import { useTrack } from "./TrackProvider";
 import styles from "./GradientTransition.module.css";
-
-const BRIDGE_REVEAL = {
-  research: { y: 28, duration: 0.72 },
-  planning: { y: 14, duration: 0.38 },
-  marketing: { y: 48, duration: 1.05 },
-  sales: { y: 8, duration: 0.26 },
-} as const;
 
 export default function GradientTransition() {
   const { bridge } = useSiteContent();
-  const { track } = useTrack();
   const sectionRef = useRef<HTMLElement>(null);
-  const reveal = BRIDGE_REVEAL[track];
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -27,15 +17,12 @@ export default function GradientTransition() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      revealOnScroll(".gradient-reveal-text", section, {
-        y: reveal.y,
-        duration: reveal.duration,
-      });
+      revealOnScroll(".gradient-reveal-text", section);
     }, section);
 
     if (reduced) return () => ctx.revert();
     return () => ctx.revert();
-  }, [reveal.duration, reveal.y]);
+  }, []);
 
   return (
     <section

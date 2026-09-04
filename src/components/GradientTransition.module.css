@@ -2,7 +2,7 @@
   position: relative;
   /* Hero(z-index: 3) 아래에 두어 CTA 겹침 방지. 블렌드는 유지하되 덜 공격적으로 */
   z-index: 1;
-  min-height: var(--bridge-min-height, 90vh);
+  min-height: 90vh;
   margin-top: clamp(-96px, -10vh, -48px);
   padding-top: clamp(96px, 12vh, 140px);
   overflow: hidden;
@@ -49,11 +49,11 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    color-mix(in srgb, var(--clr-bg) 6%, transparent) 18%,
-    color-mix(in srgb, var(--clr-bg) 22%, transparent) 36%,
-    color-mix(in srgb, var(--clr-bg) 48%, transparent) 54%,
-    color-mix(in srgb, var(--clr-bg) 72%, transparent) 72%,
-    color-mix(in srgb, var(--clr-bg) 90%, transparent) 88%,
-    var(--clr-bg) 100%
+    rgb(247 248 246 / 0.06) 18%,
+    rgb(247 248 246 / 0.22) 36%,
+    rgb(247 248 246 / 0.48) 54%,
+    rgb(247 248 246 / 0.72) 72%,
+    rgb(247 248 246 / 0.9) 88%,
+    #f7f8f6 100%
   );
 }

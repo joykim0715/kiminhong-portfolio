@@ -26,7 +26,10 @@ type HomePageProps = {
   track?: TrackId;
 };
 
-function TrackSection({ id }: { id: TrackSectionId }) {
+function TrackSection({ id, track }: { id: TrackSectionId; track: TrackId }) {
+  const layout = TRACK_LAYOUT[track];
+  const worksMode = layout.sections.includes("cases") ? "rest" : "full";
+
   switch (id) {
     case "hero":
       return <Hero />;
@@ -45,7 +48,7 @@ function TrackSection({ id }: { id: TrackSectionId }) {
     case "experience":
       return <Experience />;
     case "works":
-      return <WorkGallery mode="full" />;
+      return <WorkGallery mode={worksMode} />;
     case "blend":
       return <SectionBlend variant="works-story" />;
     case "story":
@@ -80,7 +83,7 @@ export default function HomePage({
             <Navbar />
             <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
               {layout.sections.map((id) => (
-                <TrackSection key={id} id={id} />
+                <TrackSection key={id} id={id} track={track} />
               ))}
             </main>
             <PageLoadEntrance />

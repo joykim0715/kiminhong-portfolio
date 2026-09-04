@@ -19,6 +19,9 @@ export type TrackNavItem = { id: string; label: string };
 export type TrackLayout = {
   sections: TrackSectionId[];
   nav: TrackNavItem[];
+  /** featured-only WorkGallery heading */
+  casesHeading?: { label: string; title: string };
+  /** rest WorkGallery: no GSAP pin */
   worksPin: boolean;
   collapseSecondaryExperience: boolean;
 };
@@ -34,8 +37,8 @@ const RESEARCH_NAV: TrackNavItem[] = [
   { id: "contact", label: "Contact" },
 ];
 
-/** 네 트랙 공통 섹션 순서. 차이는 히어로 구도·팔레트·스크롤 브리지. */
-const SHARED_SECTIONS: TrackSectionId[] = [
+/** 연구원 동결 — 현재 HomePage 순서와 동일 */
+const RESEARCH_SECTIONS: TrackSectionId[] = [
   "hero",
   "proof",
   "gradient",
@@ -51,25 +54,48 @@ const SHARED_SECTIONS: TrackSectionId[] = [
 
 export const TRACK_LAYOUT: Record<TrackId, TrackLayout> = {
   research: {
-    sections: SHARED_SECTIONS,
+    sections: RESEARCH_SECTIONS,
     nav: RESEARCH_NAV,
     worksPin: true,
     collapseSecondaryExperience: false,
   },
   planning: {
-    sections: SHARED_SECTIONS,
-    nav: RESEARCH_NAV,
-    worksPin: true,
-    collapseSecondaryExperience: false,
+    sections: [
+      "hero",
+      "gradient",
+      "cases",
+      "experience",
+      "skills",
+      "education",
+      "works",
+      "values",
+      "contact",
+    ],
+    nav: [
+      { id: "hero", label: "Home" },
+      { id: "cases", label: "Cases" },
+      { id: "experience", label: "Experience" },
+      { id: "skills", label: "Skills" },
+      { id: "education", label: "Education" },
+      { id: "works", label: "More" },
+      { id: "contact", label: "Contact" },
+    ],
+    casesHeading: {
+      label: "Cases",
+      title: "수요에서 숫자까지",
+    },
+    worksPin: false,
+    collapseSecondaryExperience: true,
   },
+  /** 다음 트랙 작업 전까지 연구원과 같은 골격 */
   marketing: {
-    sections: SHARED_SECTIONS,
+    sections: RESEARCH_SECTIONS,
     nav: RESEARCH_NAV,
     worksPin: true,
     collapseSecondaryExperience: false,
   },
   sales: {
-    sections: SHARED_SECTIONS,
+    sections: RESEARCH_SECTIONS,
     nav: RESEARCH_NAV,
     worksPin: true,
     collapseSecondaryExperience: false,
