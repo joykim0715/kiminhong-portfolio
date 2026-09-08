@@ -5,6 +5,7 @@ import { useRecruitSafe } from "./RecruitSafeProvider";
 import VisitorCounter from "./VisitorCounter";
 import { useLocale, useSiteContent } from "./ContentProvider";
 import HoverLink from "./ui/HoverLink";
+import WeightHoverText from "./ui/WeightHoverText";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -99,7 +100,7 @@ export default function Navbar() {
           {sections.map(({ id, label }) => (
             <li key={id}>
               <HoverLink href={`#${id}`} className={sectionLinkClass(id)}>
-                {label}
+                <WeightHoverText>{label}</WeightHoverText>
               </HoverLink>
             </li>
           ))}

@@ -22,7 +22,27 @@ export default function ContactCTA() {
 
     const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
-      revealOnScroll(".cta-headline", section);
+      const headline = section.querySelector(".cta-headline");
+      if (headline) {
+        if (reduced) {
+          gsap.set(headline, { clipPath: "inset(0 0 0 0)" });
+        } else {
+          gsap.fromTo(
+            headline,
+            { clipPath: "inset(0 100% 0 0)" },
+            {
+              clipPath: "inset(0 0% 0 0)",
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 80%",
+                toggleActions: "play none none none",
+              },
+            },
+          );
+        }
+      }
       revealOnScroll(".cta-body", section);
       revealOnScroll(".cta-button", section);
       revealOnScroll(".cta-logo", section, { stagger: 0.08 });
