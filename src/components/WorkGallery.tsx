@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { gsap } from "@/lib/gsap";
-import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinViewCycle } from "@/lib/scrollInteractions";
+import { fadeRevealOnScroll, refreshScrollTriggers, scrollPinStack } from "@/lib/scrollInteractions";
+import { getLenisInstance } from "@/lib/lenisInstance";
 import type { Work } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
 import CertificationBadge from "./CertificationBadge";
@@ -11,6 +12,9 @@ import FeaturedWork from "./FeaturedWork";
 import ProjectCard from "./ProjectCard";
 
 const ProjectPanel = dynamic(() => import("./ProjectPanel"), { ssr: false });
+
+const STACK_STEP_VH = 0.9;
+const NAV_OFFSET = 64;
 
 type TabId = "projects" | "certifications";
 
@@ -48,6 +52,16 @@ function WorksTabs({
   );
 }
 
+function scrollToPinZone(pinZone: HTMLElement) {
+  const lenis = getLenisInstance();
+  if (lenis) {
+    lenis.scrollTo(pinZone, { offset: -NAV_OFFSET, duration: 0.55 });
+  } else {
+    const top = pinZone.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+}
+
 export default function WorkGallery() {
   const { works, certifications } = useSiteContent();
   const projects = works.projects;
@@ -63,21 +77,21 @@ export default function WorkGallery() {
 
   const [activeTab, setActiveTab] = useState<TabId>("projects");
   const [panelWork, setPanelWork] = useState<Work | null>(null);
+  const [activeStackIndex, setActiveStackIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const pinZoneRef = useRef<HTMLDivElement>(null);
-  const cycleApiRef = useRef<{ scrollToView: (view: TabId) => void } | null>(null);
+  const prevTabRef = useRef<TabId>("projects");
+
+  const stackLabel = works.stackLabels[activeTab];
 
   const handleProjectClick = useCallback((work: Work) => {
     setPanelWork(work);
   }, []);
 
   const handleTabChange = useCallback((tab: TabId) => {
-    if (cycleApiRef.current) {
-      cycleApiRef.current.scrollToView(tab);
-      return;
-    }
+    if (tab === activeTab) return;
     setActiveTab(tab);
-  }, []);
+  }, [activeTab]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -90,27 +104,49 @@ export default function WorkGallery() {
       fadeRevealOnScroll(".works-heading", section);
       fadeRevealOnScroll(".featured-work", section, { start: "top 82%" });
 
-      if (isDesktop && pinZone) {
-        cycleApiRef.current = scrollPinViewCycle({
+      if (isDesktop && pinZone && activeTab === "projects" && galleryProjects.length > 1) {
+        scrollPinStack({
           zone: pinZone,
-          pinSelector: ".works-pin-panel",
-          projectsSelector: ".works-cycle-projects",
-          certsSelector: ".works-cycle-certs",
-          durationVh: 2.2,
-          onView: setActiveTab,
+          pinSelector: ".works-pin-panel--projects",
+          cardSelector: ".stack-card",
+          stepVh: STACK_STEP_VH,
+        scrub: 1.05,
+          holdDuration: 0.65,
+          onIndex: setActiveStackIndex,
         });
-      } else {
-        fadeRevealOnScroll(".gallery-card", section, { stagger: 0.1 });
+      } else if (!isDesktop) {
+        fadeRevealOnScroll(activeTab === "projects" ? ".gallery-card" : ".cert-badge", section, {
+          stagger: 0.12,
+        });
+      } else if (activeTab === "certifications") {
         fadeRevealOnScroll(".cert-badge", section, { stagger: 0.08 });
       }
     }, section);
 
     refreshScrollTriggers();
-    return () => {
-      cycleApiRef.current = null;
-      ctx.revert();
-    };
-  }, [galleryProjects.length]);
+    return () => ctx.revert();
+  }, [activeTab, galleryProjects.length]);
+
+  useEffect(() => {
+    const prevTab = prevTabRef.current;
+    prevTabRef.current = activeTab;
+    setActiveStackIndex(0);
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const pinZone = pinZoneRef.current;
+
+    if (isDesktop && prevTab === "projects" && activeTab === "certifications" && pinZone) {
+      requestAnimationFrame(() => {
+        refreshScrollTriggers();
+        requestAnimationFrame(() => {
+          scrollToPinZone(pinZone);
+          refreshScrollTriggers();
+        });
+      });
+    } else {
+      refreshScrollTriggers();
+    }
+  }, [activeTab]);
 
   return (
     <section id="works" ref={sectionRef} className="relative z-[1] overflow-hidden bg-bg py-24 text-text sm:py-32">
@@ -147,59 +183,76 @@ export default function WorkGallery() {
         ) : null}
 
         <div className="mt-14 border-t border-border/70 pt-10 lg:hidden">
-          {galleryProjects.length > 0 ? (
-            <p className="section-meta text-muted">{works.moreLabel}</p>
-          ) : null}
-          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {galleryProjects.map((work) => (
-              <ProjectCard
-                key={work.id}
-                work={work}
-                onClick={() => handleProjectClick(work)}
-                className="gallery-card"
-              />
-            ))}
-          </div>
-          <p className="section-meta mt-10 text-muted">{works.tabs.certifications}</p>
-          <div className="mt-4 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2">
-            {certifications.map((cert) => (
-              <CertificationBadge key={`${cert.name}-${cert.date}`} cert={cert} />
-            ))}
-          </div>
+          <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
+          {activeTab === "projects" ? (
+            <>
+              {galleryProjects.length > 0 ? (
+                <p className="section-meta mt-8 text-muted">{works.moreLabel}</p>
+              ) : null}
+              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {galleryProjects.map((work) => (
+                  <ProjectCard
+                    key={work.id}
+                    work={work}
+                    onClick={() => handleProjectClick(work)}
+                    className="gallery-card"
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2">
+              {certifications.map((cert) => (
+                <CertificationBadge key={`${cert.name}-${cert.date}`} cert={cert} />
+              ))}
+            </div>
+          )}
         </div>
 
         <div ref={pinZoneRef} className="mt-14 hidden border-t border-border/70 pt-10 lg:block">
-          <div className="works-pin-panel flex min-h-[calc(100dvh-4rem)] flex-col bg-bg pb-5 pt-2">
-            <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
+          <WorksTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
-            <div className="relative mt-5 min-h-0 flex-1 motion-reduce:flex motion-reduce:flex-col">
-              <div className="works-cycle-projects absolute inset-0 overflow-auto motion-reduce:relative motion-reduce:inset-auto">
-                {galleryProjects.length > 0 ? (
-                  <p className="section-meta mb-3 text-center text-muted">{works.moreLabel}</p>
-                ) : null}
-                <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4">
-                  {galleryProjects.map((work) => (
-                    <ProjectCard
-                      key={work.id}
-                      dense
-                      work={work}
-                      onClick={() => handleProjectClick(work)}
-                    />
-                  ))}
-                </div>
+          <div className={activeTab === "projects" ? "" : "hidden"} aria-hidden={activeTab !== "projects"}>
+            <div className="works-pin-panel works-pin-panel--projects flex min-h-[calc(100dvh-4rem)] flex-col justify-start bg-bg pb-6 pt-4 sm:pt-6">
+              {galleryProjects.length > 0 ? (
+                <p className="section-meta mb-4 text-center text-muted">{works.moreLabel}</p>
+              ) : null}
+              <div className="relative mx-auto mt-2 h-[min(42vh,320px)] w-full max-w-xl">
+                {galleryProjects.map((work, i) => (
+                  <div
+                    key={work.id}
+                    className="stack-card absolute inset-x-0 top-0"
+                    style={{
+                      pointerEvents: i === activeStackIndex ? "auto" : "none",
+                    }}
+                  >
+                    <ProjectCard compact work={work} onClick={() => handleProjectClick(work)} />
+                  </div>
+                ))}
               </div>
 
-              <div className="works-cycle-certs pointer-events-none absolute inset-0 overflow-auto motion-reduce:relative motion-reduce:inset-auto motion-reduce:pointer-events-auto">
-                <p className="section-meta mb-3 text-center text-muted">{works.tabs.certifications}</p>
-                <div className="cert-grid grid grid-cols-4 items-stretch gap-3">
-                  {certifications.map((cert) => (
-                    <CertificationBadge compact key={cert.name} cert={cert} />
-                  ))}
-                </div>
+              {galleryProjects.length > 0 ? (
+                <p className="mx-auto mt-4 max-w-xl text-center text-xs text-muted">
+                  {works.scrollHint.replace("{label}", stackLabel)}{" "}
+                  <span className="font-medium text-primary">
+                    {activeStackIndex + 1} / {galleryProjects.length}
+                  </span>
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          <div
+            className={activeTab === "certifications" ? "mt-5" : "hidden"}
+            aria-hidden={activeTab !== "certifications"}
+          >
+            <div className="works-pin-panel works-pin-panel--certs bg-bg py-3">
+              <div className="cert-grid grid grid-cols-2 items-stretch gap-4 sm:gap-5 lg:grid-cols-4">
+                {certifications.map((cert) => (
+                  <CertificationBadge key={cert.name} cert={cert} />
+                ))}
               </div>
             </div>
-
-            <p className="mt-3 text-center text-xs text-muted">{works.scrollHint}</p>
           </div>
         </div>
       </div>

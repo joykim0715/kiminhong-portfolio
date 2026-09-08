@@ -195,12 +195,12 @@ export const siteContentEn: SiteContent = {
       projects: "Projects",
       certifications: "Certifications",
     },
-    tabHint: "Scroll to see certifications — one cycle, then the page continues",
+    tabHint: "Select a tab to explore",
     stackLabels: {
       projects: "Projects",
       certifications: "Certifications",
     },
-    scrollHint: "One scroll cycle, then the story section below",
+    scrollHint: "Scroll to explore {label} ·",
     openHint: "Tap to view details",
     projects: [
       {
