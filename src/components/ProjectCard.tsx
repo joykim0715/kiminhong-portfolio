@@ -5,7 +5,6 @@ import { getWorkImages } from "@/lib/workImages";
 import { useSiteContent } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
 import DeviceMockup from "./ui/DeviceMockup";
-import FrostGlassHover from "./ui/FrostGlassHover";
 
 type ProjectCardProps = {
   work: Work;
@@ -37,14 +36,18 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
         </div>
         <div className="relative aspect-[5/3] overflow-hidden bg-dark-surf p-3 sm:p-4">
           <DeviceMockup>
-            <FrostGlassHover>
+            <div className="relative h-full w-full overflow-hidden">
               <ProjectImages
                 images={images}
                 alt={work.title}
                 sizes="(max-width: 768px) 100vw, 36vw"
-                imageClassName="object-contain sharp-image"
+                imageClassName="object-contain sharp-image transition-transform duration-500 group-hover:scale-[1.04]"
               />
-            </FrostGlassHover>
+              <div
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
+                aria-hidden
+              />
+            </div>
           </DeviceMockup>
         </div>
       </button>
@@ -59,14 +62,18 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-dark-surf p-3 sm:p-4">
         <DeviceMockup>
-          <FrostGlassHover>
+          <div className="relative h-full w-full overflow-hidden">
             <ProjectImages
               images={images}
               alt={work.title}
               sizes="(max-width: 768px) 100vw, 40vw"
-              imageClassName="object-contain sharp-image"
+              imageClassName="object-contain sharp-image transition-transform duration-500 group-hover:scale-[1.04]"
             />
-          </FrostGlassHover>
+            <div
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
+              aria-hidden
+            />
+          </div>
         </DeviceMockup>
       </div>
       <div className="border-t border-border p-5 text-center sm:p-6">
