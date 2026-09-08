@@ -281,12 +281,12 @@ export const siteContent = {
       projects: "Projects",
       certifications: "Certifications",
     },
-    tabHint: "탭을 선택해 내용을 확인하세요",
+    tabHint: "스크롤하면 자격증이 보이고, 한 바퀴 후 다음 섹션으로 이어집니다",
     stackLabels: {
       projects: "프로젝트",
       certifications: "자격증",
     },
-    scrollHint: "스크롤하여 {label} 탐색 ·",
+    scrollHint: "한 바퀴만 스크롤 · 그다음 스토리로 내려갑니다",
     openHint: "탭하여 상세 보기",
     projects: [
       {

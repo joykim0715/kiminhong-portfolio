@@ -1,6 +1,7 @@
 import { gsap } from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { DURATION, EASE_OUT, MOTION, prefersReducedMotion } from "@/lib/animations";
+import { getLenisInstance } from "@/lib/lenisInstance";
 
 const NAV_OFFSET = 64; // matches h-16 navbar
 
@@ -116,6 +117,98 @@ export function scrollPinCarousel(options: PinCarouselOptions) {
       options.onIndex(Math.min(steps, Math.floor(self.progress * steps + 0.0001)));
     },
   });
+}
+
+export type CycleView = "projects" | "certifications";
+
+type PinViewCycleOptions = {
+  zone: HTMLElement;
+  pinSelector: string;
+  projectsSelector: string;
+  certsSelector: string;
+  /** Pin length in viewport heights. One cycle only — then the page unpins. */
+  durationVh?: number;
+  onView?: (view: CycleView) => void;
+};
+
+const CERT_VIEW_START = 0.31;
+const CERT_VIEW_END = 0.69;
+
+function viewFromProgress(progress: number): CycleView {
+  return progress >= CERT_VIEW_START && progress < CERT_VIEW_END
+    ? "certifications"
+    : "projects";
+}
+
+/**
+ * Pin one panel and crossfade projects ↔ certifications once, then unpin.
+ * Sequence: projects → certs → projects → page continues. Does not loop.
+ */
+export function scrollPinViewCycle(options: PinViewCycleOptions) {
+  const projects = resolveEl(options.zone, options.projectsSelector);
+  const certs = resolveEl(options.zone, options.certsSelector);
+  const pinEl = resolveEl(options.zone, options.pinSelector);
+  if (!projects || !certs || !pinEl) return null;
+
+  let lastView: CycleView | null = null;
+  const applyLayer = (view: CycleView) => {
+    const certsOn = view === "certifications";
+    (projects as HTMLElement).style.pointerEvents = certsOn ? "none" : "auto";
+    (certs as HTMLElement).style.pointerEvents = certsOn ? "auto" : "none";
+    if (view === lastView) return;
+    lastView = view;
+    options.onView?.(view);
+  };
+
+  if (prefersReducedMotion()) {
+    gsap.set(projects, { opacity: 1 });
+    gsap.set(certs, { opacity: 1 });
+    applyLayer("projects");
+    return null;
+  }
+
+  const durationVh = options.durationVh ?? 2.2;
+  gsap.set(projects, { opacity: 1 });
+  gsap.set(certs, { opacity: 0 });
+  applyLayer("projects");
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: options.zone,
+      start: `top ${NAV_OFFSET}px`,
+      end: () => `+=${window.innerHeight * durationVh}`,
+      pin: pinEl,
+      pinSpacing: true,
+      scrub: 0.85,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        applyLayer(viewFromProgress(self.progress));
+      },
+    },
+  });
+
+  tl.to({}, { duration: 1, ease: "none" });
+  tl.to(projects, { opacity: 0, duration: 0.16, ease: "none" }, 0.22);
+  tl.to(certs, { opacity: 1, duration: 0.16, ease: "none" }, 0.22);
+  tl.to(certs, { opacity: 0, duration: 0.16, ease: "none" }, 0.6);
+  tl.to(projects, { opacity: 1, duration: 0.16, ease: "none" }, 0.6);
+
+  const trigger = tl.scrollTrigger;
+  if (!trigger) return { scrollToView: () => undefined };
+
+  return {
+    scrollToView(view: CycleView) {
+      const progress = view === "certifications" ? 0.5 : trigger.progress >= CERT_VIEW_START ? 0.88 : 0;
+      const top = trigger.start + (trigger.end - trigger.start) * progress;
+      const lenis = getLenisInstance();
+      if (lenis) {
+        lenis.scrollTo(top, { immediate: true });
+      } else {
+        trigger.scroll(top);
+      }
+    },
+  };
 }
 
 export function refreshScrollTriggers() {
