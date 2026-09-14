@@ -1,26 +1,54 @@
-.bridgeSection {
+.zone {
   position: relative;
-  /* Hero(z-index: 3) 아래에 두어 CTA 겹침 방지. 블렌드는 유지하되 덜 공격적으로 */
-  z-index: 1;
-  min-height: 92dvh;
-  margin-top: clamp(-96px, -10vh, -48px);
-  padding-top: clamp(96px, 12vh, 140px);
-  overflow: hidden;
-  background-color: #000000;
+  pointer-events: none;
 }
 
-.bridgeCopy {
-  position: relative;
-  z-index: 10;
+.spacer {
+  height: 180vh;
+  background: #000;
+}
+
+.zone[data-reduced] .spacer {
+  display: none;
+}
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
   display: flex;
-  min-height: inherit;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 6rem 1.5rem;
+  padding: 6rem 1.5rem 5rem;
+  background-color: #000;
+  background-image: var(--gradient-bridge);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  clip-path: inset(100% 0 0 0);
+  pointer-events: none;
+  will-change: clip-path;
 }
 
-.bridgeRule {
+.zone[data-reduced] .curtain {
+  position: relative;
+  inset: auto;
+  z-index: 1;
+  min-height: 42vh;
+  clip-path: none;
+  will-change: auto;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  max-width: min(42rem, 92vw);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rule {
   width: min(8.5rem, 40vw);
   height: 1px;
   margin-bottom: 2.25rem;
@@ -28,14 +56,11 @@
   transform-origin: center;
 }
 
-.bridgeLine {
-  max-width: min(42rem, 92vw);
+.line {
   margin: 0;
-  overflow: hidden;
-  text-align: center;
 }
 
-.bridgeLine1 {
+.line1 {
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -43,7 +68,7 @@
   color: rgb(255 255 255 / 0.72);
 }
 
-.bridgeLine2 {
+.line2 {
   margin-top: 0.85rem;
   font-size: clamp(1.85rem, 4.6vw, 3.35rem);
   font-weight: 800;
@@ -51,53 +76,4 @@
   line-height: 1.2;
   color: #fff;
   text-shadow: 0 2px 16px rgb(0 0 0 / 0.45);
-}
-
-.bridgeGradient {
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-bridge);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-.bridgeTopFade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  height: clamp(220px, 30vh, 400px);
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    #000000 0%,
-    #000000 10%,
-    rgb(0 0 0 / 0.94) 22%,
-    rgb(0 0 0 / 0.82) 36%,
-    rgb(0 0 0 / 0.62) 50%,
-    rgb(0 0 0 / 0.38) 64%,
-    rgb(0 0 0 / 0.16) 78%,
-    transparent 100%
-  );
-}
-
-.bridgeBottomFade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  height: clamp(200px, 28vh, 360px);
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgb(247 248 246 / 0.06) 18%,
-    rgb(247 248 246 / 0.22) 36%,
-    rgb(247 248 246 / 0.48) 54%,
-    rgb(247 248 246 / 0.72) 72%,
-    rgb(247 248 246 / 0.9) 88%,
-    #f7f8f6 100%
-  );
 }
