@@ -19,6 +19,9 @@ function blockScrollGesture(e: Event) {
 
 export function setLenisInstance(instance: Lenis | null) {
   lenis = instance;
+  if (instance && lockCount > 0) {
+    instance.stop();
+  }
 }
 
 export function getLenisInstance() {

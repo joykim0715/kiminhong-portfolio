@@ -41,6 +41,14 @@
   }
 }
 
+.shellInner {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .toolbar {
   position: relative;
   z-index: 3;

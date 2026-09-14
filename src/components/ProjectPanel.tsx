@@ -167,7 +167,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.28 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-panel-title"
@@ -180,18 +180,26 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
           />
 
           <motion.div
             className={styles.shell}
             data-project-panel
-            initial={{ y: "100%", opacity: 0.9 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "18%", opacity: 0 }}
-            transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ y: "110%", scale: 1.04 }}
+            animate={{ y: 0, scale: 1 }}
+            exit={{ y: "28%", scale: 0.98, opacity: 0 }}
+            transition={{ duration: 0.78, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: "center bottom", willChange: "transform" }}
             onClick={(e) => e.stopPropagation()}
             onWheel={handlePanelWheel}
           >
+            <motion.div
+              className={styles.shellInner}
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
             <div className={styles.toolbar}>
               <button type="button" className={styles.backButton} onClick={onClose}>
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
@@ -373,6 +381,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                 </div>
               </div>
             </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       ) : null}
