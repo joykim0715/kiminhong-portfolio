@@ -66,7 +66,9 @@ export function usePageLoadEntrance(coverRef: RefObject<HTMLElement | null>) {
 
       const tl = gsap.timeline({
         defaults: { ease: EASE_OUT },
-        onComplete: release,
+        onComplete() {
+          hideCover(cover);
+        },
       });
 
       tl.to(name, { opacity: 1, y: 0, duration: 0.48 })
@@ -75,6 +77,7 @@ export function usePageLoadEntrance(coverRef: RefObject<HTMLElement | null>) {
         .to(seam, { opacity: 0, duration: 0.18 }, "<")
         .to(top, { yPercent: -101, duration: 0.88, ease: "power3.inOut" }, "-=0.06")
         .to(bottom, { yPercent: 101, duration: 0.88, ease: "power3.inOut" }, "<")
+        .add(release, "-=0.22")
         .to(".nav-bar", { opacity: 1, y: 0, duration: 0.5 }, "-=0.62")
         .to(".hero-name-line", { opacity: 1, y: 0, duration: 0.7 }, "-=0.38")
         .to(".hero-desc-line", { opacity: 1, y: 0, duration: 0.55, stagger: 0.08 }, "-=0.42")

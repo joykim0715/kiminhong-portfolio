@@ -48,4 +48,7 @@ export function unlockPageScroll() {
   document.documentElement.classList.remove("scroll-locked");
   document.body.classList.remove("scroll-locked");
   lenis?.start();
+  requestAnimationFrame(() => {
+    lenis?.resize();
+  });
 }
