@@ -50,7 +50,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           cy="60"
           r="52"
           fill="none"
-          className="stroke-accent/35"
+          className="stroke-primary/40"
           strokeWidth="5.5"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
@@ -62,7 +62,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
           cy="60"
           r="52"
           fill="none"
-          className="stroke-secondary"
+          className="stroke-primary"
           strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray={RING_CIRCUMFERENCE}
@@ -72,9 +72,9 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
 
       <div className="absolute inset-0 overflow-visible px-3 sm:px-4">
         <div className="absolute inset-x-3 top-[7%] flex h-7 items-center justify-center sm:inset-x-4 sm:top-[8%] sm:h-8">
-          <span className="section-meta text-accent">{skill.category}</span>
+          <span className="section-meta text-primary">{skill.category}</span>
         </div>
-        <div className="absolute left-1/2 top-[18%] h-16 w-16 -translate-x-1/2 text-accent sm:top-[19%] sm:h-20 sm:w-20 lg:h-[5.5rem] lg:w-[5.5rem]">
+        <div className="absolute left-1/2 top-[18%] h-16 w-16 -translate-x-1/2 text-primary sm:top-[19%] sm:h-20 sm:w-20 lg:h-[5.5rem] lg:w-[5.5rem]">
           <KineticGlyph kind={SKILL_GLYPH[skill.id] ?? "data"} />
         </div>
         <div className="absolute inset-x-2 top-[50%] flex flex-col items-center text-center sm:inset-x-3 sm:top-[51%]">
