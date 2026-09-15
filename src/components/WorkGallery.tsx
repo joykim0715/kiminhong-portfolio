@@ -217,7 +217,7 @@ export default function WorkGallery() {
               {galleryProjects.length > 0 ? (
                 <p className="section-meta mb-4 text-center text-muted">{works.moreLabel}</p>
               ) : null}
-              <div className="relative mx-auto mt-2 h-[min(42vh,320px)] w-full max-w-xl">
+              <div className="relative mx-auto mt-2 h-[min(36vh,280px)] w-full max-w-lg">
                 {galleryProjects.map((work, i) => (
                   <div
                     key={work.id}

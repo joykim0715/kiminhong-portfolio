@@ -34,7 +34,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
             {works.openHint}
           </p>
         </div>
-        <div className="relative aspect-[5/3] overflow-hidden bg-dark-surf p-3 sm:p-4">
+        <div className="relative aspect-[16/10] overflow-hidden bg-dark-surf p-4 sm:p-5">
           <DeviceMockup>
             <div className="relative h-full w-full overflow-hidden">
               <ProjectImages
@@ -60,7 +60,7 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       onClick={onClick}
       className={`gallery-card group flex w-full flex-col overflow-hidden rounded-xl border border-border bg-surface text-left text-text opacity-100 transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-[0_16px_40px_-24px_rgba(95,168,163,0.55)] ${className}`}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-dark-surf p-3 sm:p-4">
+      <div className="relative aspect-[16/11] overflow-hidden bg-dark-surf p-4 sm:p-5">
         <DeviceMockup>
           <div className="relative h-full w-full overflow-hidden">
             <ProjectImages

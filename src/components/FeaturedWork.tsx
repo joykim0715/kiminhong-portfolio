@@ -26,13 +26,13 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
         onClick={onOpen}
         className="group mt-5 w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-dark-surf p-3 sm:aspect-[2/1] sm:p-5">
+        <div className="relative mx-auto aspect-[16/10] w-full max-w-4xl overflow-hidden bg-dark-surf p-4 sm:aspect-[16/9] sm:p-6 lg:p-8">
           <DeviceMockup variant="monitor">
             <div className="relative h-full w-full overflow-hidden">
               <ProjectImages
                 images={images}
                 alt={work.title}
-                sizes="(max-width: 768px) 100vw, 1200px"
+                sizes="(max-width: 768px) 100vw, 896px"
                 imageClassName="object-cover sharp-image transition-transform duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                 quality={95}
               />
