@@ -4,8 +4,16 @@
 }
 
 .spacer {
-  height: 180vh;
-  background: #000;
+  height: 175vh;
+  background: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 48%,
+    #1c2b30 62%,
+    #3f6964 76%,
+    #d4e8e4 90%,
+    #f7f8f6 100%
+  );
 }
 
 .zone[data-reduced] .spacer {
@@ -20,27 +28,42 @@
   align-items: center;
   justify-content: center;
   padding: 6rem 1.5rem 5rem;
+  overflow: visible;
   background-color: #000;
-  background-image: var(--gradient-bridge);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  clip-path: inset(100% 0 0 0);
+  transform: translate3d(0, 100%, 0);
   pointer-events: none;
-  will-change: clip-path;
+  will-change: transform, opacity, background-color;
 }
 
 .zone[data-reduced] .curtain {
   position: relative;
   inset: auto;
   z-index: 1;
-  min-height: 42vh;
-  clip-path: none;
+  min-height: 70vh;
+  overflow: hidden;
+  transform: none;
+  background-color: #1c2b30;
   will-change: auto;
+}
+
+.lip {
+  position: absolute;
+  top: -6.5rem;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 6.5rem;
+  pointer-events: none;
+  background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.5) 45%, transparent 100%);
+}
+
+.zone[data-reduced] .lip {
+  display: none;
 }
 
 .copy {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   max-width: min(42rem, 92vw);
   flex-direction: column;
