@@ -64,7 +64,9 @@ export default function Experience() {
                   <h3 className="text-preline text-lg font-bold tracking-tight text-text sm:text-xl">
                     {item.organization}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-primary sm:text-base">{item.role}</p>
+                  <p className="mt-1.5 text-xl font-semibold tracking-tight text-primary sm:text-[1.375rem]">
+                    {item.role}
+                  </p>
                   <p className="mt-1 text-sm text-muted">{item.period}</p>
                 </div>
                 <span className="w-fit shrink-0 border border-border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">

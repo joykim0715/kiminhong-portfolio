@@ -123,11 +123,13 @@ export const siteContentEn: SiteContent = {
     items: [
       {
         school: "Sungkyunkwan University",
+        mark: "/education/skku.png",
         period: "2020 – Aug 2025 (Graduated)",
         major: "B.S. in Sports Science (primary)\n+ International Trade (double major)",
       },
       {
         school: "Giheung High School",
+        mark: "/education/giheung.png",
         period: "2017 – 2020 (Graduated)",
         major: "Liberal arts track",
       },

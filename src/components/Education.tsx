@@ -46,13 +46,25 @@ export default function Education() {
                 className="absolute left-0 top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-bg sm:top-2"
                 aria-hidden
               />
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">{item.school}</h3>
-                <p className="shrink-0 text-sm text-muted">{item.period}</p>
+              <div className="flex items-start gap-3 sm:gap-4">
+                {item.mark ? (
+                  <img
+                    src={item.mark}
+                    alt=""
+                    aria-hidden
+                    className="mt-0.5 h-[4.25rem] w-[4.25rem] shrink-0 object-contain sm:h-[4.75rem] sm:w-[4.75rem]"
+                  />
+                ) : null}
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                    <h3 className="text-lg font-bold tracking-tight text-text sm:text-xl">{item.school}</h3>
+                    <p className="shrink-0 text-sm text-muted">{item.period}</p>
+                  </div>
+                  <p className="mt-2 text-preline break-keep text-base font-medium text-primary sm:text-lg">
+                    {item.major}
+                  </p>
+                </div>
               </div>
-              <p className="mt-2 text-preline break-keep text-base font-medium text-primary sm:text-lg">
-                {item.major}
-              </p>
             </article>
             </HoverLift>
           ))}

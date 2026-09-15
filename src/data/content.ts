@@ -209,11 +209,13 @@ export const siteContent = {
     items: [
       {
         school: "성균관대학교",
+        mark: "/education/skku.png",
         period: "2020 ~ 2025.08 (졸업)",
         major: "스포츠과학부 원전공 + 국제통상학과 복수전공",
       },
       {
         school: "기흥고등학교",
+        mark: "/education/giheung.png",
         period: "2017 ~ 2020 (졸업)",
         major: "인문계",
       },
@@ -222,7 +224,7 @@ export const siteContent = {
 
   experience: {
     sectionLabel: "Experience",
-    title: "경험",
+    title: "경력",
     items: [
       {
         organization: homeCareOrganization,
