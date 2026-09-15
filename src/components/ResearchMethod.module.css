@@ -1,0 +1,295 @@
+.root {
+  position: relative;
+  z-index: 1;
+  background: #0a1918;
+  color: #ecf4f0;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 0 35px;
+  background: #0a1918;
+}
+
+.header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0 auto;
+  max-width: 1380px;
+  padding: 0 6vw;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8dbcb1;
+}
+
+.title {
+  margin-top: 18px;
+  font-size: clamp(30px, 3vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+  white-space: pre-line;
+}
+
+.description {
+  max-width: 310px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #b3c9c0;
+}
+
+.skip {
+  display: inline-block;
+  margin-top: 16px;
+  padding-bottom: 7px;
+  font-size: 12px;
+  color: #acd9cb;
+  border-bottom: 1px solid #5d897e;
+}
+
+.skip:focus-visible,
+.steps button:focus-visible {
+  outline: 2px solid #a8e3c4;
+  outline-offset: 5px;
+}
+
+.window {
+  margin-top: 45px;
+}
+
+.track {
+  display: block;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  min-width: 0;
+  min-height: 460px;
+  padding: 60px 7vw;
+  overflow: hidden;
+  border-top: 1px solid #28423b;
+  scroll-margin-top: 90px;
+}
+
+.giant {
+  position: absolute;
+  right: 4%;
+  top: 0;
+  font-size: clamp(200px, 28vw, 410px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  color: #1b332d;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 460px;
+}
+
+.slideEyebrow {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: #80b5a5;
+}
+
+.copy h3 {
+  margin: 18px 0 22px;
+  font-size: clamp(50px, 6vw, 88px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+}
+
+.copy h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.body {
+  max-width: 420px;
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #b3c9c0;
+}
+
+.evidence {
+  margin-top: 25px;
+  padding-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.025em;
+  color: #9bddc1;
+  border-top: 1px solid #365449;
+}
+
+.glyph {
+  position: relative;
+  flex: 0 0 190px;
+  height: 190px;
+  margin-left: auto;
+  color: #98d7c0;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 22px;
+}
+
+.steps button {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 9px;
+  font-size: 11px;
+  color: #8bab9f;
+  cursor: pointer;
+}
+
+.steps button span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #37564b;
+  border-radius: 50%;
+  font: 10px monospace;
+}
+
+.steps button[aria-current] {
+  color: #d7ffe8;
+}
+
+.steps button[aria-current] span {
+  background: #a8e3c4;
+  color: #102b20;
+}
+
+.root[data-pinned="true"] .stage {
+  display: flex;
+  flex-direction: column;
+  height: calc(100svh - 64px);
+  min-height: 620px;
+  padding-top: 35px;
+}
+
+.root[data-pinned="true"] .header {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.root[data-pinned="true"] .title {
+  font-size: 30px;
+}
+
+.root[data-pinned="true"] .window {
+  flex: 1;
+  min-height: 0;
+  margin-top: 25px;
+}
+
+.root[data-pinned="true"] .track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+}
+
+.root[data-pinned="true"] .slide {
+  flex-shrink: 0;
+  width: 82vw;
+  max-width: 1150px;
+  min-height: 0;
+  padding: 30px 6vw;
+}
+
+.root[data-pinned="true"] .slide:last-child {
+  width: 100vw;
+  max-width: none;
+  padding-right: 20vw;
+}
+
+.root[data-pinned="true"] .steps {
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+
+@media (max-width: 1023px) {
+  .glyph {
+    flex-basis: 140px;
+    height: 140px;
+  }
+
+  .slide {
+    min-height: 420px;
+  }
+
+  .steps {
+    display: none;
+  }
+
+  .header {
+    align-items: start;
+  }
+}
+
+@media (max-width: 650px) {
+  .header {
+    display: block;
+  }
+
+  .header > div:last-child {
+    margin-top: 22px;
+  }
+
+  .stage {
+    padding-top: 45px;
+  }
+
+  .window {
+    margin-top: 30px;
+  }
+
+  .slide {
+    min-height: 420px;
+    padding: 35px 7vw;
+  }
+
+  .glyph {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    width: 110px;
+    height: 110px;
+    opacity: 0.6;
+  }
+
+  .copy h3 {
+    font-size: 53px;
+  }
+
+  .copy h4 {
+    font-size: 16px;
+  }
+
+  .body {
+    font-size: 13px;
+  }
+
+  .giant {
+    top: 85px;
+    font-size: 230px;
+  }
+}

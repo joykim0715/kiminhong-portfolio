@@ -7,6 +7,7 @@ import SkillsDial from "@/components/SkillsDial";
 import Education from "@/components/Education";
 import Experience from "@/components/Experience";
 import WorkGallery from "@/components/WorkGallery";
+import ScrollProgress from "@/components/ScrollProgress";
 import StorySection from "@/components/StorySection";
 import ContactCTA from "@/components/ContactCTA";
 import PageLoadEntrance from "@/components/PageLoadEntrance";
@@ -44,6 +45,7 @@ export default function HomePage({
           <StorySection />
           <ContactCTA />
         </main>
+        <ScrollProgress />
         <PageLoadEntrance />
       </RecruitSafeProvider>
     </ContentProvider>

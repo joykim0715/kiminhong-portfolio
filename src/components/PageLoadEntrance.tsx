@@ -2,13 +2,14 @@
 
 import { useRef } from "react";
 import { usePageLoadEntrance } from "@/hooks/usePageLoadEntrance";
-import { useSiteContent } from "./ContentProvider";
+import { useLocale } from "./ContentProvider";
 import styles from "./PageLoadEntrance.module.css";
 
 export default function PageLoadEntrance() {
-  const { hero } = useSiteContent();
+  const { locale } = useLocale();
   const coverRef = useRef<HTMLDivElement>(null);
   usePageLoadEntrance(coverRef);
+  const greeting = locale === "en" ? "Hello!" : "안녕하세요!";
 
   return (
     <div
@@ -23,7 +24,7 @@ export default function PageLoadEntrance() {
         <div className={`${styles.seam} intro-seam`} />
       </div>
       <div className={styles.nameWrap}>
-        <p className={`${styles.name} intro-name`}>{hero.name}</p>
+        <p className={`${styles.name} intro-name`}>{greeting}</p>
       </div>
     </div>
   );

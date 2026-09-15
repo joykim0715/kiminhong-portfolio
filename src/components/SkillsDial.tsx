@@ -4,6 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { type SkillItem } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
+import KineticGlyph, { type GlyphKind } from "./ui/KineticGlyph";
+
+const SKILL_GLYPH: Record<string, GlyphKind> = {
+  oa: "oa",
+  data: "data",
+  viz: "viz",
+  ai: "ai",
+};
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 const NAV_OFFSET = 64;
@@ -20,7 +28,7 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
   return (
     <div
       ref={circleRef}
-      className="skill-ring relative mx-auto w-[220px] transition-[filter] duration-300 sm:w-[250px] lg:w-[270px] hover:drop-shadow-[0_8px_18px_rgba(95,168,163,0.28)]"
+      className="skill-ring relative mx-auto w-[248px] transition-[filter] duration-300 sm:w-[270px] lg:w-[282px] xl:w-[300px] hover:drop-shadow-[0_8px_18px_rgba(95,168,163,0.28)]"
       style={{ aspectRatio: "1" }}
     >
       <svg
@@ -62,13 +70,18 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
         />
       </svg>
 
-      <div className="absolute inset-0 px-4 sm:px-5">
-        <div className="absolute inset-x-4 top-[20%] flex h-8 items-center justify-center sm:inset-x-5 sm:top-[21%] sm:h-9">
+      <div className="absolute inset-0 overflow-visible px-3 sm:px-4">
+        <div className="absolute inset-x-3 top-[7%] flex h-7 items-center justify-center sm:inset-x-4 sm:top-[8%] sm:h-8">
           <span className="section-meta text-accent">{skill.category}</span>
         </div>
-        <div className="absolute inset-x-3 top-[36%] flex flex-col items-center text-center sm:inset-x-4 sm:top-[37%]">
-          <span className="text-sm font-bold leading-tight text-text sm:text-base">{skill.tools}</span>
-          <ul className="mt-1.5 w-full max-w-[11rem] space-y-0.5 sm:mt-2 sm:max-w-[12.5rem]">
+        <div className="absolute left-1/2 top-[18%] h-16 w-16 -translate-x-1/2 text-accent sm:top-[19%] sm:h-20 sm:w-20 lg:h-[5.5rem] lg:w-[5.5rem]">
+          <KineticGlyph kind={SKILL_GLYPH[skill.id] ?? "data"} />
+        </div>
+        <div className="absolute inset-x-2 top-[50%] flex flex-col items-center text-center sm:inset-x-3 sm:top-[51%]">
+          <span className="px-1 text-[15px] font-bold leading-tight text-text sm:text-lg lg:text-[1.35rem]">
+            {skill.tools}
+          </span>
+          <ul className="mt-1.5 w-full max-w-[13.5rem] space-y-0.5 sm:mt-2 sm:max-w-[15rem]">
             {skill.details.map((detail) => (
               <li key={detail} className="text-preline text-[10px] leading-snug text-muted sm:text-[11px]">
                 {detail}
@@ -157,7 +170,15 @@ export default function SkillsDial() {
       });
     }, section);
 
-    return () => ctx.revert();
+    const observer = new IntersectionObserver(([entry]) => {
+      section.dataset.motionVisible = String(entry.isIntersecting);
+    });
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -165,7 +186,7 @@ export default function SkillsDial() {
       id="skills"
       ref={sectionRef}
       aria-labelledby="skills-heading"
-      className="relative z-[1] overflow-hidden bg-bg py-16 text-text sm:py-24"
+      className="relative z-[1] overflow-x-hidden bg-bg py-16 text-text sm:py-24"
     >
       <div className="section-container">
         <div ref={pinZoneRef}>
@@ -180,7 +201,7 @@ export default function SkillsDial() {
               </p>
             </div>
 
-            <div className="skills-rings-grid mt-10 grid grid-cols-1 justify-items-center gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-10">
+            <div className="skills-rings-grid mt-10 grid grid-cols-1 justify-items-center gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-6 xl:gap-8">
               {skills.map((skill, i) => (
                 <SkillRing
                   key={skill.id}

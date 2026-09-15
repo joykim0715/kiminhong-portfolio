@@ -9,6 +9,41 @@
   color: #f5f7f6;
 }
 
+.lineField {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--clr-primary) 42%, transparent);
+}
+
+.lineField path {
+  stroke: currentColor;
+  stroke-width: 1.15;
+}
+
+.lineFlow {
+  stroke: #a8efcb;
+  stroke-width: 1.6;
+  stroke-dasharray: 14 22;
+  animation: lineDrift 22s linear infinite;
+}
+
+@keyframes lineDrift {
+  to {
+    stroke-dashoffset: -240;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineFlow {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
 .heroBottomFade {
   position: absolute;
   bottom: 0;

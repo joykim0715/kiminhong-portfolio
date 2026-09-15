@@ -30,6 +30,17 @@ export default function Hero() {
 
   return (
     <section id="hero" className={`${styles.hero} relative flex min-h-screen flex-col pt-16`}>
+      <svg
+        className={styles.lineField}
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="none"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M-90 620 C300 940 420 210 830 360 S1160 800 1530 380" />
+        <path d="M-90 665 C300 985 420 255 830 405 S1160 845 1530 425" opacity="0.35" />
+        <path className={styles.lineFlow} d="M-90 620 C300 940 420 210 830 360 S1160 800 1530 380" />
+      </svg>
       {recruitSafe ? <ShapeDecor /> : null}
       <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
         <div className={styles.heroContent}>

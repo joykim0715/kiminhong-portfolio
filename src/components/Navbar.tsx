@@ -91,7 +91,7 @@ export default function Navbar() {
           <a href="#hero" className="shrink-0 text-sm font-bold tracking-tight text-white sm:text-base">
             {nav.siteName}
           </a>
-          <div className="nav-visitor hidden min-w-0 sm:block [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/50 [&_span.text-primary]:text-sm [&_span.text-primary]:font-semibold [&_span.text-primary]:text-accent">
+          <div className="nav-visitor hidden shrink-0 sm:block [&_p]:text-[11px] [&_p]:font-medium [&_p]:text-white/50 [&_span.text-primary]:text-sm [&_span.text-primary]:font-semibold [&_span.text-primary]:text-accent">
             <VisitorCounter />
           </div>
         </div>

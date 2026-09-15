@@ -184,6 +184,55 @@ export const siteContentEn: SiteContent = {
     ] satisfies ExperienceItem[],
   },
 
+  method: {
+    sectionLabel: "Research in motion",
+    title: "From the field\nto informed decisions.",
+    description: "Five connected stages of my senior healthcare research experience.",
+    skip: "Explore all projects",
+    steps: [
+      {
+        title: "Observe",
+        english: "OBSERVE",
+        detail: "Understand the context.",
+        body: "Observed participants’ daily habits and device use to identify barriers to continued participation.",
+        evidence: "Field observation · Participant communication",
+        glyph: "observe",
+      },
+      {
+        title: "Collect",
+        english: "COLLECT",
+        detail: "Connect experience to data.",
+        body: "Extracted 69,000 health logs with SQL and identified wearable blackouts and missing-data intervals.",
+        evidence: "69,000 logs · SQL extraction",
+        glyph: "oa",
+      },
+      {
+        title: "Analyze",
+        english: "ANALYZE",
+        detail: "Build interpretable evidence.",
+        body: "Used SPSS preprocessing and close field management to secure 85% analytical validity.",
+        evidence: "85% · Analytical validity",
+        glyph: "data",
+      },
+      {
+        title: "Design",
+        english: "DESIGN",
+        detail: "Turn numbers into action.",
+        body: "Planned personalized health guides connecting biometric data with everyday habits, using generative AI to make the language easier to understand.",
+        evidence: "83% · Participant retention",
+        glyph: "ai",
+      },
+      {
+        title: "Connect",
+        english: "CONNECT",
+        detail: "Support the next decision.",
+        body: "Organized key metrics and a Figma interactive dashboard as decision materials, supporting five MOUs and service contracts.",
+        evidence: "5 · MOUs and service contracts supported",
+        glyph: "viz",
+      },
+    ],
+  },
+
   works: {
     sectionLabel: "Portfolio",
     title: "Major projects\n& certifications",

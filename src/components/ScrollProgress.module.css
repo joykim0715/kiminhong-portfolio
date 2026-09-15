@@ -1,0 +1,64 @@
+.rail {
+  position: fixed;
+  right: 14px;
+  top: 46%;
+  z-index: 40;
+  display: flex;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: color-mix(in srgb, var(--clr-primary-light) 80%, white);
+}
+
+.meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  --page-progress: 0;
+}
+
+.line {
+  position: relative;
+  width: 1px;
+  height: 88px;
+  background: rgb(255 255 255 / 0.28);
+}
+
+.line i {
+  position: absolute;
+  inset: 0;
+  background: #b7fff0;
+  transform: scaleY(var(--page-progress));
+  transform-origin: top;
+}
+
+.percent {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+:global(body:has([data-project-panel])) .rail {
+  visibility: hidden;
+}
+
+@media (max-width: 700px) {
+  .rail {
+    top: auto;
+    right: 8px;
+    bottom: 16px;
+    mix-blend-mode: normal;
+    padding: 7px 8px;
+    border-radius: 6px;
+    background: rgb(11 34 30 / 0.86);
+    color: #d7fff4;
+  }
+
+  .line {
+    height: 32px;
+  }
+
+  .percent {
+    font-size: 9px;
+  }
+}

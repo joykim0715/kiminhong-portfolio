@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
+
+const VALUES_HOLD_VH = 0.7;
 
 export default function Values() {
   const { values: valuesContent } = useSiteContent();
@@ -14,9 +16,22 @@ export default function Values() {
     const section = sectionRef.current;
     if (!section) return;
 
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".values-heading", section);
       fadeRevealOnScroll(".value-item", section, { stagger: 0.1, start: "top 80%" });
+
+      if (!prefersReduced) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "bottom bottom",
+          end: () => `+=${Math.round(window.innerHeight * VALUES_HOLD_VH)}`,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+        });
+      }
     }, section);
 
     return () => ctx.revert();
