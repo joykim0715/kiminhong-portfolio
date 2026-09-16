@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { getLenisInstance } from "@/lib/lenisInstance";
 import { getWorkImages } from "@/lib/workImages";
 import type { Work } from "@/data/content";
+import { afterIntro } from "@/lib/introReady";
 import { useLocale, useSiteContent } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
 import DeviceMockup from "./ui/DeviceMockup";
@@ -12,9 +13,9 @@ import styles from "./WorkReel.module.css";
 
 const NAV_OFFSET = 64;
 /** Fraction of each slide's scroll spent parked before the next move. */
-const HOLD = 0.4;
-/** Extra viewport height per slide so the pause is felt, not just a curve. */
-const PAUSE_VH = 0.18;
+const HOLD = 0.2;
+/** Vertical scroll per slide — short enough that one flick almost completes the move. */
+const SCROLL_PER_SLIDE_VH = 0.5;
 
 const MOVE_EASE = gsap.parseEase("power2.inOut");
 
@@ -48,20 +49,22 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
     const track = trackRef.current;
     if (!root || !stage || !track || projects.length < 2) return;
 
-    const mm = gsap.matchMedia();
+    let mm: gsap.MatchMedia | undefined;
+    const start = () => {
+    mm = gsap.matchMedia();
     mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
       root.dataset.pinned = "true";
       const distance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
-      const pausePx = () => Math.round(window.innerHeight * PAUSE_VH);
+      const scrollPerSlide = () => Math.round(window.innerHeight * SCROLL_PER_SLIDE_VH);
       const tween = gsap.to(track, {
         x: () => -distance(),
         ease: (p) => holdThenGo(p, lastIndex),
         scrollTrigger: {
           trigger: root,
           start: `top ${NAV_OFFSET}px`,
-          end: () => `+=${distance() + pausePx() * lastIndex}`,
+          end: () => `+=${scrollPerSlide() * lastIndex}`,
           pin: stage,
-          scrub: 0.45,
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           snap: {
@@ -86,7 +89,9 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
     });
 
     ScrollTrigger.refresh();
-    return () => mm.revert();
+    };
+    afterIntro(start);
+    return () => mm?.revert();
   }, [lastIndex, projects.length]);
 
   const go = (index: number) => {
@@ -148,6 +153,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                   key={work.id}
                   id={`work-slide-${i}`}
                   className={styles.slide}
+                  data-active={i === active ? "true" : "false"}
                 >
                   <span className={styles.giant} aria-hidden="true">
                     {indexLabel}
@@ -188,7 +194,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                           images={images}
                           alt={work.title}
                           sizes="(max-width: 1024px) 90vw, 42vw"
-                          imageClassName="object-cover sharp-image"
+                          imageClassName={`object-cover sharp-image ${styles.visualImage}`}
                           quality={90}
                         />
                       </div>

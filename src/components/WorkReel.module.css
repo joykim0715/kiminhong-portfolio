@@ -114,6 +114,7 @@
   z-index: 1;
   max-width: 560px;
   min-width: 0;
+  transition: opacity 0.32s ease;
 }
 
 .slideEyebrow {
@@ -179,6 +180,16 @@
   color: #acd9cb;
   border-bottom: 1px solid #5d897e;
   cursor: pointer;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.cta:hover {
+  color: #d7ffe8;
+  border-bottom-color: #a8e3c4;
+  transform: translateY(-1px);
 }
 
 .visual {
@@ -193,6 +204,52 @@
   overflow: hidden;
   cursor: pointer;
   background: transparent;
+  box-shadow: 0 0 0 1px transparent;
+  transition:
+    opacity 0.32s ease,
+    box-shadow 0.3s ease;
+}
+
+.visualImage {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.visual:hover {
+  box-shadow: 0 0 0 1px rgb(168 227 196 / 0.48);
+}
+
+.visual:hover .visualImage {
+  transform: scale(1.016);
+}
+
+.root[data-pinned="true"] .slide[data-active="false"] .copy {
+  opacity: 0.84;
+}
+
+.root[data-pinned="true"] .slide[data-active="false"] .visual {
+  opacity: 0.72;
+}
+
+.root[data-pinned="true"] .slide[data-active="true"] .copy,
+.root[data-pinned="true"] .slide[data-active="true"] .visual {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .copy,
+  .visual,
+  .visualImage {
+    transition: none;
+  }
+
+  .cta:hover {
+    transform: none;
+  }
+
+  .visual:hover .visualImage {
+    transform: none;
+  }
 }
 
 .steps {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { afterIntro } from "@/lib/introReady";
 import { prefersReducedMotion } from "@/lib/animations";
 import { useSiteContent } from "./ContentProvider";
 import styles from "./GradientTransition.module.css";
@@ -27,8 +28,10 @@ export default function GradientTransition() {
     const rule = curtain.querySelector(".bridge-rule");
     const line1 = curtain.querySelector(".bridge-line-1");
     const line2 = curtain.querySelector(".bridge-line-2");
+    let ctx: gsap.Context | undefined;
 
-    const ctx = gsap.context(() => {
+    const start = () => {
+    ctx = gsap.context(() => {
       curtain.style.transform = "translate3d(0, 100%, 0)";
       gsap.set(curtain, {
         y: "100%",
@@ -66,8 +69,10 @@ export default function GradientTransition() {
     }, zone);
 
     requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
 
-    return () => ctx.revert();
+    afterIntro(start);
+    return () => ctx?.revert();
   }, []);
 
   return (

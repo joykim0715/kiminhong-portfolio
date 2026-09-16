@@ -42,7 +42,7 @@ export default function Hero() {
         <path className={styles.lineFlow} d="M-90 620 C300 940 420 210 830 360 S1160 800 1530 380" />
       </svg>
       {recruitSafe ? <ShapeDecor /> : null}
-      <div className={`section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
+      <div className={`hero-stage section-container ${styles.heroGrid}${recruitSafe ? ` ${styles.heroGridSafe}` : ""}`}>
         <div className={styles.heroContent}>
           <h1 className={`${styles.heroName} hero-name-line text-gradient-light`}>{hero.name}</h1>
 
@@ -121,7 +121,7 @@ export default function Hero() {
                 alt={`${hero.name} profile`}
                 fill
                 priority
-                quality={100}
+                quality={90}
                 className={`${styles.heroCutoutImage} sharp-image`}
                 sizes="(max-width: 1024px) 98vw, 1100px"
               />

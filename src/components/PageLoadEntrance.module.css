@@ -2,6 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
+  background: #f7f8f6;
   pointer-events: auto;
 }
 
@@ -11,6 +12,8 @@
   right: 0;
   height: 50%;
   background: #f7f8f6;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   will-change: transform;
 }
 
@@ -56,10 +59,17 @@
 
 .name {
   margin: 0;
+  font-family: system-ui, sans-serif;
   font-size: clamp(2.2rem, 7vw, 4.6rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.95;
   color: #1c2b30;
   word-break: keep-all;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover {
+    display: none;
+  }
 }

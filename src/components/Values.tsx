@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
+import { afterIntro } from "@/lib/introReady";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
 
@@ -17,8 +18,10 @@ export default function Values() {
     if (!section) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let ctx: gsap.Context | undefined;
 
-    const ctx = gsap.context(() => {
+    const start = () => {
+    ctx = gsap.context(() => {
       fadeRevealOnScroll(".values-heading", section);
       fadeRevealOnScroll(".value-item", section, { stagger: 0.1, start: "top 80%" });
 
@@ -33,8 +36,10 @@ export default function Values() {
         });
       }
     }, section);
+    };
 
-    return () => ctx.revert();
+    afterIntro(start);
+    return () => ctx?.revert();
   }, []);
 
   return (
