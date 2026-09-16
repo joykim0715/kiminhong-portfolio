@@ -8,6 +8,12 @@ import type { Work } from "@/data/content";
 import { useLocale, useSiteContent } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
 import DeviceMockup from "./ui/DeviceMockup";
+import {
+  applyReelHandoff,
+  bindReelSlide,
+  clearReelHandoff,
+  type ReelSlideMotion,
+} from "./workReelHandoff";
 import styles from "./WorkReel.module.css";
 
 const NAV_OFFSET = 64;
@@ -40,6 +46,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<ScrollTrigger | null>(null);
+  const activeRef = useRef(0);
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -53,6 +60,13 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
       root.dataset.pinned = "true";
       const distance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
       const pausePx = () => Math.round(window.innerHeight * PAUSE_VH);
+      const slides: ReelSlideMotion[] = [];
+      const slideEls = track.querySelectorAll<HTMLElement>("[data-reel-slide]");
+      for (let i = 0; i < slideEls.length; i += 1) {
+        slides.push(bindReelSlide(slideEls[i]));
+      }
+      applyReelHandoff(slides, 0);
+
       const tween = gsap.to(track, {
         x: () => -distance(),
         ease: (p) => holdThenGo(p, lastIndex),
@@ -73,8 +87,12 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
           },
           onUpdate(self) {
             const visual = holdThenGo(self.progress, lastIndex);
+            applyReelHandoff(slides, visual * lastIndex);
             const next = Math.min(lastIndex, Math.round(visual * lastIndex));
-            setActive((prev) => (prev === next ? prev : next));
+            if (next !== activeRef.current) {
+              activeRef.current = next;
+              setActive(next);
+            }
           },
         },
       });
@@ -82,6 +100,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
       return () => {
         triggerRef.current = null;
         delete root.dataset.pinned;
+        clearReelHandoff(root);
       };
     });
 
@@ -98,6 +117,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
       const top = current.start + (current.end - current.start) * parked;
       if (lenis) lenis.scrollTo(top, { duration: 0.9 });
       else window.scrollTo({ top, behavior: "smooth" });
+      activeRef.current = index;
       setActive(index);
       return;
     }
@@ -106,6 +126,7 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
     if (!target) return;
     if (lenis) lenis.scrollTo(target, { offset: -85, duration: 0.9 });
     else target.scrollIntoView({ behavior: "smooth", block: "start" });
+    activeRef.current = index;
     setActive(index);
   };
 
@@ -148,20 +169,38 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                   key={work.id}
                   id={`work-slide-${i}`}
                   className={styles.slide}
+                  data-reel-slide
                 >
                   <span className={styles.giant} aria-hidden="true">
-                    {indexLabel}
+                    <span
+                      className={styles.giantInner}
+                      data-reel-anim
+                      data-reel-giant
+                    >
+                      {indexLabel}
+                    </span>
                   </span>
                   <div className={styles.copy}>
                     <p className={styles.slideEyebrow}>
-                      {indexLabel} / {work.category}
+                      <span className={styles.indexMask}>
+                        <span data-reel-anim data-reel-index>
+                          {indexLabel}
+                        </span>
+                      </span>
+                      <span> / {work.category}</span>
                     </p>
-                    <h3>{work.title}</h3>
-                    <p className={styles.body}>{summary}</p>
+                    <div className={styles.titleMask}>
+                      <h3 data-reel-anim data-reel-title>
+                        {work.title}
+                      </h3>
+                    </div>
+                    <p className={styles.body} data-reel-anim data-reel-body>
+                      {summary}
+                    </p>
                     {metrics.length > 0 ? (
                       <ul className={styles.metrics}>
                         {metrics.map((metric) => (
-                          <li key={metric.label}>
+                          <li key={metric.label} data-reel-anim data-reel-metric>
                             <span>{metric.label}</span>
                             <strong>{metric.value}</strong>
                           </li>
@@ -171,6 +210,8 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                     <button
                       type="button"
                       className={styles.cta}
+                      data-reel-anim
+                      data-reel-cta
                       onClick={() => onOpen(work)}
                     >
                       {works.featuredCta} ↗
@@ -182,17 +223,19 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                     onClick={() => onOpen(work)}
                     aria-label={work.title}
                   >
-                    <DeviceMockup variant="monitor">
-                      <div className="relative h-full w-full overflow-hidden">
-                        <ProjectImages
-                          images={images}
-                          alt={work.title}
-                          sizes="(max-width: 1024px) 90vw, 42vw"
-                          imageClassName="object-cover sharp-image"
-                          quality={90}
-                        />
-                      </div>
-                    </DeviceMockup>
+                    <span className={styles.visualStage} data-reel-anim data-reel-visual>
+                      <DeviceMockup variant="monitor">
+                        <div className="relative h-full w-full overflow-hidden">
+                          <ProjectImages
+                            images={images}
+                            alt={work.title}
+                            sizes="(max-width: 1024px) 90vw, 42vw"
+                            imageClassName="object-cover sharp-image"
+                            quality={90}
+                          />
+                        </div>
+                      </DeviceMockup>
+                    </span>
                   </button>
                 </article>
               );

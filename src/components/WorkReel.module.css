@@ -101,12 +101,17 @@
   position: absolute;
   right: 4%;
   top: 0;
+  overflow: hidden;
   font-size: clamp(180px, 24vw, 360px);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.08em;
   color: #1b332d;
   pointer-events: none;
+}
+
+.giantInner {
+  display: block;
 }
 
 .copy {
@@ -122,8 +127,24 @@
   color: #80b5a5;
 }
 
-.copy h3 {
+.indexMask {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.indexMask > span {
+  display: block;
+}
+
+.titleMask {
+  display: grid;
+  overflow: hidden;
   margin: 14px 0 16px;
+}
+
+.copy h3 {
+  margin: 0;
   font-size: clamp(30px, 3.6vw, 48px);
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -193,6 +214,13 @@
   overflow: hidden;
   cursor: pointer;
   background: transparent;
+}
+
+.visualStage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 42%;
 }
 
 .steps {
@@ -317,9 +345,19 @@
   min-width: 0;
 }
 
-.root[data-pinned="true"] .copy h3 {
+.root[data-pinned="true"] .titleMask {
   margin: 10px 0 12px;
+}
+
+.root[data-pinned="true"] .copy h3 {
   font-size: clamp(26px, 2.8vw, 40px);
+}
+
+.root[data-pinned="true"] .visualStage,
+.root[data-pinned="true"] .titleMask h3,
+.root[data-pinned="true"] .indexMask span,
+.root[data-pinned="true"] .giantInner {
+  will-change: transform;
 }
 
 .root[data-pinned="true"] .body {
