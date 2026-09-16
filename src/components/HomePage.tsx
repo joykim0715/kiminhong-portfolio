@@ -10,7 +10,6 @@ import WorkGallery from "@/components/WorkGallery";
 import ScrollProgress from "@/components/ScrollProgress";
 import StorySection from "@/components/StorySection";
 import ContactCTA from "@/components/ContactCTA";
-import IntroCover from "@/components/IntroCover";
 import PageLoadEntrance from "@/components/PageLoadEntrance";
 import HashScroll from "@/components/HashScroll";
 import { RecruitSafeProvider } from "@/components/RecruitSafeProvider";
@@ -32,7 +31,6 @@ export default function HomePage({
   return (
     <ContentProvider locale={locale} content={content}>
       <RecruitSafeProvider enabled={recruitSafe}>
-        <IntroCover greeting={locale === "en" ? "Hello!" : "안녕하세요!"} />
         <HashScroll />
         <Navbar />
         <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">

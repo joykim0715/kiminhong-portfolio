@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { type SkillItem } from "@/data/content";
-import { afterIntro } from "@/lib/introReady";
 import { useSiteContent } from "./ContentProvider";
 import KineticGlyph, { type GlyphKind } from "./ui/KineticGlyph";
 
@@ -112,13 +111,8 @@ export default function SkillsDial() {
     if (!section || !pinZone || !pinPanel) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let ctx: gsap.Context | undefined;
-    const observer = new IntersectionObserver(([entry]) => {
-      section.dataset.motionVisible = String(entry.isIntersecting);
-    });
 
-    const start = () => {
-    ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const rings = ringRefs.current.filter(Boolean) as SVGCircleElement[];
       const ringGlows = ringGlowRefs.current.filter(Boolean) as SVGCircleElement[];
       const circles = circleRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -176,13 +170,14 @@ export default function SkillsDial() {
       });
     }, section);
 
+    const observer = new IntersectionObserver(([entry]) => {
+      section.dataset.motionVisible = String(entry.isIntersecting);
+    });
     observer.observe(section);
-    };
 
-    afterIntro(start);
     return () => {
       observer.disconnect();
-      ctx?.revert();
+      ctx.revert();
     };
   }, []);
 

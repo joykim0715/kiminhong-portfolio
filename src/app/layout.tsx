@@ -41,11 +41,6 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${geistSans.variable} h-full`}>
       <body className="min-h-full bg-bg font-sans text-text antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){if(location.hash)return;try{if("scrollRestoration"in history)history.scrollRestoration="manual";}catch(e){}window.scrollTo(0,0);})();`,
-          }}
-        />
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

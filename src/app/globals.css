@@ -368,10 +368,6 @@ body.scroll-locked {
   overscroll-behavior: none;
 }
 
-html[data-skip-intro] [data-intro-cover] {
-  display: none !important;
-}
-
 [data-project-panel-scroll] {
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;

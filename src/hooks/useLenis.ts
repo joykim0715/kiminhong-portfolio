@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { setLenisInstance } from "@/lib/lenisInstance";
-import { resetHomeScroll } from "@/lib/homeScroll";
 
 export function useLenis() {
   useEffect(() => {
@@ -23,7 +22,6 @@ export function useLenis() {
       const root = document.documentElement;
 
       setLenisInstance(lenis);
-      resetHomeScroll();
 
       lenis.on("scroll", ScrollTrigger.update);
 
@@ -57,13 +55,7 @@ export function useLenis() {
       ScrollTrigger.addEventListener("refresh", onRefresh);
       ScrollTrigger.refresh();
 
-      const onPageShow = (event: PageTransitionEvent) => {
-        if (event.persisted) resetHomeScroll();
-      };
-      window.addEventListener("pageshow", onPageShow);
-
       return () => {
-        window.removeEventListener("pageshow", onPageShow);
         ScrollTrigger.removeEventListener("refresh", onRefresh);
         ScrollTrigger.scrollerProxy(root, {});
         ScrollTrigger.defaults({ scroller: window });

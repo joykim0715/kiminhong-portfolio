@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { prefersReducedMotion } from "@/lib/animations";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
@@ -15,7 +14,7 @@ function highlightMetrics(text: string) {
     METRIC_RE.test(part) ? (
       <span
         key={i}
-        className="experience-metric mx-0.5 inline-block rounded-sm bg-secondary/12 px-1.5 py-0.5 text-[0.95em] font-extrabold tabular-nums text-secondary sm:text-[1.05em]"
+        className="mx-0.5 inline-block rounded-sm bg-secondary/12 px-1.5 py-0.5 text-[0.95em] font-extrabold tabular-nums text-secondary sm:text-[1.05em]"
       >
         {part}
       </span>
@@ -35,47 +34,7 @@ export default function Experience() {
 
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".experience-heading", section);
-
-      const items = gsap.utils.toArray<HTMLElement>(".experience-item");
-      const reduced = prefersReducedMotion();
-
-      items.forEach((item) => {
-        const role = item.querySelectorAll(".experience-role");
-        const metrics = item.querySelectorAll(".experience-metric");
-        const bullets = item.querySelectorAll(".experience-bullet");
-        const sectionTitles = item.querySelectorAll(".experience-section");
-        const body = [...sectionTitles, ...bullets];
-
-        if (reduced) {
-          gsap.set([role, metrics, body], { clearProps: "opacity,transform,visibility" });
-          return;
-        }
-
-        const tl = gsap.timeline({
-          defaults: { ease: "power2.out" },
-          scrollTrigger: {
-            trigger: item,
-            start: "top 82%",
-            toggleActions: "play none none none",
-          },
-        });
-
-        if (role.length) {
-          tl.from(role, { opacity: 0, y: 8, duration: 0.28 }, 0);
-        }
-
-        if (body.length) {
-          tl.from(body, { opacity: 0, y: 6, duration: 0.24, stagger: 0.035 }, 0.06);
-        }
-
-        if (metrics.length) {
-          tl.from(
-            metrics,
-            { opacity: 0, scale: 0.96, duration: 0.2, stagger: 0.03, transformOrigin: "50% 50%" },
-            0.1,
-          );
-        }
-      });
+      fadeRevealOnScroll(".experience-item", section, { stagger: 0.12, start: "top 82%" });
     }, section);
 
     return () => ctx.revert();
@@ -105,7 +64,7 @@ export default function Experience() {
                   <h3 className="text-preline text-lg font-bold tracking-tight text-text sm:text-xl">
                     {item.organization}
                   </h3>
-                  <p className="experience-role mt-1.5 text-xl font-semibold tracking-tight text-primary sm:text-[1.375rem]">
+                  <p className="mt-1.5 text-xl font-semibold tracking-tight text-primary sm:text-[1.375rem]">
                     {item.role}
                   </p>
                   <p className="mt-1 text-sm text-muted">{item.period}</p>
@@ -119,14 +78,14 @@ export default function Experience() {
                 <div className="mt-5 space-y-5 border-l border-accent/35 pl-4 sm:mt-6 sm:pl-5">
                   {item.sections.map((section) => (
                     <div key={section.title}>
-                      <h4 className="experience-section text-preline text-sm font-semibold text-text sm:text-base">
+                      <h4 className="text-preline text-sm font-semibold text-text sm:text-base">
                         {section.title}
                       </h4>
                       <ul className="mt-2.5 space-y-2">
                         {section.points.map((point) => (
                           <li
                             key={point}
-                            className="experience-bullet flex items-start gap-3 text-sm text-text sm:text-base"
+                            className="flex items-start gap-3 text-sm text-text sm:text-base"
                           >
                             <span
                               className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"

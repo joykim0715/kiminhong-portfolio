@@ -37,10 +37,6 @@
   }
 }
 
-:global(html[data-intro]) .lineFlow {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .lineFlow {
     animation: none;
