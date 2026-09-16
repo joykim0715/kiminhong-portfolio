@@ -40,6 +40,7 @@ export default function HomePage({
           <SkillsDial />
           <Education />
           <Experience />
+          <SectionBlend variant="career-work" />
           <WorkGallery />
           <SectionBlend variant="works-story" />
           <StorySection />

@@ -45,7 +45,7 @@ export default function Experience() {
       id="experience"
       ref={sectionRef}
       aria-labelledby="experience-heading"
-      className="relative z-[1] bg-bg/82 py-16 text-text backdrop-blur-[2px] sm:py-24"
+      className="relative z-[1] bg-bg/82 py-16 text-text backdrop-blur-[2px] sm:py-24 lg:bg-bg lg:pb-10 lg:backdrop-blur-none"
     >
       <div className="section-container">
         <div className="experience-heading">

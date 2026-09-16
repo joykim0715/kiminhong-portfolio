@@ -121,6 +121,32 @@
     #243238 92%,
     #1c2b30 100%
   );
+  --gradient-career-work: linear-gradient(
+    to bottom in oklab,
+    #f7f8f6 0%,
+    #f3f6f4 10%,
+    #e7efec 22%,
+    #d4e2dd 36%,
+    #b7cdc6 50%,
+    #8eaea6 62%,
+    #628a81 74%,
+    #3d635c 84%,
+    #1e3c37 93%,
+    #0a1918 100%
+  );
+  --gradient-work-certs: linear-gradient(
+    to bottom in oklab,
+    #0a1918 0%,
+    #1e3c37 10%,
+    #3d635c 22%,
+    #628a81 36%,
+    #8eaea6 50%,
+    #b7cdc6 64%,
+    #d4e2dd 78%,
+    #e7efec 88%,
+    #f3f6f4 95%,
+    #f7f8f6 100%
+  );
   --gradient-contact: linear-gradient(
     180deg,
     var(--clr-dark) 0%,

@@ -17,6 +17,30 @@
   background: var(--gradient-works-story);
 }
 
+.sectionBlendCareerWork {
+  display: none;
+}
+
+.sectionBlendWorkCerts {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sectionBlendCareerWork {
+    display: block;
+    height: clamp(240px, 36vh, 440px);
+    margin-top: -1px;
+    background: var(--gradient-career-work);
+  }
+
+  .sectionBlendWorkCerts {
+    display: block;
+    height: clamp(200px, 28vh, 340px);
+    margin-top: -1px;
+    background: var(--gradient-work-certs);
+  }
+}
+
 .sectionBlendBridgeValues {
   height: clamp(100px, 14vh, 180px);
   margin-top: -1px;
