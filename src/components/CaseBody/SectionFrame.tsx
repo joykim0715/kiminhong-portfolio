@@ -22,6 +22,7 @@ export default function SectionFrame({
   return (
     <section
       id={block.id}
+      data-case-block
       data-case-section
       ref={sectionRef}
       className={`${styles.section} ${className ?? ""}`}

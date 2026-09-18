@@ -58,6 +58,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const [activeBlockId, setActiveBlockId] = useState(firstBlockId);
   const [openedWorkId, setOpenedWorkId] = useState(work?.id);
   const blockRefs = useRef<Record<string, HTMLElement | null>>({});
+  const programmaticIdRef = useRef<string | null>(null);
 
   if (work?.id !== openedWorkId) {
     setOpenedWorkId(work?.id);
@@ -68,7 +69,8 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
   const scrollToBlock = useCallback((id: string) => {
     const container = scrollRef.current;
-    const target = blockRefs.current[id];
+    const target =
+      blockRefs.current[id] ?? container?.querySelector<HTMLElement>(`[data-case-block][id="${id}"]`);
     if (!container || !target) return;
     const navHeight = navRef.current?.offsetHeight ?? 54;
     const nextTop =
@@ -77,6 +79,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       container.scrollTop -
       navHeight -
       12;
+    programmaticIdRef.current = id;
     container.scrollTo({
       top: Math.max(0, nextTop),
       behavior: "smooth",
@@ -103,8 +106,8 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   }, []);
 
   useEffect(() => {
-    blockRefs.current = {};
     scrollRef.current?.scrollTo({ top: 0 });
+    programmaticIdRef.current = null;
   }, [work]);
 
   useEffect(() => {
@@ -138,28 +141,92 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     const container = scrollRef.current;
     if (!container) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) {
-          setActiveBlockId(visible.target.id);
-        }
-      },
-      {
-        root: container,
-        threshold: [0.25, 0.45, 0.65],
-        rootMargin: "-72px 0px -50% 0px",
-      },
-    );
+    let cancelled = false;
+    let observer: IntersectionObserver | null = null;
+    let frame = 0;
+    let scrollRaf = 0;
 
-    blocks.forEach((block) => {
-      const el = blockRefs.current[block.id];
-      if (el) observer.observe(el);
+    const pickActive = () => {
+      if (programmaticIdRef.current) return;
+      const sections = [...container.querySelectorAll<HTMLElement>("[data-case-block]")];
+      if (sections.length === 0) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const navHeight = navRef.current?.offsetHeight ?? 54;
+      const navProbe = container.scrollTop + navHeight + 32;
+      const maxScroll = Math.max(0, container.scrollHeight - container.clientHeight);
+      const relTop = (el: HTMLElement) =>
+        el.getBoundingClientRect().top - containerRect.top + container.scrollTop;
+
+      let nextId = sections[0].id;
+      let reachedIndex = 0;
+      let lastReachableIndex = 0;
+
+      sections.forEach((el, index) => {
+        const top = relTop(el);
+        if (top <= navProbe) {
+          nextId = el.id;
+          reachedIndex = index;
+        }
+        if (top - maxScroll <= navHeight + 32) {
+          lastReachableIndex = index;
+        }
+      });
+
+      if (reachedIndex >= lastReachableIndex) {
+        const deepProbe = container.scrollTop + container.clientHeight * 0.35;
+        for (let i = lastReachableIndex + 1; i < sections.length; i += 1) {
+          if (relTop(sections[i]) <= deepProbe) {
+            nextId = sections[i].id;
+          }
+        }
+      }
+
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 2) {
+        nextId = sections[sections.length - 1].id;
+      }
+
+      if (!nextId) return;
+      setActiveBlockId((current) => (current === nextId ? current : nextId));
+    };
+
+    const unlockSpy = () => {
+      programmaticIdRef.current = null;
+    };
+
+    const onScroll = () => {
+      if (scrollRaf) return;
+      scrollRaf = window.requestAnimationFrame(() => {
+        scrollRaf = 0;
+        pickActive();
+      });
+    };
+
+    frame = window.requestAnimationFrame(() => {
+      if (cancelled) return;
+      observer = new IntersectionObserver(pickActive, {
+        root: container,
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      });
+      container.querySelectorAll<HTMLElement>("[data-case-block]").forEach((el) => {
+        observer?.observe(el);
+      });
+      pickActive();
     });
 
-    return () => observer.disconnect();
+    container.addEventListener("scroll", onScroll, { passive: true });
+    container.addEventListener("wheel", unlockSpy, { passive: true });
+    container.addEventListener("touchmove", unlockSpy, { passive: true });
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
+      window.cancelAnimationFrame(scrollRaf);
+      observer?.disconnect();
+      container.removeEventListener("scroll", onScroll);
+      container.removeEventListener("wheel", unlockSpy);
+      container.removeEventListener("touchmove", unlockSpy);
+    };
   }, [work, blocks]);
 
   useEffect(() => {
@@ -197,16 +264,20 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   useEffect(() => {
     const nav = navRef.current;
     const btn = nav?.querySelector<HTMLElement>(`[data-nav-id="${activeBlockId}"]`);
-    const root = scrollRef.current;
-    if (!nav || !btn || !root) return;
+    if (!nav || !btn) return;
+    if (nav.scrollWidth <= nav.clientWidth + 1) return;
 
-    const navRect = nav.getBoundingClientRect();
-    const rootRect = root.getBoundingClientRect();
-    const navVisible = navRect.bottom > rootRect.top + 8 && navRect.top < rootRect.bottom;
-    if (!navVisible) return;
+    const btnLeft = btn.offsetLeft;
+    const btnRight = btnLeft + btn.offsetWidth;
+    const viewLeft = nav.scrollLeft;
+    const viewRight = viewLeft + nav.clientWidth;
+    if (btnLeft >= viewLeft && btnRight <= viewRight) return;
 
-    btn.scrollIntoView({ inline: "center", block: "nearest" });
-  }, [activeBlockId]);
+    nav.scrollTo({
+      left: Math.max(0, btnLeft - 16),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [activeBlockId, reduceMotion]);
 
   return (
     <AnimatePresence>
