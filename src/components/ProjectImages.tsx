@@ -7,6 +7,7 @@ type ProjectImagesProps = {
   className?: string;
   imageClassName?: string;
   quality?: number;
+  priority?: boolean;
 };
 
 export default function ProjectImages({
@@ -16,6 +17,7 @@ export default function ProjectImages({
   className = "",
   imageClassName = "object-contain sharp-image",
   quality = 90,
+  priority = false,
 }: ProjectImagesProps) {
   if (images.length === 0) {
     return (
@@ -30,7 +32,15 @@ export default function ProjectImages({
   if (images.length === 1) {
     return (
       <div className={`relative h-full w-full ${className}`}>
-        <Image src={images[0]} alt={alt} fill className={imageClassName} sizes={sizes} quality={quality} />
+        <Image
+          src={images[0]}
+          alt={alt}
+          fill
+          className={imageClassName}
+          sizes={sizes}
+          quality={quality}
+          priority={priority}
+        />
       </div>
     );
   }
@@ -46,6 +56,7 @@ export default function ProjectImages({
             className={imageClassName}
             sizes={sizes}
             quality={quality}
+            priority={priority && index === 0}
           />
         </div>
       ))}
