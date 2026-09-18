@@ -357,7 +357,7 @@ export const siteContent = {
     projects: [
       {
         id: "01",
-        title: "시니어 헬스케어 국책사업 데이터 수집 및 관리",
+        title: "시니어 헬스케어 국책사업\n데이터 수집 및 관리",
         category: "Digital Health",
         image: "/works/01.jpg",
         description:
@@ -365,7 +365,7 @@ export const siteContent = {
         panel: {
           sectionLabel: "Case Study",
           subtitle:
-            "시니어 헬스케어 국책 실증에서 생체·디바이스 로그를 안정적으로 운영하고, 현장 관찰과 생성형 AI 기반 건강 가이드로 참여를 유지한 사례입니다.",
+            "시니어 헬스케어 국책 실증에서 생체·디바이스 로그를 안정적으로 운영하고,\n현장 관찰과 생성형 AI 기반 건강 가이드로 참여를 유지한 사례입니다.",
           meta: [
             { label: "역할", value: "시니어 헬스케어 국책과제 연구원" },
             { label: "소속", value: homeCareOrganization },
@@ -448,7 +448,7 @@ export const siteContent = {
       },
       {
         id: "02",
-        title: "삼성생명 산학협력 프로젝트 '라이프놀로지 랩 1기'",
+        title: "삼성생명 산학협력 프로젝트\n'라이프놀로지 랩 1기'",
         category: "Digital Health",
         image: "/works/02.jpg",
         description:
@@ -456,7 +456,7 @@ export const siteContent = {
         panel: {
           sectionLabel: "UX Case Study",
           subtitle:
-            "fNIRS 센서를 활용한 웨어러블 링과 연동 앱 서비스를 팀 단위로 기획·프로토타이핑한 디지털 헬스 프로젝트입니다.",
+            "fNIRS 센서를 활용한 웨어러블 링과 연동 앱 서비스를\n팀 단위로 기획·프로토타이핑한 디지털 헬스 프로젝트입니다.",
           meta: [
             { label: "역할", value: "팀원 / 기획·UX" },
             { label: "소속", value: "SKKU-삼성생명 라이프놀로지랩 1기" },
@@ -523,7 +523,7 @@ export const siteContent = {
         panel: {
           sectionLabel: "Research Case",
           subtitle:
-            "약 800명 학생 설문을 설계·분석해 도서관 리모델링 우선순위를 도출하고, 학생회-학교 간 의견을 조율한 공간 연구 프로젝트입니다.",
+            "약 800명 학생 설문을 설계·분석해 도서관 리모델링 우선순위를 도출하고,\n학생회-학교 간 의견을 조율한 공간 연구 프로젝트입니다.",
           meta: [
             { label: "역할", value: "인권복지국원" },
             { label: "소속", value: "성균관대학교 제55대 총학생회" },
@@ -581,7 +581,7 @@ export const siteContent = {
       },
       {
         id: "04",
-        title: "스포츠과학대학 학생회-학과 맞춤형 기업 제휴 사업",
+        title: "스포츠과학대학 학생회-학과\n맞춤형 기업 제휴 사업",
         category: "Teamwork",
         image: "/works/04.jpg",
         description:
@@ -589,7 +589,7 @@ export const siteContent = {
         panel: {
           sectionLabel: "Business Case",
           subtitle:
-            "200명 재학생 니즈 조사로 제휴 우선순위를 정하고, 학과 맞춤형 기업 제휴를 기획·협상·실행한 사업 기획 프로젝트입니다.",
+            "200명 재학생 니즈 조사로 제휴 우선순위를 정하고,\n학과 맞춤형 기업 제휴를 기획·협상·실행한 사업 기획 프로젝트입니다.",
           meta: [
             { label: "역할", value: "대외협력국 차장" },
             { label: "소속", value: "성균관대학교 스포츠과학대학 학생회" },
@@ -655,7 +655,7 @@ export const siteContent = {
         panel: {
           sectionLabel: "Marketing Case",
           subtitle:
-            "수영 종목의 매력을 대중에게 전달하기 위해 디지털 채널 홍보 콘텐츠를 기획·제작·배포한 스포츠 마케팅 대외활동입니다.",
+            "수영 종목의 매력을 대중에게 전달하기 위해\n디지털 채널 홍보 콘텐츠를 기획·제작·배포한 스포츠 마케팅 대외활동입니다.",
           meta: [
             { label: "역할", value: "대외활동 팀원" },
             { label: "소속", value: "대한체육회 국대스마터즈 1기 (수영)" },
