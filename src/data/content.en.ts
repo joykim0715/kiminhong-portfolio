@@ -666,20 +666,20 @@ export const siteContentEn: SiteContent = {
       description: "Event-based behavior and acquisition path analysis",
     },
     {
-      name: "TOEIC",
-      fullName: "850",
-      issuer: "ETS",
-      date: "2025.01.26",
-      type: "english",
-      description: "English reading and business document comprehension",
-    },
-    {
       name: "OPIc",
       fullName: "Intermediate High",
       issuer: "ACTFL",
       date: "2025.08.03",
       type: "english",
       description: "Spoken English communication",
+    },
+    {
+      name: "TOEIC",
+      fullName: "850",
+      issuer: "ETS",
+      date: "2025.01.26",
+      type: "english",
+      description: "English reading and business document comprehension",
     },
     {
       name: "Smart Home Healthcare Instructor L2",

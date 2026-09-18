@@ -758,20 +758,20 @@ export const siteContent = {
       description: "이벤트 기반 사용자 행동 패턴 및 유입 경로 분석 역량",
     },
     {
-      name: "TOEIC",
-      fullName: "850점",
-      issuer: "ETS",
-      date: "2025.01.26",
-      type: "english",
-      description: "영어 독해·업무 문서 이해 역량",
-    },
-    {
       name: "OPIc",
       fullName: "Intermediate High",
       issuer: "ACTFL",
       date: "2025.08.03",
       type: "english",
       description: "영어 말하기 의사소통 역량",
+    },
+    {
+      name: "TOEIC",
+      fullName: "850점",
+      issuer: "ETS",
+      date: "2025.01.26",
+      type: "english",
+      description: "영어 독해·업무 문서 이해 역량",
     },
     {
       name: "스마트홈 헬스케어 지도사 2급",
@@ -782,7 +782,7 @@ export const siteContent = {
       description: "스마트홈 기술과 보건 의료 서비스 결합, 시니어 맞춤 기획 역량",
     },
     {
-      name: "우수 포스터상",
+      name: "운동재활학회 우수 포스터상",
       fullName: "2025 추계 한국운동재활학회 우수 포스터상",
       issuer: "한국운동재활학회",
       date: "2025.11",
