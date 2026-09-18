@@ -1,4 +1,4 @@
-import type { Certification, ExperienceItem, SiteContent, SkillItem, Work } from "./content";
+import type { Certification, ExperienceItem, ExperienceMetric, SiteContent, SkillItem, Work } from "./content";
 import { koResumePagePath, resumePagePath } from "./content";
 
 const contact = {
@@ -139,12 +139,20 @@ export const siteContentEn: SiteContent = {
   experience: {
     sectionLabel: "Experience",
     title: "Experience",
+    otherLabel: "Other experience",
+    metricsLabel: "Key outcomes",
     items: [
       {
         organization: homeCareOrganization,
         role: "Researcher, National Senior Healthcare Project",
         period: "Mar 2025 – Feb 2026",
         employmentType: "Contract",
+        metrics: [
+          { value: "69k", label: "Collected data" },
+          { value: "85%", label: "Valid data rate" },
+          { value: "83%", label: "Retention" },
+          { value: "5", label: "MOUs / service contracts supported" },
+        ] satisfies ExperienceMetric[],
         sections: [
           {
             title: "① Health log extraction,\npreprocessing & analysis quality",

@@ -66,6 +66,11 @@ export type ExperienceSection = {
   points: string[];
 };
 
+export type ExperienceMetric = {
+  value: string;
+  label: string;
+};
+
 export type EmploymentType = string;
 
 export type ExperienceItem = {
@@ -74,6 +79,8 @@ export type ExperienceItem = {
   period: string;
   employmentType: EmploymentType;
   sections: ExperienceSection[];
+  /** Structured outcome metrics. Featured Experience only — never regex-extracted from bullets. */
+  metrics?: ExperienceMetric[];
 };
 
 /** 지원·채용 담당자용 연락처 — 이메일·전화만 여기 수정 */
@@ -225,12 +232,20 @@ export const siteContent = {
   experience: {
     sectionLabel: "Experience",
     title: "경력",
+    otherLabel: "그 외 경력",
+    metricsLabel: "주요 성과",
     items: [
       {
         organization: homeCareOrganization,
         role: "시니어 헬스케어 국책과제 연구원",
         period: "2025.03 ~ 2026.02",
         employmentType: "계약직",
+        metrics: [
+          { value: "6.9만 건", label: "수집 데이터" },
+          { value: "85%", label: "유효 데이터율" },
+          { value: "83%", label: "참여 유지율" },
+          { value: "5건", label: "MOU·서비스 계약 지원" },
+        ],
         sections: [
           {
             title: "① 건강 로그 데이터 추출·전처리 및 분석 품질 확보",

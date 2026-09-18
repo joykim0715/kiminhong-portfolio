@@ -3,30 +3,102 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
+import type { ExperienceItem } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
+import styles from "./Experience.module.css";
 
-const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+k$|^\d+%$|^\d+건$|^\d+명$/;
+function hasMetrics(item: ExperienceItem): item is ExperienceItem & {
+  metrics: NonNullable<ExperienceItem["metrics"]>;
+} {
+  return (item.metrics?.length ?? 0) > 0;
+}
 
-function highlightMetrics(text: string) {
-  const parts = text.split(/(\d+\.?\d*만\s*건|\d+k|\d+%|\d+건|\d+명)/g);
-  return parts.map((part, i) =>
-    METRIC_RE.test(part) ? (
-      <span
-        key={i}
-        className="mx-0.5 inline-block rounded-sm bg-secondary/12 px-1.5 py-0.5 text-[0.95em] font-extrabold tabular-nums text-secondary sm:text-[1.05em]"
-      >
-        {part}
-      </span>
-    ) : (
-      part
-    ),
+function FeaturedExperience({
+  item,
+  metricsLabel,
+}: {
+  item: ExperienceItem & { metrics: NonNullable<ExperienceItem["metrics"]> };
+  metricsLabel: string;
+}) {
+  return (
+    <article className={`experience-item ${styles.featured}`}>
+      <div className={styles.split}>
+        <header className={styles.identity}>
+          <h3 className={`text-preline ${styles.org}`}>{item.organization}</h3>
+          <p className={`text-preline ${styles.role}`}>{item.role}</p>
+          <p className={styles.meta}>
+            <span>{item.period}</span>
+            <span className={styles.metaDot} aria-hidden>
+              ·
+            </span>
+            <span>{item.employmentType}</span>
+          </p>
+        </header>
+
+        <div className={styles.body}>
+          <ul className={styles.metricGrid} aria-label={metricsLabel}>
+            {item.metrics.map((metric) => (
+              <li key={`${metric.value}-${metric.label}`} className={styles.metric}>
+                <p className={styles.metricValue}>{metric.value}</p>
+                <p className={`break-keep ${styles.metricLabel}`}>{metric.label}</p>
+              </li>
+            ))}
+          </ul>
+
+          {item.sections.length > 0 ? (
+            <div className={styles.axes}>
+              {item.sections.map((section, index) => (
+                <div key={section.title} className={styles.axis}>
+                  <span className={styles.axisIndex} aria-hidden>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h4 className={`text-preline ${styles.axisTitle}`}>{section.title}</h4>
+                    <ul className={styles.points}>
+                      {section.points.map((point) => (
+                        <li key={point} className={styles.point}>
+                          <span className={styles.pointMark} aria-hidden />
+                          <span className={`text-preline break-keep ${styles.pointText}`}>
+                            {point}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function CompactExperience({ item }: { item: ExperienceItem }) {
+  return (
+    <HoverLift>
+      <article className={`experience-item ${styles.compactRow}`}>
+        <h4 className={styles.compactOrg}>{item.organization}</h4>
+        <p className={styles.compactRole}>{item.role}</p>
+        <p className={styles.compactMeta}>
+          <span className={styles.compactPeriod}>{item.period}</span>
+          <span className={styles.compactDot} aria-hidden>
+            ·
+          </span>
+          <span className={styles.compactType}>{item.employmentType}</span>
+        </p>
+      </article>
+    </HoverLift>
   );
 }
 
 export default function Experience() {
   const { experience: experienceContent } = useSiteContent();
   const sectionRef = useRef<HTMLElement>(null);
+  const featured = experienceContent.items.filter(hasMetrics);
+  const secondary = experienceContent.items.filter((item) => !hasMetrics(item));
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -55,55 +127,25 @@ export default function Experience() {
           </h2>
         </div>
 
-        <div className="mt-10 divide-y divide-border/70 border-y border-border/70">
-          {experienceContent.items.map((item) => (
-            <HoverLift key={`${item.organization}-${item.period}`}>
-              <article className="experience-item rounded-lg py-7 transition-colors hover:bg-surface/60 sm:py-8">
-              <header className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-6">
-                <div>
-                  <h3 className="text-preline text-lg font-bold tracking-tight text-text sm:text-xl">
-                    {item.organization}
-                  </h3>
-                  <p className="mt-1.5 text-xl font-semibold tracking-tight text-primary sm:text-[1.375rem]">
-                    {item.role}
-                  </p>
-                  <p className="mt-1 text-sm text-muted">{item.period}</p>
-                </div>
-                <span className="w-fit shrink-0 border border-border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
-                  {item.employmentType}
-                </span>
-              </header>
-
-              {item.sections.length > 0 && (
-                <div className="mt-5 space-y-5 border-l border-accent/35 pl-4 sm:mt-6 sm:pl-5">
-                  {item.sections.map((section) => (
-                    <div key={section.title}>
-                      <h4 className="text-preline text-sm font-semibold text-text sm:text-base">
-                        {section.title}
-                      </h4>
-                      <ul className="mt-2.5 space-y-2">
-                        {section.points.map((point) => (
-                          <li
-                            key={point}
-                            className="flex items-start gap-3 text-sm text-text sm:text-base"
-                          >
-                            <span
-                              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
-                              aria-hidden
-                            />
-                            <span className="text-preline break-keep leading-relaxed">
-                              {highlightMetrics(point)}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </article>
-            </HoverLift>
+        <div className="mt-10">
+          {featured.map((item) => (
+            <FeaturedExperience
+              key={`${item.organization}-${item.period}`}
+              item={item}
+              metricsLabel={experienceContent.metricsLabel}
+            />
           ))}
+
+          {secondary.length > 0 ? (
+            <div className={styles.other}>
+              <h3 className={styles.otherHeading}>{experienceContent.otherLabel}</h3>
+              <div className={styles.compactList}>
+                {secondary.map((item) => (
+                  <CompactExperience key={`${item.organization}-${item.period}`} item={item} />
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
