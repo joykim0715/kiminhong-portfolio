@@ -6,7 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { fadeRevealOnScroll, refreshScrollTriggers } from "@/lib/scrollInteractions";
 import type { Work } from "@/data/content";
 import { useSiteContent } from "./ContentProvider";
-import CertificationBadge from "./CertificationBadge";
+import Credentials from "./Credentials";
 import FeaturedWork from "./FeaturedWork";
 import ProjectCard from "./ProjectCard";
 import SectionBlend from "./SectionBlend";
@@ -51,7 +51,7 @@ function WorksTabs({
 }
 
 export default function WorkGallery() {
-  const { works, certifications } = useSiteContent();
+  const { works } = useSiteContent();
   const projects = works.projects;
   const featuredIdSet = useMemo(() => new Set(works.featuredIds), [works.featuredIds]);
   const featuredProjects = useMemo(
@@ -86,8 +86,8 @@ export default function WorkGallery() {
     const ctx = gsap.context(() => {
       fadeRevealOnScroll(".works-heading", section);
       fadeRevealOnScroll(".featured-work", section, { start: "top 82%" });
-      fadeRevealOnScroll(activeTab === "projects" ? ".gallery-card" : ".cert-badge", section, {
-        stagger: 0.1,
+      fadeRevealOnScroll(activeTab === "projects" ? ".gallery-card" : ".credentials", section, {
+        stagger: 0.08,
         start: "top 88%",
       });
     }, section);
@@ -150,10 +150,8 @@ export default function WorkGallery() {
                 </div>
               </>
             ) : (
-              <div id="certificates-mobile" className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2">
-                {certifications.map((cert) => (
-                  <CertificationBadge key={`${cert.name}-${cert.date}`} cert={cert} />
-                ))}
+              <div id="certificates-mobile" className="mt-8">
+                <Credentials id="credentials-mobile" showHeading={false} />
               </div>
             )}
           </div>
@@ -165,16 +163,10 @@ export default function WorkGallery() {
 
       <div
         id="certificates"
-        className="relative z-10 hidden bg-bg py-20 lg:block"
+        className="relative z-10 hidden bg-bg py-16 lg:block lg:py-20"
       >
         <div className="section-container">
-          <p className="section-eyebrow text-secondary">{works.tabs.certifications}</p>
-          <h2 className="section-title mt-3 tracking-tight text-text">{works.stackLabels.certifications}</h2>
-          <div className="cert-grid mt-10 grid grid-cols-2 items-stretch gap-4 sm:gap-5 lg:grid-cols-4">
-            {certifications.map((cert) => (
-              <CertificationBadge key={cert.name} cert={cert} />
-            ))}
-          </div>
+          <Credentials id="credentials-desktop" />
         </div>
       </div>
 

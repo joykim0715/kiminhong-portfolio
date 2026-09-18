@@ -622,6 +622,16 @@ export const siteContentEn: SiteContent = {
     ] satisfies Work[],
   },
 
+  credentials: {
+    sectionLabel: "Credentials",
+    title: "Certifications, language & awards",
+    headings: {
+      cert: "Certifications",
+      english: "Language",
+      award: "Awards",
+    },
+  },
+
   certifications: [
     {
       name: "ADsP",

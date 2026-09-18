@@ -714,6 +714,16 @@ export const siteContent = {
     ] satisfies Work[],
   },
 
+  credentials: {
+    sectionLabel: "Credentials",
+    title: "자격 · 어학 · 수상",
+    headings: {
+      cert: "자격",
+      english: "어학",
+      award: "수상",
+    },
+  },
+
   certifications: [
     {
       name: "ADsP",
