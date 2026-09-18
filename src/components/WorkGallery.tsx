@@ -170,9 +170,7 @@ export default function WorkGallery() {
         </div>
       </div>
 
-      {panelWork ? (
-        <ProjectPanel key={panelWork.id} work={panelWork} onClose={() => setPanelWork(null)} />
-      ) : null}
+      <ProjectPanel work={panelWork} onClose={() => setPanelWork(null)} />
     </section>
   );
 }

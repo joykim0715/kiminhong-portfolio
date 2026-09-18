@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
 import { getWorkImages } from "@/lib/workImages";
@@ -11,7 +11,22 @@ import { useLocale } from "./ContentProvider";
 import ProjectImages from "./ProjectImages";
 import styles from "./ProjectPanel.module.css";
 
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
+
+function useCompactPanel() {
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => setCompact(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  return compact;
+}
 
 function highlightMetrics(text: string) {
   const parts = text.split(/(\d+\.?\d*만\s*건|\d+%|\d+건|\d+명)/g);
@@ -36,12 +51,17 @@ type ProjectPanelProps = {
 
 export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const { locale } = useLocale();
+  const reduceMotion = useReducedMotion() === true;
+  const compact = useCompactPanel();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
   const panel = work?.panel;
   const blocks = panel?.blocks ?? [];
   const images = work ? getWorkImages(work) : [];
   const [activeBlockId, setActiveBlockId] = useState(blocks[0]?.id ?? "");
   const blockRefs = useRef<Record<string, HTMLElement | null>>({});
+  const shellY = compact ? 22 : 36;
+  const exitY = compact ? 18 : 28;
 
   const scrollToBlock = useCallback((id: string) => {
     const container = scrollRef.current;
@@ -84,15 +104,22 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     hideNavBarForPanel();
     lockPageScroll();
 
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const focusId = window.requestAnimationFrame(() => {
+      closeBtnRef.current?.focus();
+    });
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => {
+      window.cancelAnimationFrame(focusId);
       window.removeEventListener("keydown", onKeyDown);
       unlockPageScroll();
       showNavBarAfterPanel();
+      previous?.focus?.();
     };
   }, [work, onClose]);
 
@@ -160,17 +187,17 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
   return (
     <AnimatePresence>
-          {work && panel ? (
+      {work && panel ? (
         <motion.div
           key={work.id}
           className={styles.panel}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-panel-title"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+          transition={{ duration: reduceMotion ? 0.16 : 0.38, ease: EASE_OUT }}
         >
           <motion.button
             type="button"
@@ -178,30 +205,54 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
             aria-label={locale === "en" ? "Close project details" : "프로젝트 상세 닫기"}
             onClick={onClose}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+            animate={{
+              opacity: 1,
+              transition: { duration: reduceMotion ? 0.12 : 0.18, ease: EASE_OUT },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: reduceMotion ? 0.12 : 0.22,
+                delay: reduceMotion ? 0 : 0.1,
+                ease: EASE_OUT,
+              },
+            }}
           />
 
           <motion.div
             className={styles.shell}
             data-project-panel
-            initial={{ y: "110%", scale: 1.04 }}
-            animate={{ y: 0, scale: 1 }}
-            exit={{ y: "28%", scale: 0.98, opacity: 0 }}
-            transition={{ duration: 0.78, ease: [0.16, 1, 0.3, 1] }}
-            style={{ transformOrigin: "center bottom", willChange: "transform" }}
+            initial={reduceMotion ? { opacity: 0 } : { y: shellY, opacity: 0 }}
+            animate={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: reduceMotion ? 0.16 : compact ? 0.42 : 0.52,
+                delay: reduceMotion ? 0 : 0.05,
+                ease: EASE_OUT,
+              },
+            }}
+            exit={
+              reduceMotion
+                ? { opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }
+                : {
+                    y: exitY,
+                    opacity: 0,
+                    transition: { duration: 0.32, ease: EASE_OUT },
+                  }
+            }
+            style={{ willChange: "transform, opacity" }}
             onClick={(e) => e.stopPropagation()}
             onWheel={handlePanelWheel}
           >
-            <motion.div
-              className={styles.shellInner}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <div className={styles.shellInner}>
             <div className={styles.toolbar}>
-              <button type="button" className={styles.backButton} onClick={onClose}>
+              <button
+                ref={closeBtnRef}
+                type="button"
+                className={styles.backButton}
+                onClick={onClose}
+              >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M15 19l-7-7 7-7" />
                 </svg>
@@ -221,45 +272,88 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                     : ""
               }`}>
                 {images.length > 0 ? (
-                  <div className={images.length > 1 ? styles.thumbPair : styles.thumb}>
+                  <motion.div
+                    className={images.length > 1 ? styles.thumbPair : styles.thumb}
+                    initial={
+                      reduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0.72, scale: compact ? 1.012 : 1.025 }
+                    }
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        duration: reduceMotion ? 0.12 : compact ? 0.36 : 0.48,
+                        delay: reduceMotion ? 0 : compact ? 0.08 : 0.12,
+                        ease: EASE_OUT,
+                      },
+                    }}
+                    style={{ willChange: reduceMotion ? undefined : "transform, opacity" }}
+                  >
                     <ProjectImages
                       images={images.length > 1 ? images.slice(0, 2) : images}
                       alt={work.title}
                       sizes="160px"
                       quality={88}
                     />
-                  </div>
+                  </motion.div>
                 ) : null}
 
                 <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-primary-light">
-                    {work.category}
-                  </p>
-                  <h2 id="project-panel-title" className="text-preline mt-2 text-xl font-bold tracking-tight sm:text-2xl">
-                    {work.title}
-                  </h2>
-                  <p className="text-preline mt-2 break-keep text-sm leading-relaxed text-white/72 sm:text-base">
-                    {panel.subtitle}
-                  </p>
+                  <motion.div
+                    initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: compact ? 10 : 16 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: reduceMotion ? 0.12 : compact ? 0.34 : 0.42,
+                        delay: reduceMotion ? 0 : compact ? 0.1 : 0.16,
+                        ease: EASE_OUT,
+                      },
+                    }}
+                  >
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-primary-light">
+                      {work.category}
+                    </p>
+                    <h2 id="project-panel-title" className="text-preline mt-2 text-xl font-bold tracking-tight sm:text-2xl">
+                      {work.title}
+                    </h2>
+                  </motion.div>
+                  <motion.div
+                    initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: compact ? 8 : 12 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: reduceMotion ? 0.12 : compact ? 0.32 : 0.4,
+                        delay: reduceMotion ? 0 : compact ? 0.14 : 0.22,
+                        ease: EASE_OUT,
+                      },
+                    }}
+                  >
+                    <p className="text-preline mt-2 break-keep text-sm leading-relaxed text-white/72 sm:text-base">
+                      {panel.subtitle}
+                    </p>
 
-                  {panel.metrics && panel.metrics.length > 0 ? (
-                    <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                      {panel.metrics.map((metric) => (
-                        <div
-                          key={metric.label}
-                          className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-center"
-                        >
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">
-                            {metric.label}
-                          </p>
-                          <p className="mt-1 text-lg font-black text-primary-light sm:text-xl">{metric.value}</p>
-                          {metric.note ? (
-                            <p className="text-preline mt-1 text-[10px] text-white/45">{metric.note}</p>
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
+                    {panel.metrics && panel.metrics.length > 0 ? (
+                      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        {panel.metrics.map((metric) => (
+                          <div
+                            key={metric.label}
+                            className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-center"
+                          >
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">
+                              {metric.label}
+                            </p>
+                            <p className="mt-1 text-lg font-black text-primary-light sm:text-xl">{metric.value}</p>
+                            {metric.note ? (
+                              <p className="text-preline mt-1 text-[10px] text-white/45">{metric.note}</p>
+                            ) : null}
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </motion.div>
                 </div>
               </div>
             </header>
@@ -381,7 +475,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                 </div>
               </div>
             </div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       ) : null}
