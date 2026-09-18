@@ -9,11 +9,11 @@ import { getWorkImages } from "@/lib/workImages";
 import { formatMetaValue, getImpactMetrics, getInfoMetrics } from "@/lib/panelMetrics";
 import type { Work } from "@/data/works";
 import { useLocale } from "./ContentProvider";
+import CaseBlock from "./CaseBody/CaseBlock";
 import ProjectImages from "./ProjectImages";
 import styles from "./ProjectPanel.module.css";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-const METRIC_RE = /^\d+\.?\d*만\s*건$|^\d+%$|^\d+건$|^\d+명$/;
 const HERO_SIZES = "(max-width: 1023px) 100vw, 60vw";
 const EMPTY_BLOCKS: Work["panel"]["blocks"] = [];
 
@@ -31,22 +31,6 @@ function useCompactPanel() {
   return compact;
 }
 
-function highlightMetrics(text: string) {
-  const parts = text.split(/(\d+\.?\d*만\s*건|\d+%|\d+건|\d+명)/g);
-  return parts.map((part, i) =>
-    METRIC_RE.test(part) ? (
-      <span
-        key={i}
-        className="mx-0.5 inline-block rounded-md bg-secondary/15 px-1.5 py-0.5 text-[0.95em] font-extrabold tabular-nums text-secondary sm:text-[1.05em]"
-      >
-        {part}
-      </span>
-    ) : (
-      part
-    ),
-  );
-}
-
 type ProjectPanelProps = {
   work: Work | null;
   onClose: () => void;
@@ -57,6 +41,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const reduceMotion = useReducedMotion() === true;
   const compact = useCompactPanel();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const panel = work?.panel;
   const blocks = panel?.blocks ?? EMPTY_BLOCKS;
@@ -85,10 +70,15 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     const container = scrollRef.current;
     const target = blockRefs.current[id];
     if (!container || !target) return;
+    const navHeight = navRef.current?.offsetHeight ?? 54;
     const nextTop =
-      target.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop - 12;
+      target.getBoundingClientRect().top -
+      container.getBoundingClientRect().top +
+      container.scrollTop -
+      navHeight -
+      12;
     container.scrollTo({
-      top: nextTop,
+      top: Math.max(0, nextTop),
       behavior: "smooth",
     });
     setActiveBlockId(id);
@@ -160,7 +150,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       {
         root: container,
         threshold: [0.25, 0.45, 0.65],
-        rootMargin: "-8% 0px -55% 0px",
+        rootMargin: "-72px 0px -50% 0px",
       },
     );
 
@@ -175,7 +165,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   useEffect(() => {
     if (!work || !scrollRef.current) return;
 
-    const blocksEls = scrollRef.current.querySelectorAll<HTMLElement>(`.${styles.block}`);
+    const blocksEls = scrollRef.current.querySelectorAll<HTMLElement>("[data-case-section]");
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -203,6 +193,20 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
     return () => revealObserver.disconnect();
   }, [work]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    const btn = nav?.querySelector<HTMLElement>(`[data-nav-id="${activeBlockId}"]`);
+    const root = scrollRef.current;
+    if (!nav || !btn || !root) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const rootRect = root.getBoundingClientRect();
+    const navVisible = navRect.bottom > rootRect.top + 8 && navRect.top < rootRect.bottom;
+    if (!navVisible) return;
+
+    btn.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [activeBlockId]);
 
   return (
     <AnimatePresence>
@@ -399,93 +403,62 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                 ) : null}
 
                 <div className={styles.body}>
-                  <nav className={styles.rail} aria-label={locale === "en" ? "Project outline" : "프로젝트 목차"}>
-                    {blocks.map((block, index) => (
-                      <button
-                        key={block.id}
-                        type="button"
-                        className={`${styles.railButton} ${
-                          activeBlockId === block.id ? styles.railButtonActive : ""
-                        }`}
-                        onClick={() => scrollToBlock(block.id)}
-                      >
-                        <span className={styles.railIndex}>{String(index + 1).padStart(2, "0")}</span>
-                        <span>{block.title}</span>
-                      </button>
-                    ))}
-                  </nav>
-
-                  <div className={styles.contentColumn}>
-                    <div className={styles.mobileNav} aria-label={locale === "en" ? "Project outline" : "프로젝트 목차"}>
-                      {blocks.map((block) => (
+                  <nav
+                    ref={navRef}
+                    className={styles.sectionNav}
+                    data-case-nav
+                    aria-label={locale === "en" ? "Project outline" : "프로젝트 목차"}
+                  >
+                    {blocks.map((block, index) => {
+                      const active = activeBlockId === block.id;
+                      return (
                         <button
                           key={block.id}
                           type="button"
-                          className={`${styles.mobilePill} ${
-                            activeBlockId === block.id ? styles.mobilePillActive : ""
-                          }`}
+                          data-nav-id={block.id}
+                          className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+                          aria-current={active ? "true" : undefined}
                           onClick={() => scrollToBlock(block.id)}
                         >
-                          {block.title}
+                          <span className={styles.navIndex}>{String(index + 1).padStart(2, "0")}</span>
+                          <span>{block.title}</span>
                         </button>
-                      ))}
-                    </div>
+                      );
+                    })}
+                  </nav>
 
-                    <div className={`section-container ${styles.content}`}>
-                      {panel.demoHref && panel.demoCtaLabel ? (
-                        <div className="mb-5">
-                          <Link
-                            href={panel.demoHref}
-                            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
-                          >
-                            {panel.demoCtaLabel}
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                          <p className="mt-2 text-xs text-muted">
-                            {locale === "en"
-                              ? "Web reconstruction of the real ops screens (participants · center · smart-home risk) — synthetic data only"
-                              : "실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)"}
-                          </p>
-                        </div>
-                      ) : null}
-
-                      {blocks.map((block, index) => (
-                        <article
-                          key={block.id}
-                          id={block.id}
-                          ref={(el) => {
-                            blockRefs.current[block.id] = el;
-                          }}
-                          className={styles.block}
-                          style={{ transitionDelay: `${index * 40}ms` }}
+                  <div className={`section-container ${styles.content}`}>
+                    {panel.demoHref && panel.demoCtaLabel ? (
+                      <div className={styles.demo}>
+                        <Link
+                          href={panel.demoHref}
+                          className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
                         >
-                          <div className="flex items-baseline gap-3">
-                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/12 text-sm font-bold text-primary">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <div className="min-w-0">
-                              <h3 className="text-lg font-bold tracking-tight text-text">{block.title}</h3>
-                              {block.summary ? (
-                                <p className="mt-2 break-keep text-sm leading-relaxed text-muted sm:text-base">
-                                  {block.summary}
-                                </p>
-                              ) : null}
-                            </div>
-                          </div>
+                          {panel.demoCtaLabel}
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
+                        <p className="mt-2 text-xs text-muted">
+                          {locale === "en"
+                            ? "Web reconstruction of the real ops screens (participants · center · smart-home risk) — synthetic data only"
+                            : "실제 운영 화면 구성(참여자·센터 수집·스마트홈 위험)을 웹으로 재현한 데모 (합성 데이터)"}
+                        </p>
+                      </div>
+                    ) : null}
 
-                          <ul className="mt-5 space-y-2.5 border-t border-border pt-5">
-                            {block.bullets.map((bullet) => (
-                              <li key={bullet} className="flex items-start gap-3 text-sm text-text sm:text-base">
-                                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                                <span className="break-keep leading-relaxed">{highlightMetrics(bullet)}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </article>
-                      ))}
-                    </div>
+                    {blocks.map((block, index) => (
+                      <CaseBlock
+                        key={block.id}
+                        block={block}
+                        index={index}
+                        hasImpact={impactMetrics.length > 0}
+                        className={styles.block}
+                        sectionRef={(el) => {
+                          blockRefs.current[block.id] = el;
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
