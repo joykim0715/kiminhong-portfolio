@@ -23,55 +23,51 @@ function FeaturedExperience({
 }) {
   return (
     <article className={`experience-item ${styles.featured}`}>
-      <div className={styles.split}>
-        <header className={styles.identity}>
-          <h3 className={`text-preline ${styles.org}`}>{item.organization}</h3>
-          <p className={`text-preline ${styles.role}`}>{item.role}</p>
-          <p className={styles.meta}>
-            <span>{item.period}</span>
-            <span className={styles.metaDot} aria-hidden>
-              ·
-            </span>
-            <span>{item.employmentType}</span>
-          </p>
-        </header>
+      <header className={styles.identity}>
+        <h3 className={`text-preline ${styles.org}`}>{item.organization}</h3>
+        <p className={`text-preline ${styles.role}`}>{item.role}</p>
+        <p className={styles.meta}>
+          <span>{item.period}</span>
+          <span className={styles.metaDot} aria-hidden>
+            ·
+          </span>
+          <span>{item.employmentType}</span>
+        </p>
+      </header>
 
-        <div className={styles.body}>
-          <ul className={styles.metricGrid} aria-label={metricsLabel}>
-            {item.metrics.map((metric) => (
-              <li key={`${metric.value}-${metric.label}`} className={styles.metric}>
-                <p className={styles.metricValue}>{metric.value}</p>
-                <p className={`break-keep ${styles.metricLabel}`}>{metric.label}</p>
-              </li>
-            ))}
-          </ul>
+      <ul className={styles.metricRow} aria-label={metricsLabel}>
+        {item.metrics.map((metric) => (
+          <li key={`${metric.value}-${metric.label}`} className={styles.metric}>
+            <p className={styles.metricValue}>{metric.value}</p>
+            <p className={`break-keep ${styles.metricLabel}`}>{metric.label}</p>
+          </li>
+        ))}
+      </ul>
 
-          {item.sections.length > 0 ? (
-            <div className={styles.axes}>
-              {item.sections.map((section, index) => (
-                <div key={section.title} className={styles.axis}>
-                  <span className={styles.axisIndex} aria-hidden>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h4 className={`text-preline ${styles.axisTitle}`}>{section.title}</h4>
-                    <ul className={styles.points}>
-                      {section.points.map((point) => (
-                        <li key={point} className={styles.point}>
-                          <span className={styles.pointMark} aria-hidden />
-                          <span className={`text-preline break-keep ${styles.pointText}`}>
-                            {point}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
+      {item.sections.length > 0 ? (
+        <div className={styles.axes}>
+          {item.sections.map((section, index) => (
+            <div key={section.title} className={styles.axis}>
+              <span className={styles.axisIndex} aria-hidden>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h4 className={`text-preline ${styles.axisTitle}`}>{section.title}</h4>
+                <ul className={styles.points}>
+                  {section.points.map((point) => (
+                    <li key={point} className={styles.point}>
+                      <span className={styles.pointMark} aria-hidden />
+                      <span className={`text-preline break-keep ${styles.pointText}`}>
+                        {point}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          ) : null}
+          ))}
         </div>
-      </div>
+      ) : null}
     </article>
   );
 }
