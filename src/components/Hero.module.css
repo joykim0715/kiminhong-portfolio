@@ -222,18 +222,18 @@
 
 .heroCutoutWrap {
   position: absolute;
-  top: 6%;
-  right: -2%;
-  bottom: 8%;
-  left: 10%;
+  top: 9%;
+  right: 1%;
+  bottom: 11%;
+  left: 14%;
   z-index: 1;
   background: #000000;
 }
 
 .heroCutoutImage {
   object-fit: cover;
-  object-position: 94% 46%;
-  transform: scale(1.32);
+  object-position: 93% 44%;
+  transform: scale(1.14);
   transform-origin: 90% 40%;
   background-color: #000000;
 }
@@ -245,15 +245,15 @@
   }
 
   .heroCutoutWrap {
-    top: 4%;
-    right: 0;
-    bottom: 6%;
-    left: 8%;
+    top: 7%;
+    right: 3%;
+    bottom: 9%;
+    left: 12%;
   }
 
   .heroCutoutImage {
-    object-position: 93% 45%;
-    transform: scale(1.24);
+    object-position: 92% 43%;
+    transform: scale(1.08);
     transform-origin: 90% 38%;
   }
 }
@@ -264,15 +264,15 @@
   }
 
   .heroCutoutWrap {
-    top: 2%;
-    right: 0;
-    bottom: 4%;
-    left: 6%;
+    top: 5%;
+    right: 4%;
+    bottom: 7%;
+    left: 10%;
   }
 
   .heroCutoutImage {
-    object-position: 92% 44%;
-    transform: scale(1.2);
+    object-position: 91% 42%;
+    transform: scale(1.04);
     transform-origin: 88% 36%;
   }
 }

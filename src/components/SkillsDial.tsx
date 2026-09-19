@@ -15,7 +15,8 @@ const SKILL_GLYPH: Record<string, GlyphKind> = {
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 const NAV_OFFSET = 64;
-const SKILLS_SCROLL_VH = 0.72;
+const SKILLS_SCROLL_VH = 0.96;
+const SKILLS_SCROLL_VH_MOBILE = 0.84;
 
 type SkillRingProps = {
   skill: SkillItem;
@@ -144,7 +145,8 @@ export default function SkillsDial() {
         scrollTrigger: {
           trigger: pinZone,
           start: `top ${NAV_OFFSET}px`,
-          end: () => `+=${window.innerHeight * SKILLS_SCROLL_VH}`,
+          end: () =>
+            `+=${window.innerHeight * (window.innerWidth < 768 ? SKILLS_SCROLL_VH_MOBILE : SKILLS_SCROLL_VH)}`,
           pin: pinPanel,
           pinSpacing: true,
           anticipatePin: 1,

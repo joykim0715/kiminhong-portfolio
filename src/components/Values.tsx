@@ -6,7 +6,8 @@ import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
 
-const VALUES_HOLD_VH = 0.28;
+const VALUES_HOLD_VH = 0.46;
+const VALUES_HOLD_VH_MOBILE = 0.34;
 
 export default function Values() {
   const { values: valuesContent } = useSiteContent();
@@ -26,7 +27,10 @@ export default function Values() {
         ScrollTrigger.create({
           trigger: section,
           start: "bottom bottom",
-          end: () => `+=${Math.round(window.innerHeight * VALUES_HOLD_VH)}`,
+          end: () =>
+            `+=${Math.round(
+              window.innerHeight * (window.innerWidth < 768 ? VALUES_HOLD_VH_MOBILE : VALUES_HOLD_VH),
+            )}`,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -38,8 +42,8 @@ export default function Values() {
   }, []);
 
   return (
-    <section id="values" ref={sectionRef} className="relative z-[1] -mt-px bg-bg py-16 text-text sm:py-20">
-      <div className="section-container grid gap-8 lg:grid-cols-2 lg:gap-14">
+    <section id="values" ref={sectionRef} className="relative z-[1] -mt-px bg-bg py-20 text-text sm:py-24">
+      <div className="section-container grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="values-heading lg:sticky lg:top-28 lg:self-start">
           <p className="section-eyebrow text-secondary">{valuesContent.sectionLabel}</p>
           <h2 className="section-title mt-3 tracking-tight text-text">{valuesContent.title}</h2>
@@ -50,7 +54,7 @@ export default function Values() {
           {valuesContent.items.map((item, index) => (
             <li key={item} className="value-item">
               <HoverLift axis="x">
-                <div className="flex items-start gap-4 py-3.5 sm:gap-5 sm:py-4">
+                <div className="flex items-start gap-4 py-4 sm:gap-5 sm:py-5">
                   <span
                     className="mt-0.5 w-7 shrink-0 font-mono text-xs font-semibold tabular-nums text-accent/80"
                     aria-hidden
