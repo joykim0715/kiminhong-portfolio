@@ -39,7 +39,7 @@ export default function ScrollProgress() {
   }, []);
 
   return (
-    <aside className={styles.rail}>
+    <aside className={styles.rail} data-scroll-progress>
       <div
         ref={meterRef}
         className={styles.meter}

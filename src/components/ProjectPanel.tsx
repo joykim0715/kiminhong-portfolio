@@ -16,6 +16,35 @@ import styles from "./ProjectPanel.module.css";
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const HERO_SIZES = "(max-width: 1023px) 100vw, 60vw";
 const EMPTY_BLOCKS: Work["panel"]["blocks"] = [];
+const LOCK_SETTLE_MS = 520;
+const SCROLL_LINE = 56;
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  "button:not([disabled])",
+  'input:not([disabled]):not([type="hidden"])',
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+const USER_SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"]);
+
+function isVisibleFocusable(el: HTMLElement) {
+  if (el.tabIndex < 0) return false;
+  if (el.hasAttribute("disabled") || el.getAttribute("aria-hidden") === "true") return false;
+  if (el.closest("[inert]")) return false;
+  const style = window.getComputedStyle(el);
+  if (style.visibility === "hidden" || style.display === "none") return false;
+  return el.getClientRects().length > 0;
+}
+
+function getFocusable(root: HTMLElement) {
+  return [...root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)].filter(isVisibleFocusable);
+}
+
+function setInert(el: Element | null, inert: boolean) {
+  if (!(el instanceof HTMLElement)) return;
+  el.inert = inert;
+}
 
 function useCompactPanel() {
   const [compact, setCompact] = useState(false);
@@ -43,6 +72,8 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const panelRootRef = useRef<HTMLDivElement>(null);
+  const lockTimerRef = useRef(0);
   const panel = work?.panel;
   const blocks = panel?.blocks ?? EMPTY_BLOCKS;
   const images = work ? getWorkImages(work) : [];
@@ -80,12 +111,17 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       navHeight -
       12;
     programmaticIdRef.current = id;
+    if (lockTimerRef.current) window.clearTimeout(lockTimerRef.current);
+    lockTimerRef.current = window.setTimeout(() => {
+      programmaticIdRef.current = null;
+      lockTimerRef.current = 0;
+    }, LOCK_SETTLE_MS);
     container.scrollTo({
       top: Math.max(0, nextTop),
-      behavior: "smooth",
+      behavior: reduceMotion ? "auto" : "smooth",
     });
     setActiveBlockId(id);
-  }, []);
+  }, [reduceMotion]);
 
   const handlePanelWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
     const container = scrollRef.current;
@@ -105,10 +141,18 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     }
   }, []);
 
+  const unlockSpy = useCallback(() => {
+    programmaticIdRef.current = null;
+    if (lockTimerRef.current) {
+      window.clearTimeout(lockTimerRef.current);
+      lockTimerRef.current = 0;
+    }
+  }, []);
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
-    programmaticIdRef.current = null;
-  }, [work]);
+    unlockSpy();
+  }, [work, unlockSpy]);
 
   useEffect(() => {
     if (!work) return;
@@ -117,23 +161,120 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
     lockPageScroll();
 
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const inertTargets: HTMLElement[] = [];
+    const markInert = (el: Element | null) => {
+      if (!(el instanceof HTMLElement) || el.hasAttribute("data-project-panel-root")) return;
+      setInert(el, true);
+      inertTargets.push(el);
+    };
+
+    markInert(document.querySelector(".nav-bar"));
+    markInert(document.querySelector("[data-scroll-progress]"));
+    const main = document.getElementById("main-content");
+    const works = document.getElementById("works");
+    if (main) {
+      Array.from(main.children).forEach((child) => {
+        if (child !== works) markInert(child);
+      });
+    }
+    if (works) {
+      Array.from(works.children).forEach((child) => {
+        if (!child.hasAttribute("data-project-panel-root")) markInert(child);
+      });
+    }
+
     const focusId = window.requestAnimationFrame(() => {
       closeBtnRef.current?.focus();
     });
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    const trapTab = (e: KeyboardEvent) => {
+      const root = panelRootRef.current;
+      if (!root) return;
+      const nodes = getFocusable(root);
+      if (nodes.length === 0) {
+        e.preventDefault();
+        closeBtnRef.current?.focus();
+        return;
+      }
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !root.contains(active))) {
+        e.preventDefault();
+        last.focus();
+        return;
+      }
+      if (!e.shiftKey && (active === last || !root.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     };
 
-    window.addEventListener("keydown", onKeyDown);
+    const scrollPanelByKey = (e: KeyboardEvent) => {
+      const isSpace = e.key === " " || e.key === "Spacebar";
+      if (!USER_SCROLL_KEYS.has(e.key) && !isSpace) return false;
+
+      const target = e.target instanceof Element ? e.target : null;
+      if (isSpace && target?.closest("button, a, [role='button'], input, textarea, select")) {
+        return false;
+      }
+
+      unlockSpy();
+      const container = scrollRef.current;
+      if (!container) return true;
+      if (document.activeElement === container) return true;
+
+      e.preventDefault();
+      const page = Math.max(120, container.clientHeight * 0.88);
+      if (e.key === "Home") {
+        container.scrollTo({ top: 0 });
+        return true;
+      }
+      if (e.key === "End") {
+        container.scrollTo({ top: container.scrollHeight });
+        return true;
+      }
+      let delta = 0;
+      if (e.key === "ArrowDown") delta = SCROLL_LINE;
+      if (e.key === "ArrowUp") delta = -SCROLL_LINE;
+      if (e.key === "PageDown") delta = page;
+      if (e.key === "PageUp") delta = -page;
+      if (isSpace) delta = e.shiftKey ? -page : page;
+      container.scrollBy({ top: delta });
+      return true;
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab") {
+        trapTab(e);
+        return;
+      }
+      scrollPanelByKey(e);
+    };
+
+    const onFocusIn = (e: FocusEvent) => {
+      const root = panelRootRef.current;
+      if (!root || !(e.target instanceof Node) || root.contains(e.target)) return;
+      const next = getFocusable(root)[0] ?? closeBtnRef.current;
+      next?.focus();
+    };
+
+    window.addEventListener("keydown", onKeyDown, true);
+    document.addEventListener("focusin", onFocusIn);
     return () => {
       window.cancelAnimationFrame(focusId);
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keydown", onKeyDown, true);
+      document.removeEventListener("focusin", onFocusIn);
+      inertTargets.forEach((el) => setInert(el, false));
       unlockPageScroll();
       showNavBarAfterPanel();
       previous?.focus?.();
     };
-  }, [work, onClose]);
+  }, [work, onClose, unlockSpy]);
 
   useEffect(() => {
     if (!work) return;
@@ -190,16 +331,23 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       setActiveBlockId((current) => (current === nextId ? current : nextId));
     };
 
-    const unlockSpy = () => {
-      programmaticIdRef.current = null;
-    };
-
     const onScroll = () => {
       if (scrollRaf) return;
       scrollRaf = window.requestAnimationFrame(() => {
         scrollRaf = 0;
         pickActive();
       });
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target instanceof Element ? e.target : null;
+      if (target?.closest("[data-case-nav]")) return;
+      const rect = container.getBoundingClientRect();
+      const onScrollbar =
+        e.clientX > rect.left + container.clientWidth || e.clientY > rect.top + container.clientHeight;
+      if (onScrollbar || target === container || !target?.closest("a, button, [role='button']")) {
+        unlockSpy();
+      }
     };
 
     frame = window.requestAnimationFrame(() => {
@@ -214,20 +362,32 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       pickActive();
     });
 
+    const onScrollEnd = () => {
+      unlockSpy();
+      pickActive();
+    };
+
     container.addEventListener("scroll", onScroll, { passive: true });
+    container.addEventListener("scrollend", onScrollEnd);
     container.addEventListener("wheel", unlockSpy, { passive: true });
+    container.addEventListener("touchstart", unlockSpy, { passive: true });
     container.addEventListener("touchmove", unlockSpy, { passive: true });
+    container.addEventListener("pointerdown", onPointerDown);
 
     return () => {
       cancelled = true;
+      unlockSpy();
       window.cancelAnimationFrame(frame);
       window.cancelAnimationFrame(scrollRaf);
       observer?.disconnect();
       container.removeEventListener("scroll", onScroll);
+      container.removeEventListener("scrollend", onScrollEnd);
       container.removeEventListener("wheel", unlockSpy);
+      container.removeEventListener("touchstart", unlockSpy);
       container.removeEventListener("touchmove", unlockSpy);
+      container.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [work, blocks]);
+  }, [work, blocks, unlockSpy]);
 
   useEffect(() => {
     if (!work || !scrollRef.current) return;
@@ -284,9 +444,11 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       {work && panel ? (
         <motion.div
           key={work.id}
+          ref={panelRootRef}
           className={styles.panel}
           role="dialog"
           aria-modal="true"
+          data-project-panel-root
           aria-labelledby="project-panel-title"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
@@ -296,6 +458,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
           <motion.button
             type="button"
             className={styles.backdrop}
+            tabIndex={-1}
             aria-label={locale === "en" ? "Close project details" : "프로젝트 상세 닫기"}
             onClick={onClose}
             initial={{ opacity: 0 }}
@@ -355,7 +518,12 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                 <span className={styles.toolbarLabel}>{panel.sectionLabel}</span>
               </div>
 
-              <div ref={scrollRef} className={styles.scroll} data-project-panel-scroll>
+              <div
+                ref={scrollRef}
+                className={styles.scroll}
+                data-project-panel-scroll
+                tabIndex={-1}
+              >
                 <header className={styles.hero}>
                   <div className={styles.heroGlow} aria-hidden="true" />
                   <div className={`section-container ${styles.heroGrid}`}>

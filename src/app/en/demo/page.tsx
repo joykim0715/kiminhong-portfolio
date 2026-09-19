@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DashboardDemo from "@/components/DashboardDemo";
+import HtmlLang from "@/components/HtmlLang";
 import { dashboardDemoEn } from "@/data/dashboardDemo.en";
 
 export const metadata: Metadata = {
@@ -11,5 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function EnglishDemoPage() {
-  return <DashboardDemo data={dashboardDemoEn} />;
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.lang="en"`,
+        }}
+      />
+      <HtmlLang locale="en" />
+      <DashboardDemo data={dashboardDemoEn} />
+    </>
+  );
 }

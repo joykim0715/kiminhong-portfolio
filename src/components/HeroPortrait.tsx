@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/animations";
+import { useLocale } from "./ContentProvider";
 import styles from "./HeroPortrait.module.css";
 
 export type ProfileGalleryItem = {
@@ -24,6 +25,7 @@ const DURATION = 0.55;
 const INTRO_DELAY = 2.1;
 
 export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
+  const { locale } = useLocale();
   const formal = images.find((img) => img.variant === "formal");
   const field = images.filter((img) => img.variant === "field");
 
@@ -227,8 +229,9 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
 
   if (!formal) return null;
 
-  const hintDesktop = hint?.desktop ?? "마우스를 올려 사진을 둘러보세요";
-  const hintMobile = hint?.mobile ?? "탭해서 사진 둘러보기";
+  const hintDesktop =
+    hint?.desktop ?? (locale === "en" ? "Hover to browse photos" : "마우스를 올려 사진을 둘러보세요");
+  const hintMobile = hint?.mobile ?? (locale === "en" ? "Tap to browse photos" : "탭해서 사진 둘러보기");
 
   return (
     <div
@@ -247,7 +250,7 @@ export default function HeroPortrait({ images, hint }: HeroPortraitProps) {
         onKeyDown={(e) => e.key === "Enter" && handleTap("formal")}
         role="button"
         tabIndex={0}
-        aria-label="프로필 사진 보기"
+        aria-label={locale === "en" ? "View profile photo" : "프로필 사진 보기"}
       >
         <Image
           src={formal.src}

@@ -125,7 +125,15 @@ export default function Navbar() {
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/15 text-white/80 transition hover:border-white/30 hover:bg-white/8 hover:text-white lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav-menu"
-            aria-label={menuOpen ? "메뉴 닫기" : "섹션 메뉴 열기"}
+            aria-label={
+              menuOpen
+                ? locale === "en"
+                  ? "Close menu"
+                  : "메뉴 닫기"
+                : locale === "en"
+                  ? "Open section menu"
+                  : "섹션 메뉴 열기"
+            }
             onClick={() => setMenuOpen((open) => !open)}
           >
             <MenuIcon open={menuOpen} />

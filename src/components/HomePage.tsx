@@ -31,6 +31,13 @@ export default function HomePage({
   return (
     <ContentProvider locale={locale} content={content}>
       <RecruitSafeProvider enabled={recruitSafe}>
+        {locale === "en" ? (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `document.documentElement.lang="en"`,
+            }}
+          />
+        ) : null}
         <HashScroll />
         <Navbar />
         <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">

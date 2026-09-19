@@ -2,6 +2,7 @@
 
 import { createContext, useContext, type ReactNode } from "react";
 import { siteContent as koContent, type SiteContent } from "@/data/content";
+import HtmlLang from "./HtmlLang";
 
 export type Locale = "ko" | "en";
 
@@ -38,7 +39,12 @@ export function ContentProvider({
     otherLocaleLabel: locale === "en" ? "KO" : "EN",
   };
 
-  return <ContentContext.Provider value={value}>{children}</ContentContext.Provider>;
+  return (
+    <ContentContext.Provider value={value}>
+      <HtmlLang locale={locale} />
+      {children}
+    </ContentContext.Provider>
+  );
 }
 
 export function useSiteContent() {

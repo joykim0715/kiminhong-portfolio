@@ -104,7 +104,10 @@ export default function DashboardDemo({
           </p>
         </section>
 
-        <section className={styles.kpiGrid} aria-label="핵심 현황">
+        <section
+          className={styles.kpiGrid}
+          aria-label={data === dashboardDemoEn ? "Key status" : "핵심 현황"}
+        >
           {kpis.map((kpi, index) => (
             <motion.article
               key={kpi.id}
