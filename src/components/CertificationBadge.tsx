@@ -19,7 +19,7 @@ export default function CertificationBadge({ cert }: CredentialItemProps) {
   const secondary = showSecondaryName(cert.name, cert.fullName);
 
   return (
-    <article className={`credential-item ${styles.item}`} tabIndex={0}>
+    <article className={`credential-item ${styles.item}`}>
       <h4 className={`text-preline ${styles.name}`}>{cert.name}</h4>
       {isLanguage ? (
         <p className={`text-preline ${styles.score}`}>{cert.fullName}</p>

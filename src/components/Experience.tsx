@@ -14,6 +14,12 @@ function hasMetrics(item: ExperienceItem): item is ExperienceItem & {
   return (item.metrics?.length ?? 0) > 0;
 }
 
+const CIRCLED_INDEX = /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]\s*/u;
+
+function displaySectionTitle(title: string) {
+  return title.replace(CIRCLED_INDEX, "");
+}
+
 function FeaturedExperience({
   item,
   metricsLabel,
@@ -52,7 +58,9 @@ function FeaturedExperience({
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div>
-                <h4 className={`text-preline ${styles.axisTitle}`}>{section.title}</h4>
+                <h4 className={`text-preline ${styles.axisTitle}`}>
+                  {displaySectionTitle(section.title)}
+                </h4>
                 <ul className={styles.points}>
                   {section.points.map((point) => (
                     <li key={point} className={styles.point}>

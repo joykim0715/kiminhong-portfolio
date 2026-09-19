@@ -39,8 +39,16 @@ export default function HomePage({
           />
         ) : null}
         <HashScroll />
+        <a href="#main-content" className="skip-to-main">
+          {content.nav.skipToMain}
+        </a>
         <Navbar />
-        <main id="main-content" lang={locale === "en" ? "en" : "ko"} className="relative z-[3]">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          lang={locale === "en" ? "en" : "ko"}
+          className="relative z-[3]"
+        >
           <Hero />
           <GradientTransition />
           <Values />

@@ -362,6 +362,30 @@ img {
     0 8px 28px color-mix(in srgb, var(--clr-dark) 28%, transparent);
 }
 
+.skip-to-main {
+  position: fixed;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 80;
+  padding: 0.6rem 0.95rem;
+  background: #0a1211;
+  color: #a8e3c4;
+  border: 1px solid color-mix(in srgb, #a8e3c4 50%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+}
+
+.skip-to-main:focus,
+.skip-to-main:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #a8e3c4;
+  outline-offset: 3px;
+}
+
 html.scroll-locked,
 body.scroll-locked {
   overflow: hidden !important;

@@ -23,6 +23,7 @@ export const siteContentEn: SiteContent = {
   nav: {
     siteName: "Inhong Kim",
     contactCta: "Contact",
+    skipToMain: "Skip to main content",
     sections: [
       { id: "hero", label: "Home" },
       { id: "values", label: "Values" },
@@ -150,8 +151,8 @@ export const siteContentEn: SiteContent = {
         metrics: [
           { value: "69k", label: "Collected data" },
           { value: "85%", label: "Valid data rate" },
-          { value: "83%", label: "Retention" },
-          { value: "5", label: "MOUs / service contracts supported" },
+          { value: "83%", label: "Participant retention" },
+          { value: "5", label: "MOU & service contract support" },
         ] satisfies ExperienceMetric[],
         sections: [
           {
@@ -281,9 +282,9 @@ export const siteContentEn: SiteContent = {
           ],
           metrics: [
             { label: "Collected data", value: "69k", note: "SQL log extraction & analysis" },
-            { label: "Analysis validity", value: "85%", note: "After SPSS preprocessing\n& QC" },
-            { label: "Retention", value: "83%", note: "After personalized health guidance" },
-            { label: "Decision support", value: "5", note: "MOUs / service contracts" },
+            { label: "Valid data rate", value: "85%", note: "After SPSS preprocessing\n& QC" },
+            { label: "Participant retention", value: "83%", note: "After personalized health guidance" },
+            { label: "MOU & service contract support", value: "5", note: "MOUs / service contracts" },
           ],
           blocks: [
             {

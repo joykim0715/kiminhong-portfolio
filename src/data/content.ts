@@ -118,6 +118,7 @@ export const siteContent = {
   nav: {
     siteName: "김인홍",
     contactCta: "Contact",
+    skipToMain: "본문으로 건너뛰기",
     sections: [
       { id: "hero", label: "Home" },
       { id: "values", label: "Values" },
@@ -374,9 +375,9 @@ export const siteContent = {
           ],
           metrics: [
             { label: "수집 데이터", value: "6.9만 건", note: "SQL 로그 추출·분석" },
-            { label: "분석 유효성", value: "85%", note: "SPSS 전처리·품질 관리 후" },
+            { label: "유효 데이터율", value: "85%", note: "SPSS 전처리·품질 관리 후" },
             { label: "참여 유지율", value: "83%", note: "맞춤형 건강 가이드 적용 후" },
-            { label: "의사결정 지원", value: "5건", note: "MOU·서비스 계약" },
+            { label: "MOU·서비스 계약 지원", value: "5건", note: "MOU·서비스 계약" },
           ],
           blocks: [
             {

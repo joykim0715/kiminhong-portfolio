@@ -407,7 +407,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
 
     blocksEls.forEach((block) => revealObserver.observe(block));
 
-    requestAnimationFrame(() => {
+    const revealFrame = window.requestAnimationFrame(() => {
       blocksEls.forEach((block) => {
         const rect = block.getBoundingClientRect();
         const rootRect = scrollRef.current?.getBoundingClientRect();
@@ -418,7 +418,10 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
       });
     });
 
-    return () => revealObserver.disconnect();
+    return () => {
+      window.cancelAnimationFrame(revealFrame);
+      revealObserver.disconnect();
+    };
   }, [work]);
 
   useEffect(() => {
