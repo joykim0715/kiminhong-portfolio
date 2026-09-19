@@ -428,11 +428,11 @@ export const siteContentEn: SiteContent = {
         category: "Teamwork",
         images: ["/works/03.jpg", "/works/03-b.jpg"],
         description:
-          "Collected and analyzed student survey data to guide library remodeling priorities, and coordinated input on barrier-free map design.",
+          "Collected and analyzed student survey data to guide space improvements in the Samsung Academic Information Hall — including the 5F lounge — and coordinated input on barrier-free map design.",
         panel: {
           sectionLabel: "Research Case",
           subtitle:
-            "Designed and analyzed a survey of ~800 students to prioritize library remodeling\nand mediate between the student council and the university.",
+            "Designed and analyzed a survey of ~800 students to prioritize Academic Information Hall space improvements,\nincluding the 5F lounge, and mediate between the student council and the university.",
           meta: [
             { label: "Role", value: "Human Rights & Welfare Officer" },
             { label: "Org", value: "55th Student Council, Sungkyunkwan University" },
@@ -482,7 +482,7 @@ export const siteContentEn: SiteContent = {
               bullets: [
                 "Completed analysis of ~800 responses",
                 "Derived improvement items targeting 87%+ space satisfaction",
-                "Documented remodeling rationale grounded in student needs",
+                "Documented Academic Information Hall space-improvement rationale grounded in student needs",
               ],
             },
           ],
