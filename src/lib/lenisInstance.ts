@@ -6,8 +6,7 @@ let lockCount = 0;
 function isInsideScrollableOverlay(target: EventTarget | null) {
   if (!(target instanceof Element)) return false;
   return Boolean(
-    target.closest("[data-work-modal]") ||
-      target.closest("[data-project-panel]") ||
+    target.closest("[data-project-panel]") ||
       target.closest("[data-project-panel-scroll]"),
   );
 }

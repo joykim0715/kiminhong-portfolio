@@ -2,7 +2,7 @@
  * 사이트 전체 텍스트·콘텐츠 — 이 파일만 수정하면 사이트에 반영됩니다.
  *
  * 섹션: meta, nav, hero, bridge, values, skills, education, experience,
- *       method, works, certifications, story, about, socialLinks
+ *       works, certifications, story, about, socialLinks
  */
 
 import { dashboardDemoPath } from "./dashboardDemo";
@@ -286,55 +286,6 @@ export const siteContent = {
         sections: [] as ExperienceSection[],
       },
     ] as ExperienceItem[],
-  },
-
-  method: {
-    sectionLabel: "Research in motion",
-    title: "현장에서 시작해,\n의사결정에 닿기까지.",
-    description: "시니어 헬스케어 연구 경험을 다섯 단계로 따라갑니다.",
-    skip: "전체 프로젝트로 이동",
-    steps: [
-      {
-        title: "관찰",
-        english: "OBSERVE",
-        detail: "현장의 맥락을 읽습니다.",
-        body: "참여자의 생활 습관과 디바이스 사용을 살피고, 참여를 어렵게 만드는 요인을 확인했습니다.",
-        evidence: "현장 관찰 · 참여자 커뮤니케이션",
-        glyph: "observe",
-      },
-      {
-        title: "수집",
-        english: "COLLECT",
-        detail: "경험을 데이터로 연결합니다.",
-        body: "SQL로 건강 로그 6.9만 건을 추출하고, 웨어러블의 blackout·결측 구간을 식별했습니다.",
-        evidence: "6.9만 건 · SQL 로그 추출",
-        glyph: "oa",
-      },
-      {
-        title: "분석",
-        english: "ANALYZE",
-        detail: "해석할 수 있는 근거를 만듭니다.",
-        body: "SPSS 전처리와 현장 밀착 관리를 통해 분석 유효성 85%를 확보했습니다.",
-        evidence: "85% · 분석 유효성",
-        glyph: "data",
-      },
-      {
-        title: "설계",
-        english: "DESIGN",
-        detail: "숫자를 행동의 언어로 바꿉니다.",
-        body: "생체 데이터를 생활 습관에 연결한 맞춤형 건강 가이드를 기획하고 생성형 AI로 이해하기 쉽게 재구성했습니다.",
-        evidence: "83% · 참여 유지율",
-        glyph: "ai",
-      },
-      {
-        title: "연결",
-        english: "CONNECT",
-        detail: "다음 의사결정을 돕습니다.",
-        body: "Figma 인터랙티브 대시보드와 핵심 지표를 의사결정 자료로 정리해 MOU 및 서비스 계약 5건의 체결을 지원했습니다.",
-        evidence: "5건 · MOU·서비스 계약 체결 지원",
-        glyph: "viz",
-      },
-    ],
   },
 
   works: {
