@@ -6,7 +6,7 @@ import { fadeRevealOnScroll } from "@/lib/scrollInteractions";
 import { useSiteContent } from "./ContentProvider";
 import HoverLift from "./ui/HoverLift";
 
-const VALUES_HOLD_VH = 0.7;
+const VALUES_HOLD_VH = 0.28;
 
 export default function Values() {
   const { values: valuesContent } = useSiteContent();
@@ -38,8 +38,8 @@ export default function Values() {
   }, []);
 
   return (
-    <section id="values" ref={sectionRef} className="relative z-[1] -mt-px bg-bg py-24 text-text sm:py-32">
-      <div className="section-container grid gap-12 lg:grid-cols-2 lg:gap-20">
+    <section id="values" ref={sectionRef} className="relative z-[1] -mt-px bg-bg py-16 text-text sm:py-20">
+      <div className="section-container grid gap-8 lg:grid-cols-2 lg:gap-14">
         <div className="values-heading lg:sticky lg:top-28 lg:self-start">
           <p className="section-eyebrow text-secondary">{valuesContent.sectionLabel}</p>
           <h2 className="section-title mt-3 tracking-tight text-text">{valuesContent.title}</h2>
@@ -50,7 +50,7 @@ export default function Values() {
           {valuesContent.items.map((item, index) => (
             <li key={item} className="value-item">
               <HoverLift axis="x">
-                <div className="flex items-start gap-4 py-5 sm:gap-5 sm:py-6">
+                <div className="flex items-start gap-4 py-3.5 sm:gap-5 sm:py-4">
                   <span
                     className="mt-0.5 w-7 shrink-0 font-mono text-xs font-semibold tabular-nums text-accent/80"
                     aria-hidden

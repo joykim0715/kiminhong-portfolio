@@ -86,15 +86,15 @@ export const siteContentEn: SiteContent = {
     items: [
       {
         id: "oa",
-        category: "OA",
-        tools: "MS Word, Excel, PowerPoint",
+        category: "OFFICE",
+        tools: "MS Word · Excel · PowerPoint",
         proficiency: 90,
         details: ["Data management & visualization", "Documentation & paperwork", "Supporting materials"],
       },
       {
         id: "data",
-        category: "Data Analysis",
-        tools: "SPSS, MySQL",
+        category: "DATA",
+        tools: "SPSS · MySQL",
         proficiency: 70,
         details: [
           "Hypothesis testing, regression,\nand multi-faceted statistical analysis",
@@ -103,15 +103,15 @@ export const siteContentEn: SiteContent = {
       },
       {
         id: "viz",
-        category: "Visualization",
-        tools: "Figma, Looker Studio",
+        category: "DESIGN",
+        tools: "Figma · Looker Studio",
         proficiency: 65,
         details: ["UX-focused layout design", "Component-based UI prototyping"],
       },
       {
         id: "ai",
-        category: "Generative AI",
-        tools: "Claude, Cursor, Gemini",
+        category: "AI",
+        tools: "Claude · Cursor · Gemini",
         proficiency: 85,
         details: ["MCP-based workflow automation", "Visual asset generation", "Vibe coding"],
       },

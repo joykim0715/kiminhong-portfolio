@@ -15,7 +15,7 @@ const SKILL_GLYPH: Record<string, GlyphKind> = {
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 const NAV_OFFSET = 64;
-const SKILLS_SCROLL_VH = 1.5;
+const SKILLS_SCROLL_VH = 0.72;
 
 type SkillRingProps = {
   skill: SkillItem;
@@ -71,14 +71,16 @@ function SkillRing({ skill, ringRef, ringGlowRef, circleRef }: SkillRingProps) {
       </svg>
 
       <div className="absolute inset-0 overflow-visible px-3 sm:px-4">
-        <div className="absolute inset-x-3 top-[7%] flex h-7 items-center justify-center sm:inset-x-4 sm:top-[8%] sm:h-8">
-          <span className="section-meta text-primary">{skill.category}</span>
+        <div className="absolute inset-x-3 top-[6%] flex h-8 items-center justify-center sm:inset-x-4 sm:top-[7%] sm:h-9">
+          <span className="px-1 text-center text-[11px] font-bold uppercase tracking-[0.16em] text-primary sm:text-xs">
+            {skill.category}
+          </span>
         </div>
         <div className="absolute left-1/2 top-[18%] h-16 w-16 -translate-x-1/2 text-primary sm:top-[19%] sm:h-20 sm:w-20 lg:h-[5.5rem] lg:w-[5.5rem]">
           <KineticGlyph kind={SKILL_GLYPH[skill.id] ?? "data"} />
         </div>
         <div className="absolute inset-x-2 top-[50%] flex flex-col items-center text-center sm:inset-x-3 sm:top-[51%]">
-          <span className="px-1 text-[15px] font-bold leading-tight text-text sm:text-lg lg:text-[1.35rem]">
+          <span className="px-1 text-[12px] font-medium leading-snug text-muted sm:text-[13px] lg:text-sm">
             {skill.tools}
           </span>
           <ul className="mt-1.5 w-full max-w-[13.5rem] space-y-0.5 sm:mt-2 sm:max-w-[15rem]">
@@ -179,14 +181,14 @@ export default function SkillsDial() {
       observer.disconnect();
       ctx.revert();
     };
-  }, []);
+  }, [skills]);
 
   return (
     <section
       id="skills"
       ref={sectionRef}
       aria-labelledby="skills-heading"
-      className="relative z-[1] overflow-x-hidden bg-bg py-16 text-text sm:py-24"
+      className="relative z-[1] overflow-x-hidden bg-bg py-12 text-text sm:py-16"
     >
       <div className="section-container">
         <div ref={pinZoneRef}>
@@ -201,7 +203,7 @@ export default function SkillsDial() {
               </p>
             </div>
 
-            <div className="skills-rings-grid mt-10 grid grid-cols-1 justify-items-center gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-6 xl:gap-8">
+            <div className="skills-rings-grid mt-8 grid grid-cols-1 justify-items-center gap-6 sm:mt-9 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
               {skills.map((skill, i) => (
                 <SkillRing
                   key={skill.id}
