@@ -31,7 +31,7 @@ export default function StorySection() {
       id="story"
       ref={sectionRef}
       aria-labelledby="story-heading"
-      className="relative z-[1] -mt-px bg-dark py-16 text-white sm:py-24"
+      className="relative z-[1] -mt-px overflow-x-clip bg-dark py-16 text-white sm:py-24"
     >
       <div className="section-container">
         <div

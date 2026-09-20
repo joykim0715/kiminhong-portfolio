@@ -1,8 +1,8 @@
 "use client";
 
 import type { Work } from "@/data/content";
-import { getWorkImages } from "@/lib/workImages";
-import ProjectImages from "./ProjectImages";
+import { getWorkTypographyCover } from "@/lib/workImages";
+import WorkVisual from "./WorkVisual";
 import DeviceMockup from "./ui/DeviceMockup";
 
 type FeaturedWorkProps = {
@@ -13,7 +13,7 @@ type FeaturedWorkProps = {
 };
 
 export default function FeaturedWork({ work, label, ctaLabel, onOpen }: FeaturedWorkProps) {
-  const images = getWorkImages(work);
+  const cover = getWorkTypographyCover(work);
   const metrics = work.panel.metrics?.slice(0, 4) ?? [];
   const summary = work.panel.subtitle || work.description;
 
@@ -29,17 +29,19 @@ export default function FeaturedWork({ work, label, ctaLabel, onOpen }: Featured
         <div className="relative mx-auto aspect-[16/10] w-full max-w-4xl overflow-hidden bg-dark-surf p-4 sm:aspect-[16/9] sm:p-6 lg:p-8">
           <DeviceMockup variant="monitor">
             <div className="relative h-full w-full overflow-hidden">
-              <ProjectImages
-                images={images}
+              <WorkVisual
+                work={work}
                 alt={work.title}
                 sizes="(max-width: 768px) 100vw, 896px"
                 imageClassName="object-cover sharp-image transition-transform duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                 quality={95}
               />
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/45 via-dark/8 to-transparent transition-opacity duration-500 group-hover:opacity-90"
-                aria-hidden
-              />
+              {cover ? null : (
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/45 via-dark/8 to-transparent transition-opacity duration-500 group-hover:opacity-90"
+                  aria-hidden
+                />
+              )}
             </div>
           </DeviceMockup>
         </div>

@@ -443,7 +443,7 @@ export const siteContentEn: SiteContent = {
         id: "04",
         title: "College of Sports Science\n— tailored corporate partnerships",
         category: "Teamwork",
-        image: "/works/04.jpg",
+        visual: "typography",
         description:
           "Planned and executed major-specific corporate partnerships based on student needs analysis.",
         panel: {

@@ -5,12 +5,13 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { lockPageScroll, unlockPageScroll } from "@/lib/lenisInstance";
 import { hideNavBarForPanel, showNavBarAfterPanel } from "@/lib/navBarVisibility";
-import { getWorkImages } from "@/lib/workImages";
+import { getWorkImages, getWorkTypographyCover } from "@/lib/workImages";
 import { formatMetaValue, getImpactMetrics, getInfoMetrics } from "@/lib/panelMetrics";
 import type { Work } from "@/data/works";
 import { useLocale } from "./ContentProvider";
 import CaseBlock from "./CaseBody/CaseBlock";
 import ProjectImages from "./ProjectImages";
+import WorkTypographyCover from "./WorkTypographyCover";
 import styles from "./ProjectPanel.module.css";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
@@ -77,6 +78,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
   const panel = work?.panel;
   const blocks = panel?.blocks ?? EMPTY_BLOCKS;
   const images = work ? getWorkImages(work) : [];
+  const cover = work ? getWorkTypographyCover(work) : null;
   const primaryImage = images[0];
   const secondaryImage = images[1];
   const impactMetrics = getImpactMetrics(panel?.metrics);
@@ -564,7 +566,7 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                       </motion.div>
                     </div>
 
-                    {primaryImage ? (
+                    {cover || primaryImage ? (
                       <motion.div
                         className={styles.visualStage}
                         initial={
@@ -583,22 +585,28 @@ export default function ProjectPanel({ work, onClose }: ProjectPanelProps) {
                         }}
                         style={{ willChange: reduceMotion ? undefined : "transform, opacity" }}
                       >
-                        <ProjectImages
-                          images={[primaryImage]}
-                          alt={work.title}
-                          sizes={HERO_SIZES}
-                          quality={90}
-                          priority
-                        />
-                        {secondaryImage ? (
-                          <div className={styles.visualInset}>
+                        {cover ? (
+                          <WorkTypographyCover cover={cover} />
+                        ) : primaryImage ? (
+                          <>
                             <ProjectImages
-                              images={[secondaryImage]}
-                              alt={`${work.title} 2`}
-                              sizes="(max-width: 1023px) 30vw, 160px"
-                              quality={84}
+                              images={[primaryImage]}
+                              alt={work.title}
+                              sizes={HERO_SIZES}
+                              quality={90}
+                              priority
                             />
-                          </div>
+                            {secondaryImage ? (
+                              <div className={styles.visualInset}>
+                                <ProjectImages
+                                  images={[secondaryImage]}
+                                  alt={`${work.title} 2`}
+                                  sizes="(max-width: 1023px) 30vw, 160px"
+                                  quality={84}
+                                />
+                              </div>
+                            ) : null}
+                          </>
                         ) : null}
                       </motion.div>
                     ) : null}

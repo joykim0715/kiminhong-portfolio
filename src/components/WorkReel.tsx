@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { getLenisInstance } from "@/lib/lenisInstance";
-import { getWorkImages } from "@/lib/workImages";
 import type { Work } from "@/data/content";
 import { useLocale, useSiteContent } from "./ContentProvider";
-import ProjectImages from "./ProjectImages";
+import WorkVisual from "./WorkVisual";
 import DeviceMockup from "./ui/DeviceMockup";
 import {
   applyReelHandoff,
@@ -159,7 +158,6 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
         <div className={styles.window}>
           <div ref={trackRef} className={styles.track}>
             {projects.map((work, i) => {
-              const images = getWorkImages(work);
               const summary = work.panel.subtitle || work.description;
               const metrics = work.panel.metrics?.slice(0, 4) ?? [];
               const indexLabel = String(i + 1).padStart(2, "0");
@@ -226,8 +224,8 @@ export default function WorkReel({ projects, onOpen }: WorkReelProps) {
                     <span className={styles.visualStage} data-reel-anim data-reel-visual>
                       <DeviceMockup variant="monitor">
                         <div className="relative h-full w-full overflow-hidden">
-                          <ProjectImages
-                            images={images}
+                          <WorkVisual
+                            work={work}
                             alt={work.title}
                             sizes="(max-width: 1024px) 90vw, 42vw"
                             imageClassName="object-cover sharp-image"

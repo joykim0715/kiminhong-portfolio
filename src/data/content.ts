@@ -16,6 +16,8 @@ export type Work = {
   /** @deprecated images 배열을 사용하세요 */
   image?: string;
   images?: string[];
+  /** Typography cover instead of a photo. Copy still comes from panel meta/metrics. */
+  visual?: "image" | "typography";
   description: string;
   panel: ProjectPanel;
 };
@@ -535,7 +537,7 @@ export const siteContent = {
         id: "04",
         title: "스포츠과학대학 학생회-학과\n맞춤형 기업 제휴 사업",
         category: "Teamwork",
-        image: "/works/04.jpg",
+        visual: "typography",
         description:
           "재학생 니즈 분석을 바탕으로 학과 맞춤형 기업 제휴를 기획·추진한 프로젝트입니다.",
         panel: {

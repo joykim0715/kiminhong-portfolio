@@ -1,9 +1,9 @@
 "use client";
 
 import type { Work } from "@/data/content";
-import { getWorkImages } from "@/lib/workImages";
+import { getWorkTypographyCover } from "@/lib/workImages";
 import { useSiteContent } from "./ContentProvider";
-import ProjectImages from "./ProjectImages";
+import WorkVisual from "./WorkVisual";
 import DeviceMockup from "./ui/DeviceMockup";
 
 type ProjectCardProps = {
@@ -16,7 +16,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ work, onClick, className = "", compact = false }: ProjectCardProps) {
   const { works } = useSiteContent();
-  const images = getWorkImages(work);
+  const cover = getWorkTypographyCover(work);
 
   if (compact) {
     return (
@@ -37,16 +37,18 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
         <div className="relative aspect-[16/10] overflow-hidden bg-dark-surf p-4 sm:p-5">
           <DeviceMockup>
             <div className="relative h-full w-full overflow-hidden">
-              <ProjectImages
-                images={images}
+              <WorkVisual
+                work={work}
                 alt={work.title}
                 sizes="(max-width: 768px) 100vw, 36vw"
                 imageClassName="object-contain sharp-image transition-transform duration-500 group-hover:scale-[1.04]"
               />
-              <div
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
-                aria-hidden
-              />
+              {cover ? null : (
+                <div
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
+                  aria-hidden
+                />
+              )}
             </div>
           </DeviceMockup>
         </div>
@@ -63,16 +65,18 @@ export default function ProjectCard({ work, onClick, className = "", compact = f
       <div className="relative aspect-[16/11] overflow-hidden bg-dark-surf p-4 sm:p-5">
         <DeviceMockup>
           <div className="relative h-full w-full overflow-hidden">
-            <ProjectImages
-              images={images}
+            <WorkVisual
+              work={work}
               alt={work.title}
               sizes="(max-width: 768px) 100vw, 40vw"
               imageClassName="object-contain sharp-image transition-transform duration-500 group-hover:scale-[1.04]"
             />
-            <div
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
-              aria-hidden
-            />
+            {cover ? null : (
+              <div
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/18 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:transition-none"
+                aria-hidden
+              />
+            )}
           </div>
         </DeviceMockup>
       </div>
