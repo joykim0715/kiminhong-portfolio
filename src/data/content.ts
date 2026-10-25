@@ -770,6 +770,11 @@ export const siteContent = {
     credential:
       "Verified Capability: AI-POT 2급 (역설계 프롬프팅·MCP) · AIBT 2급 · Claude · Cursor",
     activeLabel: "SYSTEM ACTIVE",
+    hoverNote: "항목에 올리면 미리보기가 바뀝니다.",
+    switchHint: "올려서 전환",
+    openPreview: "실제 화면 보기",
+    closePreview: "닫기",
+    exampleTag: "예시 화면",
     items: [
       {
         id: "meridian",
@@ -781,6 +786,17 @@ export const siteContent = {
         summary: "안 읽은 기사만 모아, 30분마다 브리핑 파일 하나를 덮어씁니다.",
         tags: ["국제", "금융", "기술"],
         steps: ["SBH", "Cursor", "파일"],
+        screen: {
+          kicker: "MERIDIAN",
+          title: "Daily Briefing",
+          left: "금융",
+          right: "국제정세",
+          range: ["1주", "1달", "3달"],
+          names: ["S&P 500", "QQQ", "Vanguard", "TIGER", "SCHD"],
+          basis: "방향은 최근 20거래일 공개 수치입니다. 이 화면은 주문을 넣지 않습니다.",
+          newsTitle: "미열람 기사",
+          newsBody: "분류가 끝난 기사 한 건이 이 칸에 덮어써집니다.",
+        },
       },
       {
         id: "floorball",
@@ -792,6 +808,16 @@ export const siteContent = {
         summary: "다섯 형식의 명단이 안건 하나로 모이고, 협회 결재 단계를 따라 승인됩니다.",
         tags: ["XLS", "PDF", "DOC", "HWP", "IMG"],
         steps: ["작성", "시도", "대한", "승인"],
+        screen: {
+          kicker: "결재 흐름",
+          title: "진행 현황",
+          filters: ["전체", "내 차례", "작성 중", "결재 중", "승인", "거절"],
+          kind: "신규 등록",
+          name: "예시 선수",
+          team: "서울 · 일반부",
+          status: "시도협회 결재",
+          note: "결재 차례인 계정에만 승인 버튼이 나옵니다.",
+        },
       },
     ],
   },

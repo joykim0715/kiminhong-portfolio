@@ -676,6 +676,11 @@ export const siteContentEn: SiteContent = {
     credential:
       "Verified Capability: AI-POT Level 2 (reverse prompting · MCP) · AIBT Level 2 · Claude · Cursor",
     activeLabel: "SYSTEM ACTIVE",
+    hoverNote: "Hover an item to switch the preview.",
+    switchHint: "Hover to switch",
+    openPreview: "View the actual screen",
+    closePreview: "Close",
+    exampleTag: "Example screen",
     items: [
       {
         id: "meridian",
@@ -687,6 +692,17 @@ export const siteContentEn: SiteContent = {
         summary: "Unread articles are collected and one briefing file is overwritten every 30 minutes.",
         tags: ["World", "Markets", "Tech"],
         steps: ["SBH", "Cursor", "File"],
+        screen: {
+          kicker: "MERIDIAN",
+          title: "Daily Briefing",
+          left: "Markets",
+          right: "World",
+          range: ["1W", "1M", "3M"],
+          names: ["S&P 500", "QQQ", "Vanguard", "TIGER", "SCHD"],
+          basis: "Direction uses the last 20 sessions of public data. This screen does not place orders.",
+          newsTitle: "Unread article",
+          newsBody: "One classified article is overwritten into this pane.",
+        },
       },
       {
         id: "floorball",
@@ -698,6 +714,16 @@ export const siteContentEn: SiteContent = {
         summary: "Five roster formats collapse into one case, then move through association approval.",
         tags: ["XLS", "PDF", "DOC", "HWP", "IMG"],
         steps: ["Draft", "Region", "Nation", "Approved"],
+        screen: {
+          kicker: "Approval flow",
+          title: "Cases",
+          filters: ["All", "My turn", "Draft", "In review", "Approved", "Rejected"],
+          kind: "New registration",
+          name: "Example player",
+          team: "Seoul · General",
+          status: "Regional review",
+          note: "Only the account whose turn it is sees the approve button.",
+        },
       },
     ],
   },

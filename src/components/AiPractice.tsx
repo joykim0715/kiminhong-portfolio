@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSiteContent } from "./ContentProvider";
 import styles from "./AiPractice.module.css";
 
@@ -130,6 +130,188 @@ function FloorballArt({ item }: { item: AiItem }) {
   );
 }
 
+function MeridianScreen({ screen }: { screen: Extract<AiItem["screen"], { names: string[] }> }) {
+  return (
+    <div className={styles.realMeridian}>
+      <header className={styles.realHead}>
+        <div>
+          <p className={styles.realKicker}>{screen.kicker}</p>
+          <p className={styles.realTitle}>{screen.title}</p>
+        </div>
+      </header>
+      <div className={styles.realSplit}>
+        <section>
+          <p className={styles.zone}>{screen.left}</p>
+          <div className={styles.ranges}>
+            {screen.range.map((label, index) => (
+              <span key={label} data-on={index === 1 ? "true" : "false"}>
+                {label}
+              </span>
+            ))}
+          </div>
+          <ul className={styles.names}>
+            {screen.names.map((name) => (
+              <li key={name}>
+                <b>{name}</b>
+                <i />
+              </li>
+            ))}
+          </ul>
+          <p className={styles.basis}>{screen.basis}</p>
+        </section>
+        <section>
+          <p className={styles.zone}>{screen.right}</p>
+          <article className={styles.newsCard}>
+            <p>{screen.newsTitle}</p>
+            <h4>{screen.newsBody}</h4>
+            <span />
+            <span />
+          </article>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function FloorballScreen({
+  screen,
+  steps,
+}: {
+  screen: Extract<AiItem["screen"], { filters: string[] }>;
+  steps: string[];
+}) {
+  return (
+    <div className={styles.realFloor}>
+      <p className={styles.floorKicker}>{screen.kicker}</p>
+      <h4 className={styles.floorTitle}>{screen.title}</h4>
+      <p className={styles.floorNote}>{screen.note}</p>
+      <div className={styles.filters}>
+        {screen.filters.map((label, index) => (
+          <span key={label} data-on={index === 0 ? "true" : "false"}>
+            {label}
+          </span>
+        ))}
+      </div>
+      <article className={styles.caseCard}>
+        <header>
+          <div>
+            <p>{screen.kind}</p>
+            <h5>{screen.name}</h5>
+            <small>{screen.team}</small>
+          </div>
+          <span>{screen.status}</span>
+        </header>
+        <ol>
+          {steps.map((step, index) => (
+            <li key={step} data-on={index < 2 ? "true" : "false"}>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </article>
+    </div>
+  );
+}
+
+function ScreenDialog({
+  item,
+  onClose,
+}: {
+  item: AiItem;
+  onClose: () => void;
+}) {
+  const { ai } = useSiteContent();
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  return (
+    <motion.div
+      className={styles.backdrop}
+      role="presentation"
+      onClick={onClose}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reduceMotion ? undefined : { opacity: 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={item.title}
+        className={styles.dialog}
+        onClick={(event) => event.stopPropagation()}
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={reduceMotion ? undefined : { opacity: 0, y: 8 }}
+        transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className={styles.dialogBar}>
+          <p>{ai.exampleTag}</p>
+          <button type="button" onClick={onClose} autoFocus>
+            {ai.closePreview}
+          </button>
+        </div>
+        {item.screen.names && item.screen.range && item.screen.left && item.screen.right ? (
+          <MeridianScreen
+            screen={{
+              kicker: item.screen.kicker,
+              title: item.screen.title,
+              left: item.screen.left,
+              right: item.screen.right,
+              range: item.screen.range,
+              names: item.screen.names,
+              basis: item.screen.basis ?? "",
+              newsTitle: item.screen.newsTitle ?? "",
+              newsBody: item.screen.newsBody ?? "",
+            }}
+          />
+        ) : (
+          <FloorballScreen
+            screen={{
+              kicker: item.screen.kicker,
+              title: item.screen.title,
+              filters: item.screen.filters ?? [],
+              kind: item.screen.kind ?? "",
+              name: item.screen.name ?? "",
+              team: item.screen.team ?? "",
+              status: item.screen.status ?? "",
+              note: item.screen.note ?? "",
+            }}
+            steps={item.steps}
+          />
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function PreviewButton({ item, onOpen }: { item: AiItem; onOpen: () => void }) {
+  const { ai } = useSiteContent();
+  return (
+    <button type="button" className={styles.preview} onClick={onOpen} aria-haspopup="dialog">
+      <Visual item={item} />
+      <span className={styles.cue}>
+        {ai.openPreview}
+        <span className={styles.cueArrow} aria-hidden>
+          ↗
+        </span>
+      </span>
+    </button>
+  );
+}
+
 function Visual({ item }: { item: AiItem }) {
   return (
     <Artwork src={item.image} alt={item.title}>
@@ -160,6 +342,8 @@ export default function AiPractice() {
   const { ai } = useSiteContent();
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [open, setOpen] = useState(false);
+  const closePreview = useCallback(() => setOpen(false), []);
   const item = ai.items[active] ?? ai.items[0];
 
   return (
@@ -175,6 +359,7 @@ export default function AiPractice() {
 
         <div className="mt-12 grid items-start gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-10">
           <div className="min-w-0 lg:col-span-5">
+            <p className={styles.hoverNote}>{ai.hoverNote}</p>
             <ul className="border-t border-border/80">
               {ai.items.map((entry, index) => {
                 const selected = index === active;
@@ -211,11 +396,14 @@ export default function AiPractice() {
                           {entry.title}
                         </span>
                       </span>
+                      <span className={styles.tabHint} aria-hidden>
+                        {ai.switchHint}
+                      </span>
                     </button>
                     <div className="pb-4 pl-4 lg:hidden">
                       {selected ? (
                         <>
-                          <Visual item={entry} />
+                          <PreviewButton item={entry} onOpen={() => setOpen(true)} />
                           <Copy item={entry} />
                         </>
                       ) : null}
@@ -231,12 +419,15 @@ export default function AiPractice() {
 
           <div className="hidden min-w-0 lg:col-span-7 lg:block" aria-live="polite">
             <article className="rounded-xl border border-border bg-surface p-3 sm:p-4">
-              <Visual item={item} />
+              <PreviewButton item={item} onOpen={() => setOpen(true)} />
               <Copy item={item} />
             </article>
           </div>
         </div>
       </div>
+      <AnimatePresence>
+        {open ? <ScreenDialog item={item} onClose={closePreview} /> : null}
+      </AnimatePresence>
     </section>
   );
 }
