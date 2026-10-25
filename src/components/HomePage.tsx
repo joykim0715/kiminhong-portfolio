@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import GradientTransition from "@/components/GradientTransition";
 import Values from "@/components/Values";
 import SkillsDial from "@/components/SkillsDial";
+import AiPractice from "@/components/AiPractice";
 import Education from "@/components/Education";
 import Experience from "@/components/Experience";
 import WorkGallery from "@/components/WorkGallery";
@@ -53,6 +54,7 @@ export default function HomePage({
           <GradientTransition />
           <Values />
           <SkillsDial />
+          <AiPractice />
           <Education />
           <Experience />
           <SectionBlend variant="career-work" />

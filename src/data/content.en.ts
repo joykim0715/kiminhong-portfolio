@@ -28,6 +28,7 @@ export const siteContentEn: SiteContent = {
       { id: "hero", label: "Home" },
       { id: "values", label: "Values" },
       { id: "skills", label: "Skills" },
+      { id: "ai", label: "AI" },
       { id: "education", label: "Education" },
       { id: "experience", label: "Experience" },
       { id: "works", label: "Work" },
@@ -666,6 +667,43 @@ export const siteContentEn: SiteContent = {
       description: "Recognized for leadership and responsibility as a representative cadet",
     },
   ] satisfies Certification[],
+
+  ai: {
+    sectionLabel: "AI",
+    title: "Systems directed through to the end",
+    description:
+      "MCP handles collection and sorting. Vibe coding is how the screen was fitted to the workflow.",
+    items: [
+      {
+        id: "meridian",
+        index: "01",
+        method: "MCP",
+        title: "Meridian briefing",
+        summary:
+          "A morning briefing that puts news and market figures in one window. It classifies only unread articles and overwrites a single file.",
+        points: [
+          "Pulls only unread items from the SBH News feed.",
+          "Classification is handed to Cursor, and that call does not fetch the feed again.",
+          "Runs every 30 minutes from 7:30 a.m. to 10:30 p.m.",
+          "It does not place orders. Figures come only from public official sources.",
+        ],
+      },
+      {
+        id: "floorball",
+        index: "02",
+        method: "Vibe coding",
+        title: "Floorball player admin",
+        summary:
+          "A browser site for association registration and approval. Roles and approval steps are fixed as code rules.",
+        points: [
+          "Access is split across players and guardians, team reps, regional associations, and the Korea Floorball Association.",
+          "A case moves through draft, regional review, national review, then approval or rejection.",
+          "Rosters are read from Excel, PDF, Word, HWP, and images.",
+          "Built 12–14 Oct 2026. There is no public URL yet.",
+        ],
+      },
+    ],
+  },
 
   story: {
     sectionLabel: "Story",

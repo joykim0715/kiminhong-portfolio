@@ -1,0 +1,25 @@
+.mobileDetail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.75, 0, 0.25, 1);
+}
+
+.mobileDetail > div {
+  overflow: hidden;
+}
+
+.mobileDetail[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .mobileDetail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileDetail {
+    transition: none;
+  }
+}

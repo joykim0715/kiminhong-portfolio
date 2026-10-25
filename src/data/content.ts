@@ -125,6 +125,7 @@ export const siteContent = {
       { id: "hero", label: "Home" },
       { id: "values", label: "Values" },
       { id: "skills", label: "Skills" },
+      { id: "ai", label: "AI" },
       { id: "education", label: "Education" },
       { id: "experience", label: "Experience" },
       { id: "works", label: "Work" },
@@ -760,6 +761,43 @@ export const siteContent = {
       description: "군사교육단 대표 후보생으로서 리더십과 책임감 인정",
     },
   ] satisfies Certification[],
+
+  ai: {
+    sectionLabel: "AI",
+    title: "지시해서 끝까지 만든 시스템",
+    description:
+      "MCP로 수집과 분류를 붙이고, 바이브코딩으로 화면과 업무 규칙을 맞춘 작업입니다.",
+    items: [
+      {
+        id: "meridian",
+        index: "01",
+        method: "MCP",
+        title: "메리디안 브리핑",
+        summary:
+          "뉴스와 시장 숫자를 한 창에 모으는 아침 브리핑입니다. 안 읽은 기사만 골라 분류하고, 결과는 파일 하나에 덮어씁니다.",
+        points: [
+          "SBH News 피드에서 안 읽은 기사만 가져옵니다.",
+          "분류는 Cursor에 맡기고, 그 호출에서 피드를 다시 받지 않습니다.",
+          "아침 7시 30분부터 밤 10시 30분까지 30분마다 실행합니다.",
+          "주문은 넣지 않습니다. 숫자는 공개된 공식 자료만 씁니다.",
+        ],
+      },
+      {
+        id: "floorball",
+        index: "02",
+        method: "바이브코딩",
+        title: "플로어볼 선수 관리",
+        summary:
+          "협회 등록과 결재를 브라우저에서 처리하는 사이트입니다. 역할과 승인 단계를 코드 규칙으로 고정했습니다.",
+        points: [
+          "선수·보호자, 팀 대표, 시도협회, 대한플로어볼협회 권한이 나뉩니다.",
+          "안건은 작성, 시도협회 대기, 대한협회 대기, 승인 또는 거절로 움직입니다.",
+          "엑셀, PDF, 워드, 한글, 이미지 명단을 읽어 등록합니다.",
+          "2026.10.12–10.14에 만들었습니다. 공개 주소는 아직 없습니다.",
+        ],
+      },
+    ],
+  },
 
   story: {
     sectionLabel: "Story",
