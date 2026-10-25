@@ -669,38 +669,114 @@ export const siteContentEn: SiteContent = {
   ] satisfies Certification[],
 
   ai: {
-    sectionLabel: "AI",
-    title: "Systems directed through to the end",
+    sectionLabel: "AI SYSTEMS",
+    title: "End-to-End AI Systems Engineered for Real Workflows",
     description:
-      "MCP handles collection and sorting. Vibe coding is how the screen was fitted to the workflow.",
+      "Automated data ingestion and classification pipelines via MCP, and built production-grade web workflows with strict role-based rules through Vibe Coding.",
+    credential:
+      "Verified Capability: AI-POT Level 2 (reverse prompting · MCP) · AIBT Level 2 · Claude · Cursor",
+    activeLabel: "SYSTEM ACTIVE",
     items: [
       {
         id: "meridian",
         index: "01",
         method: "MCP",
-        title: "Meridian briefing",
+        title: "Meridian Briefing",
+        consoleTitle: "01 // MCP AUTOMATION PIPELINE",
+        chips: ["07:30–22:30 live", "Refresh every 30m", "Single pass (zero re-fetch)", "Read-only integrity"],
         summary:
-          "A morning briefing that puts news and market figures in one window. It classifies only unread articles and overwrites a single file.",
-        points: [
-          "Pulls only unread items from the SBH News feed.",
-          "Classification is handed to Cursor, and that call does not fetch the feed again.",
-          "Runs every 30 minutes from 7:30 a.m. to 10:30 p.m.",
-          "It does not place orders. Figures come only from public official sources.",
+          "An unattended pipeline that collects unread news and official market series every 30 minutes, classifies them, and overwrites one briefing file.",
+        rules: [
+          {
+            title: "Delta Ingestion",
+            body: "Targets only unread items from the SBH News feed.",
+          },
+          {
+            title: "Single-Pass Classification",
+            body: "Classification is handed to Cursor. That call does not fetch the feed again.",
+          },
+          {
+            title: "30m Cron & Single-File Overwrite",
+            body: "Runs every 30 minutes from 07:30 to 22:30 and overwrites briefings/latest.md.",
+          },
+          {
+            title: "Strict Data Governance",
+            body: "No orders. Figures are cited only from public official sources.",
+          },
         ],
+        meridian: {
+          flowTab: "Pipeline",
+          fileTab: "Output file",
+          nodes: [
+            "SBH News Feed (Unread Only)",
+            "Cursor MCP Classifier (No Re-fetch)",
+            "Official Market Indicators",
+            "Single File Overwrite",
+          ],
+          fileName: "briefings/latest.md",
+          cronNote: "Cron: Every 30m, 07:30–22:30",
+          mode: "Mode: Read-Only",
+          simulate: "Simulate next 30m cycle",
+          classified: "Unread articles classified",
+          marketTitle: "Official market series",
+          markets: ["S&P 500", "QQQ", "Vanguard", "TIGER", "SCHD"],
+          marketNote: "Public sources · no orders",
+          logFetch: "Unread articles fetched",
+          logClass: "Classified via Cursor (0 redundant calls)",
+          logWrite: "briefings/latest.md overwritten",
+          slots: ["08:00", "08:30", "09:00", "09:30"],
+          unread: [6, 2, 4, 1],
+        },
+        floorball: null,
       },
       {
         id: "floorball",
         index: "02",
-        method: "Vibe coding",
-        title: "Floorball player admin",
+        method: "VIBE CODING",
+        title: "Floorball Roster & Approval",
+        consoleTitle: "02 // RBAC APPROVAL WORKFLOW",
+        chips: ["72h build", "4-tier RBAC", "4-step state machine", "5-format parser"],
         summary:
-          "A browser site for association registration and approval. Roles and approval steps are fixed as code rules.",
-        points: [
-          "Access is split across players and guardians, team reps, regional associations, and the Korea Floorball Association.",
-          "A case moves through draft, regional review, national review, then approval or rejection.",
-          "Rosters are read from Excel, PDF, Word, HWP, and images.",
-          "Built 12–14 Oct 2026. There is no public URL yet.",
+          "A browser workflow from player registration to final approval, with four roles and multi-format roster parsing.",
+        rules: [
+          {
+            title: "4-Tier RBAC",
+            body: "Players and guardians, team reps, regional associations, and the Korea Floorball Association are isolated in code.",
+          },
+          {
+            title: "Deterministic State Machine",
+            body: "A case moves only through draft, regional review, national review, then approval or rejection.",
+          },
+          {
+            title: "5-Format Roster Parser",
+            body: "Excel, PDF, Word, HWP, and image rosters are read into structured rows.",
+          },
+          {
+            title: "Rapid Vibe Coding (2026.10.12–14)",
+            body: "Requirements through the core rules were built in three days. Internal verification build.",
+          },
         ],
+        meridian: null,
+        floorball: {
+          formats: [
+            { id: "xlsx", label: ".XLSX", result: "Excel roster parsed — header checked" },
+            { id: "pdf", label: ".PDF", result: "PDF roster parsed — text layer checked" },
+            { id: "docx", label: ".DOCX", result: "Word roster parsed — table checked" },
+            { id: "hwp", label: ".HWP", result: "HWP roster parsed — 18 names checked" },
+            { id: "img", label: ".IMG", result: "Image roster parsed — two-column list" },
+          ],
+          roles: [
+            { id: "player", label: "1. Player / guardian", permit: "View and download the team list only. No drafting or approval." },
+            { id: "team", label: "2. Team rep", permit: "Draft a case and send it to regional review." },
+            { id: "assoc", label: "3. Regional association", permit: "Approve or reject while the case waits on the region." },
+            { id: "national", label: "4. Korea Floorball Association", permit: "Final approve or reject while the case waits nationally." },
+          ],
+          steps: ["Draft", "Regional wait", "National wait", "Approved"],
+          rejected: "Rejected",
+          advance: "Advance approval step",
+          reject: "Reject",
+          blocked: "This role cannot move the case at this step.",
+        },
       },
     ],
   },

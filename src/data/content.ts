@@ -763,38 +763,114 @@ export const siteContent = {
   ] satisfies Certification[],
 
   ai: {
-    sectionLabel: "AI",
-    title: "지시해서 끝까지 만든 시스템",
+    sectionLabel: "AI SYSTEMS",
+    title: "설계부터 구현까지, AI로 구축한 실무 시스템",
     description:
-      "MCP로 수집과 분류를 붙이고, 바이브코딩으로 화면과 업무 규칙을 맞춘 작업입니다.",
+      "단순 프롬프트 질의를 넘어 MCP로 데이터 수집·분류 파이프라인을 자동화하고, 바이브코딩으로 현장의 복잡한 권한과 업무 규칙을 작동하는 시스템으로 구현했습니다.",
+    credential:
+      "Verified Capability: AI-POT 2급 (역설계 프롬프팅·MCP) · AIBT 2급 · Claude · Cursor",
+    activeLabel: "SYSTEM ACTIVE",
     items: [
       {
         id: "meridian",
         index: "01",
         method: "MCP",
         title: "메리디안 브리핑",
+        consoleTitle: "01 // MCP AUTOMATION PIPELINE",
+        chips: ["07:30–22:30 가동", "30분 주기 갱신", "단일 호출(Zero Re-fetch)", "Read-Only 무결성"],
         summary:
-          "뉴스와 시장 숫자를 한 창에 모으는 아침 브리핑입니다. 안 읽은 기사만 골라 분류하고, 결과는 파일 하나에 덮어씁니다.",
-        points: [
-          "SBH News 피드에서 안 읽은 기사만 가져옵니다.",
-          "분류는 Cursor에 맡기고, 그 호출에서 피드를 다시 받지 않습니다.",
-          "아침 7시 30분부터 밤 10시 30분까지 30분마다 실행합니다.",
-          "주문은 넣지 않습니다. 숫자는 공개된 공식 자료만 씁니다.",
+          "미열람 뉴스와 공식 시장 지표를 30분 주기로 수집·분류해 단일 브리핑 파일에 덮어쓰는 무인 인텔리전스 파이프라인입니다.",
+        rules: [
+          {
+            title: "Delta Ingestion (미열람 필터링)",
+            body: "SBH News 피드에서 읽지 않은 신규 기사만 타겟팅하여 수집합니다.",
+          },
+          {
+            title: "Single-Pass Classification",
+            body: "분류는 Cursor에 위임하며, 해당 호출에서 피드를 재수신하지 않아 중복 호출을 원천 차단합니다.",
+          },
+          {
+            title: "30m Cron & Single-File Overwrite",
+            body: "07:30부터 22:30까지 30분마다 자동 실행되며, briefings/latest.md 하나에 덮어써 최신 상태를 유지합니다.",
+          },
+          {
+            title: "Strict Data Governance",
+            body: "임의 주문·실행을 배제하고 검증된 공개 공식 지표만 인용하는 안전 설계를 적용했습니다.",
+          },
         ],
+        meridian: {
+          flowTab: "파이프라인",
+          fileTab: "출력 파일",
+          nodes: [
+            "SBH News Feed (Unread Only)",
+            "Cursor MCP Classifier (No Re-fetch)",
+            "Official Market Indicators",
+            "Single File Overwrite",
+          ],
+          fileName: "briefings/latest.md",
+          cronNote: "Cron: Every 30m, 07:30–22:30",
+          mode: "Mode: Read-Only",
+          simulate: "다음 30분 주기 시뮬레이션",
+          classified: "미열람 기사 분류 완료",
+          marketTitle: "공식 시장 지표",
+          markets: ["S&P 500", "QQQ", "Vanguard", "TIGER", "SCHD"],
+          marketNote: "공개 자료 · 주문 없음",
+          logFetch: "Unread articles fetched",
+          logClass: "Classified via Cursor (0 redundant calls)",
+          logWrite: "briefings/latest.md overwritten",
+          slots: ["08:00", "08:30", "09:00", "09:30"],
+          unread: [6, 2, 4, 1],
+        },
+        floorball: null,
       },
       {
         id: "floorball",
         index: "02",
-        method: "바이브코딩",
+        method: "VIBE CODING",
         title: "플로어볼 선수 관리",
+        consoleTitle: "02 // RBAC APPROVAL WORKFLOW",
+        chips: ["3일 완성 (72h Build)", "4단계 권한(RBAC)", "4단계 결재 상태 머신", "5종 문서 자동 파싱"],
         summary:
-          "협회 등록과 결재를 브라우저에서 처리하는 사이트입니다. 역할과 승인 단계를 코드 규칙으로 고정했습니다.",
-        points: [
-          "선수·보호자, 팀 대표, 시도협회, 대한플로어볼협회 권한이 나뉩니다.",
-          "안건은 작성, 시도협회 대기, 대한협회 대기, 승인 또는 거절로 움직입니다.",
-          "엑셀, PDF, 워드, 한글, 이미지 명단을 읽어 등록합니다.",
-          "2026.10.12–10.14에 만들었습니다. 공개 주소는 아직 없습니다.",
+          "협회 선수 등록부터 최종 결재까지, 4단계 권한 체계와 다중 포맷 명단 파싱을 브라우저 기반으로 구현한 행정 워크플로우 시스템입니다.",
+        rules: [
+          {
+            title: "4-Tier RBAC (역할 기반 권한 분리)",
+            body: "선수·보호자, 팀 대표, 시도협회, 대한플로어볼협회 4단계 권한을 코드 규칙으로 엄격히 격리했습니다.",
+          },
+          {
+            title: "Deterministic State Machine",
+            body: "안건은 [작성 → 시도협회 대기 → 대한협회 대기 → 승인/반려]의 고정된 상태 전이 규칙에 따라서만 이동합니다.",
+          },
+          {
+            title: "5-Format Roster Parser",
+            body: "현장에서 제출하는 Excel, PDF, Word, 한글(HWP), 이미지 명단을 자동 판독해 정형 데이터로 일괄 등록합니다.",
+          },
+          {
+            title: "Rapid Vibe Coding (2026.10.12–14)",
+            body: "요구사항 구조화부터 핵심 비즈니스 로직 검증까지 단 3일 만에 엔드투엔드 프로토타입을 구축했습니다. (내부 검증용 빌드)",
+          },
         ],
+        meridian: null,
+        floorball: {
+          formats: [
+            { id: "xlsx", label: ".XLSX", result: "Excel 선수 명단 파싱 완료 — 표 헤더 확인" },
+            { id: "pdf", label: ".PDF", result: "PDF 선수 명단 파싱 완료 — 텍스트 층 확인" },
+            { id: "docx", label: ".DOCX", result: "Word 선수 명단 파싱 완료 — 문단 표 확인" },
+            { id: "hwp", label: ".HWP", result: "한글(HWP) 선수 명단 파싱 완료 — 18명 검증됨" },
+            { id: "img", label: ".IMG", result: "이미지 명단 파싱 완료 — 두 칸 명단으로 해석" },
+          ],
+          roles: [
+            { id: "player", label: "1. 선수·보호자", permit: "조회와 소속 명단만 가능합니다. 작성과 결재는 없습니다." },
+            { id: "team", label: "2. 팀 대표", permit: "안건을 작성하고 시도협회 결재로 올립니다." },
+            { id: "assoc", label: "3. 시도협회", permit: "시도협회 대기에서 승인하거나 반려합니다." },
+            { id: "national", label: "4. 대한플로어볼협회", permit: "대한협회 대기에서 최종 승인하거나 반려합니다." },
+          ],
+          steps: ["작성", "시도협회 대기", "대한협회 대기", "승인"],
+          rejected: "반려",
+          advance: "다음 결재 단계 진행",
+          reject: "반려",
+          blocked: "이 역할로는 이 단계를 움직일 수 없습니다.",
+        },
       },
     ],
   },
