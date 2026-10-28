@@ -31,21 +31,21 @@ function RosterIcon() {
 }
 
 function Artwork({ src, alt, children }: { src: string; alt: string; children: ReactNode }) {
-  const [live, setLive] = useState(false);
-
-  useEffect(() => {
-    const probe = new window.Image();
-    probe.onload = () => setLive(true);
-    probe.onerror = () => setLive(false);
-    probe.src = src;
-  }, [src]);
+  const [failed, setFailed] = useState(false);
 
   return (
     <div className={styles.canvas}>
-      {live ? (
-        <Image src={src} alt={alt} fill className={styles.shot} sizes="(min-width: 1024px) 46vw, 100vw" />
-      ) : (
+      {failed ? (
         children
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={styles.shot}
+          sizes="(min-width: 1024px) 46vw, 100vw"
+          onError={() => setFailed(true)}
+        />
       )}
     </div>
   );
@@ -130,89 +130,6 @@ function FloorballArt({ item }: { item: AiItem }) {
   );
 }
 
-function MeridianScreen({ screen }: { screen: Extract<AiItem["screen"], { names: string[] }> }) {
-  return (
-    <div className={styles.realMeridian}>
-      <header className={styles.realHead}>
-        <div>
-          <p className={styles.realKicker}>{screen.kicker}</p>
-          <p className={styles.realTitle}>{screen.title}</p>
-        </div>
-      </header>
-      <div className={styles.realSplit}>
-        <section>
-          <p className={styles.zone}>{screen.left}</p>
-          <div className={styles.ranges}>
-            {screen.range.map((label, index) => (
-              <span key={label} data-on={index === 1 ? "true" : "false"}>
-                {label}
-              </span>
-            ))}
-          </div>
-          <ul className={styles.names}>
-            {screen.names.map((name) => (
-              <li key={name}>
-                <b>{name}</b>
-                <i />
-              </li>
-            ))}
-          </ul>
-          <p className={styles.basis}>{screen.basis}</p>
-        </section>
-        <section>
-          <p className={styles.zone}>{screen.right}</p>
-          <article className={styles.newsCard}>
-            <p>{screen.newsTitle}</p>
-            <h4>{screen.newsBody}</h4>
-            <span />
-            <span />
-          </article>
-        </section>
-      </div>
-    </div>
-  );
-}
-
-function FloorballScreen({
-  screen,
-  steps,
-}: {
-  screen: Extract<AiItem["screen"], { filters: string[] }>;
-  steps: string[];
-}) {
-  return (
-    <div className={styles.realFloor}>
-      <p className={styles.floorKicker}>{screen.kicker}</p>
-      <h4 className={styles.floorTitle}>{screen.title}</h4>
-      <p className={styles.floorNote}>{screen.note}</p>
-      <div className={styles.filters}>
-        {screen.filters.map((label, index) => (
-          <span key={label} data-on={index === 0 ? "true" : "false"}>
-            {label}
-          </span>
-        ))}
-      </div>
-      <article className={styles.caseCard}>
-        <header>
-          <div>
-            <p>{screen.kind}</p>
-            <h5>{screen.name}</h5>
-            <small>{screen.team}</small>
-          </div>
-          <span>{screen.status}</span>
-        </header>
-        <ol>
-          {steps.map((step, index) => (
-            <li key={step} data-on={index < 2 ? "true" : "false"}>
-              {step}
-            </li>
-          ))}
-        </ol>
-      </article>
-    </div>
-  );
-}
-
 function ScreenDialog({
   item,
   onClose,
@@ -263,35 +180,9 @@ function ScreenDialog({
             {ai.closePreview}
           </button>
         </div>
-        {item.screen.names && item.screen.range && item.screen.left && item.screen.right ? (
-          <MeridianScreen
-            screen={{
-              kicker: item.screen.kicker,
-              title: item.screen.title,
-              left: item.screen.left,
-              right: item.screen.right,
-              range: item.screen.range,
-              names: item.screen.names,
-              basis: item.screen.basis ?? "",
-              newsTitle: item.screen.newsTitle ?? "",
-              newsBody: item.screen.newsBody ?? "",
-            }}
-          />
-        ) : (
-          <FloorballScreen
-            screen={{
-              kicker: item.screen.kicker,
-              title: item.screen.title,
-              filters: item.screen.filters ?? [],
-              kind: item.screen.kind ?? "",
-              name: item.screen.name ?? "",
-              team: item.screen.team ?? "",
-              status: item.screen.status ?? "",
-              note: item.screen.note ?? "",
-            }}
-            steps={item.steps}
-          />
-        )}
+        <div className={styles.shotFrame}>
+          <Image src={item.image} alt={item.title} width={1440} height={900} className={styles.shotLarge} />
+        </div>
       </motion.div>
     </motion.div>
   );

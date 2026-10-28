@@ -774,7 +774,7 @@ export const siteContent = {
     switchHint: "올려서 전환",
     openPreview: "실제 화면 보기",
     closePreview: "닫기",
-    exampleTag: "예시 화면",
+    exampleTag: "실제 화면",
     items: [
       {
         id: "meridian",

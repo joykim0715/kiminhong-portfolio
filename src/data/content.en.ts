@@ -680,7 +680,7 @@ export const siteContentEn: SiteContent = {
     switchHint: "Hover to switch",
     openPreview: "View the actual screen",
     closePreview: "Close",
-    exampleTag: "Example screen",
+    exampleTag: "Actual screen",
     items: [
       {
         id: "meridian",

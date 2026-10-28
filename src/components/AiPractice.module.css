@@ -12,6 +12,17 @@
 
 .shot {
   object-fit: cover;
+  object-position: left top;
+}
+
+.shotFrame {
+  background: #0e1626;
+}
+
+.shotLarge {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .meridian,
